@@ -1,6 +1,5 @@
 'use client';
 
-import React from 'react';
 import { motion } from 'framer-motion';
 import { Card, CardHeader, CardTitle, CardDescription, CardContent, CardFooter } from '../ui/card';
 import { Badge } from '../ui/badge';
@@ -13,40 +12,80 @@ interface ProjectCardProps {
 }
 
 export default function ProjectCard({ project }: ProjectCardProps) {
-  const itemVariants = {
-    hidden: { y: 20, opacity: 0 },
+  const cardVariants = {
+    hidden: { opacity: 0, y: 20 },
     visible: { 
-      y: 0, 
-      opacity: 1,
-      transition: { type: 'spring', stiffness: 100 }
+      opacity: 1, 
+      y: 0,
+      transition: { 
+        type: 'spring', 
+        stiffness: 100,
+        duration: 0.5
+      }
+    },
+    hover: {
+      y: -5,
+      boxShadow: "0 10px 25px rgba(0, 0, 0, 0.1)",
+      transition: { type: 'spring', stiffness: 200 }
     }
   };
 
   return (
-    <motion.div variants={itemVariants}>
-      <Card className="overflow-hidden h-full flex flex-col hover:shadow-lg transition-shadow">
-        <div className="aspect-video overflow-hidden">
-          <img 
-            src={project.image} 
-            alt={project.title} 
-            className="w-full h-full object-cover transition-transform hover:scale-105 duration-300"
-          />
-        </div>
+    <motion.div
+      variants={cardVariants}
+      initial="hidden"
+      animate="visible"
+      whileHover="hover"
+      className="h-full"
+    >
+      <Card className="h-full flex flex-col overflow-hidden border-2 hover:border-primary/50 transition-all duration-300">
+        {project.imageUrl && (
+          <div className="w-full h-48 overflow-hidden">
+            <img 
+              src={project.imageUrl} 
+              alt={project.title} 
+              className="w-full h-full object-cover transition-transform duration-500 hover:scale-105"
+            />
+          </div>
+        )}
+        
         <CardHeader>
-          <CardTitle>{project.title}</CardTitle>
-          <CardDescription>{project.description}</CardDescription>
+          <div className="flex justify-between items-start">
+            <CardTitle className="text-xl font-bold">{project.title}</CardTitle>
+            {project.featured && (
+              <Badge variant="default" className="bg-primary text-primary-foreground ml-2">
+                Featured
+              </Badge>
+            )}
+          </div>
+          <CardDescription className="mt-2 line-clamp-2">{project.description}</CardDescription>
         </CardHeader>
-        <CardContent className="flex flex-wrap gap-2">
-          {project.tags.map((tag, index) => (
-            <Badge key={index} variant="secondary" className="text-xs">{tag}</Badge>
-          ))}
+        
+        <CardContent className="flex-grow">
+          <div className="flex flex-wrap gap-2 mt-2">
+            {project.tags.map((tag, index) => (
+              <Badge key={index} variant="secondary" className="text-xs">
+                {tag}
+              </Badge>
+            ))}
+          </div>
         </CardContent>
-        <CardFooter className="mt-auto">
-          <Button variant="ghost" size="sm" className="ml-auto" asChild>
-            <a href={project.url} target="_blank" rel="noopener noreferrer">
-              View Project <ExternalLink size={16} className="ml-1" />
-            </a>
-          </Button>
+        
+        <CardFooter className="pt-2 border-t">
+          <div className="w-full flex justify-between items-center">
+            <span className="text-sm text-muted-foreground">
+              {project.date}
+            </span>
+            <Button 
+              variant="outline" 
+              size="sm" 
+              className="flex items-center gap-1 hover:bg-primary hover:text-primary-foreground"
+              onClick={() => window.open(project.url, '_blank')}
+            >
+              View Project
+              <ExternalLink className="h-4 w-4 ml-1" />
+            </Button>
+          </div>
         </CardFooter>
       </Card>
     </motion.div>

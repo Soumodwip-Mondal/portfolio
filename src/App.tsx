@@ -1,26 +1,18 @@
 import { useState, createContext, useContext } from 'react';
-import { BrowserRouter as Router} from 'react-router-dom';
+import {  BrowserRouter as Router} from 'react-router-dom';
 import { useLocalStorage } from './hooks/useLocalStorage';
-
-// Import components
 import Header from './components/layout/header';
 import Home from './app/page';
-// import footer from './components/layout/footer';
-// import HomePage from './pages/HomePage';
-// import ProjectsPage from './pages/ProjectsPage';
-// import AboutPage from './pages/AboutPage';
-// import ContactPage from './pages/ContactPage';
-
-// Create context
 const defaultContextValue = {
   viewMode: 'grid',
-  setViewMode: (value: string | ((val: string) => string)) => {},
+  setViewMode: (_value: string | ((val: string) => string)) => {},
   contactFormData: { name: '', email: '', message: '' },
-  setContactFormData: (value: React.SetStateAction<{ name: string; email: string; message: string; }>) => {},
+  setContactFormData: (_value: React.SetStateAction<{ name: string; email: string; message: string; }>) => {},
   activeFilters: [] as string[],
+  toggleFilter: (_filter: string) => {},
   clearFilters: () => {},
   isLoading: false,
-  setIsLoading: (value: boolean | ((val: boolean) => boolean)) => {},
+  setIsLoading: (_value: React.SetStateAction<boolean>) => {},
 };
 
 export const AppContext = createContext(defaultContextValue);
@@ -45,27 +37,25 @@ function App() {
   const [isLoading, setIsLoading] = useState(false);
   
   // Toggle a filter on or off
-//   const toggleFilter = (filter) => {
-//     setActiveFilters(prev => 
-//       prev.includes(filter)
-//         ? prev.filter(f => f !== filter)
-//         : [...prev, filter]
-//     );
-//   };
+  // eslint-disable-next-line @typescript-eslint/no-unused-vars
+  const toggleFilter = (filter: string) => {
+    setActiveFilters(prev => 
+      prev.includes(filter)
+        ? prev.filter(f => f !== filter)
+        : [...prev, filter]
+    );
+  };
   
-  // Clear all active filters
   const clearFilters = () => {
     setActiveFilters([]);
   };
-  
-  // The value that will be provided to consumers of this context
   const contextValue = {
     viewMode,
     setViewMode,
     contactFormData,
     setContactFormData,
     activeFilters,
-    // toggleFilter,
+    toggleFilter,
     clearFilters,
     isLoading,
     setIsLoading,
@@ -83,14 +73,7 @@ function App() {
               </div>
             )}
             <Home />
-            {/* <Routes>
-              <Route path="/" element={<HomePage />} />
-              <Route path="/projects" element={<ProjectsPage />} />
-              <Route path="/about" element={<AboutPage />} />
-              <Route path="/contact" element={<ContactPage />} />
-            </Routes> */}
           </main>
-          {/* <Footer /> */}
         </div>
       </Router>
     </AppContext.Provider>

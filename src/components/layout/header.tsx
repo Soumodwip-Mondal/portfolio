@@ -3,7 +3,7 @@
 import { useState, useEffect } from 'react';
 import { motion } from 'framer-motion';
 import { useTheme } from 'next-themes';
-// import { Avatar, AvatarFallback, AvatarImage } from '../../components/ui/avatar';
+import { Avatar, AvatarFallback, AvatarImage } from '../ui/avatar'
 import { Button } from '../../components/ui/button';
 import { Moon, Sun, Menu } from 'lucide-react';
 import MobileMenu from './mobile-menu';
@@ -26,10 +26,10 @@ export default function Header() {
           transition={{ duration: 0.5 }}
           className="flex items-center gap-2"
         >
-          {/* <Avatar className="h-10 w-10">
+          <Avatar className="h-10 w-10">
             <AvatarImage src="/images/profile.jpg" alt="Jane " />
             <AvatarFallback>JS</AvatarFallback>
-          </Avatar> */}
+          </Avatar>
           <span className="font-bold text-xl">Soumodwip Mondal</span>
         </motion.div>
         

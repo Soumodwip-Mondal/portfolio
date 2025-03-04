@@ -1,6 +1,4 @@
-/**
- * Navigation links for the site
- */
+
 export const NAVIGATION_LINKS = [
     { href: "/", label: "Home" },
     { href: "/projects", label: "Projects" },
@@ -8,9 +6,6 @@ export const NAVIGATION_LINKS = [
     { href: "/contact", label: "Contact" },
   ];
   
-  /**
-   * Social media links
-   */
   export const SOCIAL_LINKS = [
     { 
       platform: "GitHub", 

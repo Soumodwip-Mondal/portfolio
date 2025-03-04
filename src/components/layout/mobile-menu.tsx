@@ -1,6 +1,4 @@
 'use client';
-
-import React from 'react';
 import { motion, AnimatePresence } from 'framer-motion';
 import { useTheme } from 'next-themes';
 import { Button } from '../../components/ui/button';
