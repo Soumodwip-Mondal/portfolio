@@ -159,7 +159,7 @@ export default function Hero() {
                   className="text-sm font-medium uppercase tracking-widest text-blue-600 dark:text-blue-400 mb-2 flex items-center"
                 >
                   <Sparkles className="mr-2 h-4 w-4" />
-                  Full-Stack Developer
+                  Full-Stack Developer And Data Analyst
                 </motion.h2>
                 <motion.h1 
                   variants={itemVariants}
@@ -184,7 +184,7 @@ export default function Hero() {
                   variants={itemVariants} 
                   className="text-xl text-slate-600 dark:text-slate-300 mb-8 max-w-lg"
                 >
-                  I build beautiful, interactive, and performant web applications with modern technologies and a focus on user experience.
+                  I build beautiful, interactive, and performant web applications with modern technologies and a focus on user experience and analize data to make informed decisions.
                 </motion.p>
                 
                 <motion.div 

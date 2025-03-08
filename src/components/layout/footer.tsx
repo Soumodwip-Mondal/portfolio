@@ -11,7 +11,7 @@ export default function Footer() {
         <div className="grid grid-cols-1 md:grid-cols-3 gap-8">
           {/* About/Bio Section */}
           <div>
-            <h3 className="text-lg font-semibold mb-3">Your Name</h3>
+            <h3 className="text-lg font-semibold mb-3">Soumodwip Mondal</h3>
             <p className="text-slate-600 dark:text-slate-400 mb-4">
               A passionate developer focused on creating intuitive and efficient web experiences.
             </p>
@@ -33,22 +33,22 @@ export default function Footer() {
             <h3 className="text-lg font-semibold mb-3">Connect</h3>
             <div className="flex space-x-3">
               <Button variant="ghost" size="icon" asChild>
-                <a href="https://github.com/yourusername" target="_blank" rel="noopener noreferrer" aria-label="GitHub">
+                <a href="https://github.com/Soumodwip-Mondal" target="_blank" rel="noopener noreferrer" aria-label="GitHub">
                   <Github size={20} />
                 </a>
               </Button>
               <Button variant="ghost" size="icon" asChild>
-                <a href="https://linkedin.com/in/yourusername" target="_blank" rel="noopener noreferrer" aria-label="LinkedIn">
+                <a href="https://linkedin.com/in/soumodwip-mondal-805243298" target="_blank" rel="noopener noreferrer" aria-label="LinkedIn">
                   <Linkedin size={20} />
                 </a>
               </Button>
               <Button variant="ghost" size="icon" asChild>
-                <a href="https://twitter.com/yourusername" target="_blank" rel="noopener noreferrer" aria-label="Twitter">
+                <a href="https://twitter.com/SouravMond17180" target="_blank" rel="noopener noreferrer" aria-label="Twitter">
                   <Twitter size={20} />
                 </a>
               </Button>
               <Button variant="ghost" size="icon" asChild>
-                <a href="mailto:your.email@example.com" aria-label="Email">
+                <a href="mailto:msoumodwip485@gmail.com" aria-label="Email">
                   <Mail size={20} />
                 </a>
               </Button>

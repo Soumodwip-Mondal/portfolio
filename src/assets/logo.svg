@@ -1,0 +1,55 @@
+<svg xmlns="http://www.w3.org/2000/svg" viewBox="0 0 400 400">
+  <!-- Clean circular background -->
+  <circle cx="200" cy="200" r="190" fill="#f8f9fa" stroke="#6c5ce7" stroke-width="8"/>
+  
+  <!-- Modern portfolio icon -->
+  <g transform="translate(80, 160) scale(0.7)">
+    <!-- Portfolio base shape -->
+    <rect x="30" y="50" width="220" height="200" rx="12" fill="#ffffff" stroke="#6c5ce7" stroke-width="8"/>
+    
+    <!-- Portfolio details -->
+    <line x1="70" y1="90" x2="210" y2="90" stroke="#a29bfe" stroke-width="10" stroke-linecap="round"/>
+    <line x1="70" y1="130" x2="210" y2="130" stroke="#a29bfe" stroke-width="10" stroke-linecap="round"/>
+    <line x1="70" y1="170" x2="170" y2="170" stroke="#a29bfe" stroke-width="10" stroke-linecap="round"/>
+    
+    <!-- Decorative elements -->
+    <circle cx="40" cy="210" r="8" fill="#ff7675"/>
+    <circle cx="70" cy="210" r="8" fill="#74b9ff"/>
+    <circle cx="100" cy="210" r="8" fill="#55efc4"/>
+  </g>
+  
+  <!-- Anime Character -->
+  <g transform="translate(270, 180)">
+    <!-- Face -->
+    <circle cx="0" cy="0" r="60" fill="#ffe6ea" stroke="#6c5ce7" stroke-width="3"/>
+    
+    <!-- Hair -->
+    <path d="M-45,-45 C-60,-20 -70,10 -60,40 L60,40 C70,10 60,-20 45,-45 C30,-70 0,-75 0,-75 C0,-75 -30,-70 -45,-45 Z" fill="#6c5ce7" stroke="#5b52d1" stroke-width="2"/>
+    <path d="M-40,-10 C-50,0 -45,20 -40,30" fill="none" stroke="#5b52d1" stroke-width="3" stroke-linecap="round"/>
+    <path d="M40,-10 C50,0 45,20 40,30" fill="none" stroke="#5b52d1" stroke-width="3" stroke-linecap="round"/>
+    
+    <!-- Bangs -->
+    <path d="M-30,-45 L-20,-15 L-10,-45 L0,-15 L10,-45 L20,-15 L30,-45" fill="none" stroke="#6c5ce7" stroke-width="6" stroke-linecap="round"/>
+    
+    <!-- Eyes -->
+    <ellipse cx="-20" cy="-5" rx="10" ry="15" fill="white" stroke="#333" stroke-width="1.5"/>
+    <ellipse cx="20" cy="-5" rx="10" ry="15" fill="white" stroke="#333" stroke-width="1.5"/>
+    <ellipse cx="-20" cy="-5" rx="5" ry="8" fill="#333"/>
+    <ellipse cx="20" cy="-5" rx="5" ry="8" fill="#333"/>
+    <circle cx="-18" cy="-8" r="2" fill="white"/>
+    <circle cx="22" cy="-8" r="2" fill="white"/>
+    
+    <!-- Blush -->
+    <ellipse cx="-30" cy="15" rx="10" ry="7" fill="#ff7675" opacity="0.6"/>
+    <ellipse cx="30" cy="15" rx="10" ry="7" fill="#ff7675" opacity="0.6"/>
+    
+    <!-- Mouth -->
+    <path d="M-10,20 C-5,25 5,25 10,20" fill="none" stroke="#333" stroke-width="2" stroke-linecap="round"/>
+  </g>
+  
+  <!-- Elegant small details -->
+  <circle cx="90" cy="90" r="8" fill="#ff7675" opacity="0.8"/>
+  <circle cx="70" cy="310" r="10" fill="#74b9ff" opacity="0.8"/>
+  <circle cx="320" cy="290" r="12" fill="#55efc4" opacity="0.8"/>
+  <circle cx="330" cy="110" r="8" fill="#ffeaa7" opacity="0.8"/>
+</svg>
