@@ -1,7 +1,7 @@
 'use client';
 
 import React from 'react';
-import { motion, Variant, Variants } from 'framer-motion';
+import { motion, Variants } from 'framer-motion';
 
 interface AnimatedContainerProps {
   children: React.ReactNode;

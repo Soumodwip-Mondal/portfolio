@@ -1,28 +1,40 @@
 import { Project } from '../types/project';
 
 export const projects: Project[] = [
-  { 
-    id: 1, 
-    title: 'E-commerce Platform', 
-    description: 'A full-stack e-commerce solution built with Next.js, TypeScript, and Stripe integration.',
-    tags: ['Next.js', 'TypeScript', 'Stripe', 'Tailwind CSS'],
-    image: '/images/projects/project1.jpg',
-    url: 'https://example.com/project1'
+  {
+    id: 1,
+    title: "Project 1",
+    description: "Description for project 1",
+    category: "Web Development",
+    tags: ["React", "TypeScript", "Tailwind"],
+    image: "/images/project1.jpg",
+    imageUrl: "/images/project1.jpg",
+    url: 'https://example.com/project1',
+    featured: true,
+    date: "June 2023"
   },
-  { 
-    id: 2, 
-    title: 'AI Content Generator', 
-    description: 'An AI-powered content creation tool using OpenAI API with a sleek UI.',
-    tags: ['React', 'OpenAI', 'TypeScript', 'shadcn/ui'],
-    image: '/images/projects/project2.jpg',
-    url: 'https://example.com/project2'
+  {
+    id: 2,
+    title: "Project 2",
+    description: "Description for project 2",
+    category: "Mobile App",
+    tags: ["React Native", "Firebase"],
+    image: "/images/project2.jpg",
+    imageUrl: "/images/project2.jpg",
+    url: 'https://example.com/project2',
+    date: "March 2023"
   },
-  { 
-    id: 3, 
-    title: 'Finance Dashboard', 
-    description: 'Interactive dashboard visualizing financial data with real-time updates.',
-    tags: ['Next.js', 'D3.js', 'TypeScript', 'Supabase'],
-    image: '/images/projects/project3.jpg',
-    url: 'https://example.com/project3'
+  {
+    id: 3,
+    title: "Project 3",
+    description: "Description for project 3",
+    category: "UI/UX Design",
+    tags: ["Figma", "Adobe XD"],
+    image: "/images/project3.jpg",
+    imageUrl: "/images/project3.jpg",
+    url: 'https://example.com/project3',
+    date: "January 2023"
   }
-];
+]
+
+export default projects;

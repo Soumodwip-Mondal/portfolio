@@ -5,6 +5,7 @@ import { motion, useAnimation, AnimatePresence } from 'framer-motion';
 import { Button } from '../ui/button';
 import ProjectCard from '../shared/project-card';
 import { projects } from '../../data/project';
+import { Project } from '../../types/project';
 import AnimatedContainer from '../shared/animated-container';
 import { ChevronRight, Star, Sparkles, Zap } from 'lucide-react';
 
@@ -171,9 +172,9 @@ export default function Projects() {
   };
 
   // Filter projects based on active filter
-  const filteredProjects = activeFilter === 'all' 
+  const filteredProjects: Project[] = activeFilter === 'all' 
     ? projects 
-    : projects.filter(project => project.category === activeFilter);
+    : projects.filter((project: Project) => project.category === activeFilter);
 
   return (
     <motion.section 
@@ -394,7 +395,7 @@ export default function Projects() {
           variants={containerVariants} 
           className="grid md:grid-cols-2 lg:grid-cols-3 gap-8"
         >
-          {filteredProjects.map((project, index) => (
+          {filteredProjects.map((project: Project, index: number) => (
             <motion.div
               key={project.id}
               custom={index}
