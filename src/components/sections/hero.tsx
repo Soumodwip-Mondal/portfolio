@@ -1,14 +1,14 @@
 'use client';
 
 import { useEffect, useState } from 'react';
-import { motion, useScroll, useTransform, AnimatePresence } from 'framer-motion';
+import { motion, AnimatePresence } from 'framer-motion';
 import { Button } from '../ui/button';
 import { Badge } from '../ui/badge';
 import { ChevronRight, ExternalLink, Sparkles } from 'lucide-react';
 import image from '../../assets/MyImage.jpg';
 export default function Hero() {
   const [isLoaded, setIsLoaded] = useState(false);
-  const { scrollY } = useScroll();
+  // const { scrollY } = useScroll();
 
   useEffect(() => {
     const timer = setTimeout(() => {
