@@ -8,9 +8,9 @@ import { Code, Database, Globe, Palette, Server, Smartphone, Sparkles, Zap, Star
 const SkillIcon = memo(({ icon, color }: { icon: React.ReactNode; color: string }) => (
   <motion.div 
     className={`p-3 rounded-xl bg-gradient-to-br ${color} text-white shadow-lg`}
-    whileHover={{ rotate: [0, 10, -10, 0], scale: 1.2 }}
-    whileTap={{ scale: 0.9 }}
-    transition={{ type: 'spring', stiffness: 400, damping: 10 }}
+    whileHover={{ scale: 1.1 }}
+    whileTap={{ scale: 0.95 }}
+    transition={{ type: 'spring', stiffness: 300, damping: 20 }}
   >
     {icon}
   </motion.div>
@@ -39,15 +39,15 @@ const Skills: React.FC = () => {
 
   const skillsData: SkillCategory[] = [
     {
-      title: 'Frontend',
+      title: 'Data Analysis',
       icon: <Palette size={22} />,
       color: 'from-blue-500 to-indigo-600',
       skills: [
-        { name: 'React', level: 5, icon: <Code size={18} />, color: 'from-cyan-400 to-cyan-600' },
-        { name: 'Next.js', level: 4, icon: <Code size={18} />, color: 'from-blue-400 to-blue-600' },
-        { name: 'TypeScript', level: 4, icon: <Code size={18} />, color: 'from-blue-500 to-indigo-500' },
-        { name: 'Tailwind CSS', level: 5, icon: <Palette size={18} />, color: 'from-sky-400 to-sky-600' },
-        { name: 'Framer Motion', level: 3, icon: <Palette size={18} />, color: 'from-purple-400 to-purple-600' },
+        { name: 'Python', level: 5, icon: <Code size={18} />, color: 'from-cyan-400 to-cyan-600' },
+        { name: 'SQL', level: 4, icon: <Code size={18} />, color: 'from-blue-400 to-blue-600' },
+        { name: 'Tableau', level: 4, icon: <Code size={18} />, color: 'from-blue-500 to-indigo-500' },
+        { name: 'Web Scraping', level: 5, icon: <Palette size={18} />, color: 'from-sky-400 to-sky-600' },
+        // { name: '', level: 3, icon: <Palette size={18} />, color: 'from-purple-400 to-purple-600' },
       ],
     },
     {
@@ -59,7 +59,7 @@ const Skills: React.FC = () => {
         { name: 'Express', level: 4, icon: <Server size={18} />, color: 'from-emerald-400 to-emerald-600' },
         { name: 'MongoDB', level: 3, icon: <Database size={18} />, color: 'from-green-500 to-teal-500' },
         { name: 'PostgreSQL', level: 3, icon: <Database size={18} />, color: 'from-blue-400 to-blue-600' },
-        { name: 'GraphQL', level: 2, icon: <Database size={18} />, color: 'from-pink-400 to-pink-600' },
+        { name: 'MySQL', level: 2, icon: <Database size={18} />, color: 'from-pink-400 to-pink-600' },
       ],
     },
     {
@@ -135,9 +135,9 @@ const Skills: React.FC = () => {
       } 
     }),
     hover: { 
-      y: -15, 
-      scale: 1.05, 
-      boxShadow: '0 20px 40px rgba(0, 0, 0, 0.2)', 
+      y: -10,
+      scale: 1.02,
+      boxShadow: '0 15px 30px rgba(0, 0, 0, 0.15)',
       transition: { duration: 0.3 } 
     },
     tap: { 
@@ -395,7 +395,6 @@ const Skills: React.FC = () => {
                 exit="exit"
                 whileHover="hover"
                 whileTap="tap"
-                viewport={{ once: true, margin: '-50px' }}
                 onMouseEnter={() => setHoveredSkill(skill.name)}
                 onMouseLeave={() => setHoveredSkill(null)}
               >

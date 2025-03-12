@@ -5,11 +5,10 @@ import { motion, useScroll, useTransform, AnimatePresence } from 'framer-motion'
 import { Button } from '../ui/button';
 import { Badge } from '../ui/badge';
 import { ChevronRight, ExternalLink, Sparkles } from 'lucide-react';
-
+import image from '../../assets/MyImage.jpg';
 export default function Hero() {
   const [isLoaded, setIsLoaded] = useState(false);
   const { scrollY } = useScroll();
-  const imageRotate = useTransform(scrollY, [0, 300], [0, -10]);
 
   useEffect(() => {
     const timer = setTimeout(() => {
@@ -20,13 +19,13 @@ export default function Hero() {
 
   // Skills with color variants
   const skills: { name: string; color: keyof typeof colorMap }[] = [
-    { name: 'TypeScript', color: 'blue' },
+    { name: 'JavaScript', color: 'blue' },
     { name: 'React', color: 'cyan' },
-    { name: 'Next.js', color: 'indigo' },
+    { name: 'Data Analysis', color: 'indigo' },
     { name: 'Tailwind CSS', color: 'sky' },
-    { name: 'shadcn/ui', color: 'violet' },
-    { name: 'Node.js', color: 'green' },
-    { name: 'GraphQL', color: 'pink' },
+    { name: 'Python', color: 'violet' },
+    { name: 'Tableau', color: 'green' },
+    { name: 'SQL', color: 'pink' },
   ];
 
   // Animation variants
@@ -256,7 +255,6 @@ export default function Hero() {
             className="relative mx-auto max-w-md"
           >
             <motion.div
-              style={{ rotate: imageRotate }}
               className="relative z-20"
             >
               <motion.div 
@@ -265,43 +263,45 @@ export default function Hero() {
                 animate={{ y: 0, opacity: 1 }}
                 transition={{ type: 'spring', delay: 0.4, stiffness: 50 }}
                 whileHover={{ 
-                  scale: 1.02,
-                  boxShadow: "0 20px 25px -5px rgba(0, 0, 0, 0.1), 0 10px 10px -5px rgba(0, 0, 0, 0.04)",
-                  transition: { type: 'spring', stiffness: 200 }
+                  scale: 1.05,
+                  boxShadow: "0 25px 30px -5px rgba(0, 0, 0, 0.1), 0 15px 15px -5px rgba(0, 0, 0, 0.04)",
+                  transition: { type: 'spring', stiffness: 300 }
                 }}
               >
                 <div className="w-full h-full bg-gradient-to-tr from-blue-100 to-purple-100 dark:from-blue-900/20 dark:to-purple-900/20 absolute"></div>
-                <img 
-                  src="/images/profile.jpg" 
+                <motion.img 
+                  src={image}
                   alt="Developer portrait" 
                   className="w-full h-full object-cover mix-blend-multiply dark:mix-blend-normal dark:opacity-90"
+                  initial={{ scale: 1.1 }}
+                  animate={{ scale: 1 }}
+                  transition={{ duration: 0.8, ease: "easeOut" }}
                 />
                 
                 {/* Photo overlay effect */}
                 <motion.div 
-                  className="absolute inset-0 bg-gradient-to-t from-black/30 to-transparent opacity-60"
+                  className="absolute inset-0 bg-gradient-to-t from-black/30 to-transparent"
                   initial={{ opacity: 0 }}
-                  animate={{ opacity: 0.6 }}
-                  transition={{ delay: 0.8, duration: 0.6 }}
+                  animate={{ opacity: [0, 0.3, 0.2] }}
+                  transition={{ duration: 2, times: [0, 0.7, 1] }}
                 />
               </motion.div>
             </motion.div>
             
-            {/* Experience badge */}
+            {/* Experience badge with updated animation */}
             <motion.div 
               className="absolute -bottom-6 -right-6 z-30"
-              initial={{ scale: 0, opacity: 0, rotate: -10 }}
-              animate={{ scale: 1, opacity: 1, rotate: 0 }}
-              transition={{ type: 'spring', delay: 1, stiffness: 50 }}
+              initial={{ scale: 0, opacity: 0, y: 20 }}
+              animate={{ scale: 1, opacity: 1, y: 0 }}
+              transition={{ type: 'spring', delay: 0.6, stiffness: 100 }}
               whileHover={{ 
-                scale: 1.05, 
-                rotate: -2,
-                transition: { type: 'spring', stiffness: 200 }
+                y: -5,
+                transition: { type: 'spring', stiffness: 400 }
               }}
             >
               <div className="bg-white dark:bg-slate-800 rounded-lg p-4 shadow-xl border border-slate-100 dark:border-slate-700">
                 <div className="text-center">
-                  <p className="font-bold text-lg text-blue-600 dark:text-blue-400">5+ Years</p>
+                  <p className="font-bold text-lg text-blue-600 dark:text-blue-400">1+ Years</p>
                   <p className="font-medium text-xs text-slate-500 dark:text-slate-400">Professional Experience</p>
                 </div>
               </div>

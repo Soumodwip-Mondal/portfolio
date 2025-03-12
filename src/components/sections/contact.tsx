@@ -2,7 +2,7 @@
 
 import React, { useState } from 'react';
 import { motion, AnimatePresence } from 'framer-motion';
-import { Send, Mail, MapPin, Phone, Clock, CheckCircle, Github, Linkedin, Twitter } from 'lucide-react';
+import { Send, Mail, MapPin, Phone, Clock, CheckCircle, Github, Linkedin, X } from 'lucide-react';
 import { Button } from '../ui/button';
 import { Input } from '../ui/input';
 import { Textarea } from '../ui/textarea';
@@ -53,16 +53,16 @@ export default function Contact() {
   };
 
   const contactInfo = [
-    { icon: <Mail size={20} />, title: 'Email', content: 'your.email@example.com', link: 'mailto:your.email@example.com' },
-    { icon: <Phone size={20} />, title: 'Phone', content: '+1 (123) 456-7890', link: 'tel:+11234567890' },
-    { icon: <MapPin size={20} />, title: 'Location', content: 'City, Country', link: null },
-    { icon: <Clock size={20} />, title: 'Working Hours', content: 'Mon - Fri, 9AM - 5PM', link: null }
+    { icon: <Mail size={20} />, title: 'Email', content: 'msoumo005@gmail.com', link: 'mailto:msoumo005@gmail.com' },
+    { icon: <Phone size={20} />, title: 'Phone', content: '+91 8348017580', link: 'tel:+11234567890' },
+    { icon: <MapPin size={20} />, title: 'Location', content: 'City-Jalpaiguri, Country-India', link: null },
+    { icon: <Clock size={20} />, title: 'Working Hours', content: 'Any Time', link: null }
   ];
 
   const socialLinks = [
-    { icon: <Github size={16} />, name: 'GitHub', url: 'https://github.com/yourusername' },
-    { icon: <Linkedin size={16} />, name: 'LinkedIn', url: 'https://linkedin.com/in/yourusername' },
-    { icon: <Twitter size={16} />, name: 'Twitter', url: 'https://twitter.com/yourusername' }
+    { icon: <Github size={16} />, name: 'GitHub', url: 'https://github.com/Soumodwip-Mondal' },
+    { icon: <Linkedin size={16} />, name: 'LinkedIn', url: 'https://linkedin.com/in/soumodwip-mondal-805243298' },
+    { icon: <X size={16} />, name: 'Twitter', url: 'https://twitter.com/@SouravMond17180'}
   ];
 
   // Animation variants
