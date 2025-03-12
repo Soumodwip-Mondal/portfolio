@@ -10,7 +10,6 @@ export default function Hero() {
   const [isLoaded, setIsLoaded] = useState(false);
   const { scrollY } = useScroll();
   const imageRotate = useTransform(scrollY, [0, 300], [0, -10]);
-  const textY = useTransform(scrollY, [0, 300], [0, 100]);
 
   useEffect(() => {
     const timer = setTimeout(() => {
@@ -164,7 +163,6 @@ export default function Hero() {
                 <motion.h1 
                   variants={itemVariants}
                   className="text-4xl md:text-6xl font-bold mb-4 leading-tight"
-                  style={{ y: textY }}
                 >
                   Crafting{" "}
                   <span className="relative">
