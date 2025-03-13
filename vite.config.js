@@ -6,5 +6,8 @@ export default defineConfig({
         hmr: {
             overlay: false
         }
+    },
+    preview: {
+        port: 3000
     }
 });
