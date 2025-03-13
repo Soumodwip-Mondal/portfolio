@@ -9,6 +9,7 @@ import { Button } from '../../components/ui/button';
 import { Moon, Sun, Menu } from 'lucide-react';
 import MobileMenu from './mobile-menu';
 import { useScrollToSection } from '../../hooks/useScrollToSection';
+import { GamificationButton } from '../gamification/GamificationButton';
 
 export default function Header() {
   const [mounted, setMounted] = useState(false);
@@ -79,6 +80,8 @@ export default function Header() {
             Contact
           </Button>
           
+          <GamificationButton />
+          
           <Button variant="ghost" size="icon" onClick={() => setTheme(theme === 'dark' ? 'light' : 'dark')}>
             {theme === 'dark' ? <Sun size={20} /> : <Moon size={20} />}
           </Button>
@@ -86,6 +89,7 @@ export default function Header() {
         
         {/* Mobile Navigation Toggle */}
         <div className="md:hidden flex items-center">
+          <GamificationButton />
           <Button variant="ghost" size="icon" onClick={() => setMenuOpen(!menuOpen)}>
             <Menu size={24} />
           </Button>

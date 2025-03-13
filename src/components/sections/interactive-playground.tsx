@@ -8,6 +8,7 @@ import { Card } from '../ui/card';
 import { Play, Pause, Maximize2, Minimize2, RefreshCw } from 'lucide-react';
 import * as React from "react";
 import { cn } from "../../lib/utils";
+import { MemoryGame } from '../gamification/MemoryGame';
 
 // Tabs Component Implementation
 const TabsContext = React.createContext<{
@@ -634,11 +635,12 @@ function TabsComponent() {
   
   return (
     <Tabs defaultValue="code-editor" className="w-full">
-      <TabsList className="grid grid-cols-4">
+      <TabsList className="grid grid-cols-5">
         <TabsTrigger value="code-editor">Code Editor</TabsTrigger>
         <TabsTrigger value="ui-components">UI Components</TabsTrigger>
         <TabsTrigger value="before-after">Before/After</TabsTrigger>
         <TabsTrigger value="mini-app">Mini App</TabsTrigger>
+        <TabsTrigger value="memory-game">Memory Game</TabsTrigger>
       </TabsList>
       
       <TabsContent value="code-editor" className="mt-6">
@@ -655,6 +657,10 @@ function TabsComponent() {
       
       <TabsContent value="mini-app" className="mt-6">
         <MiniApp demoData={demoProjects.find(p => p.id === 'mini-app')?.demoData || []} />
+      </TabsContent>
+      
+      <TabsContent value="memory-game" className="mt-6">
+        <MemoryGame />
       </TabsContent>
     </Tabs>
   );
