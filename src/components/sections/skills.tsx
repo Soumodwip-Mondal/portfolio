@@ -43,10 +43,10 @@ const Skills: React.FC = () => {
       icon: <Palette size={22} />,
       color: 'from-blue-500 to-indigo-600',
       skills: [
-        { name: 'Python', level: 5, icon: <Code size={18} />, color: 'from-cyan-400 to-cyan-600' },
-        { name: 'SQL', level: 4, icon: <Code size={18} />, color: 'from-blue-400 to-blue-600' },
+        { name: 'Python', level: 5, icon: <Code size={18} />, color: 'from-green-400 to-green-600' },
+        { name: 'SQL', level: 4, icon: <Code size={18} />, color: 'from-pink-400 to-pink-600' },
         { name: 'Tableau', level: 4, icon: <Code size={18} />, color: 'from-blue-500 to-indigo-500' },
-        { name: 'Web Scraping', level: 5, icon: <Palette size={18} />, color: 'from-sky-400 to-sky-600' },
+        { name: 'Web Scraping', level: 5, icon: <Palette size={18} />, color: 'from-purple-400 to-purple-600' },
         // { name: '', level: 3, icon: <Palette size={18} />, color: 'from-purple-400 to-purple-600' },
       ],
     },
@@ -56,7 +56,7 @@ const Skills: React.FC = () => {
       color: 'from-emerald-500 to-green-600',
       skills: [
         { name: 'Node.js', level: 4, icon: <Server size={18} />, color: 'from-green-400 to-green-600' },
-        { name: 'Express', level: 4, icon: <Server size={18} />, color: 'from-emerald-400 to-emerald-600' },
+        { name: 'Express', level: 4, icon: <Server size={18} />, color: 'from-emerald-400 to #94A3B8' },
         { name: 'MongoDB', level: 3, icon: <Database size={18} />, color: 'from-green-500 to-teal-500' },
         { name: 'PostgreSQL', level: 3, icon: <Database size={18} />, color: 'from-blue-400 to-blue-600' },
         { name: 'MySQL', level: 2, icon: <Database size={18} />, color: 'from-pink-400 to-pink-600' },

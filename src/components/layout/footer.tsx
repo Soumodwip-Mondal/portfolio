@@ -1,9 +1,12 @@
 'use client';
+import { Link } from 'react-router-dom';
 import { Github, Linkedin, Mail, Twitter } from 'lucide-react';
 import { Button } from '../../components/ui/button';
+import { useScrollToSection } from '../../hooks/useScrollToSection';
 
 export default function Footer() {
   const currentYear = new Date().getFullYear();
+  const { scrollToSection } = useScrollToSection();
 
   return (
     <footer className="bg-slate-50 dark:bg-slate-900 border-t border-slate-200 dark:border-slate-800 py-8">
@@ -21,10 +24,41 @@ export default function Footer() {
           <div>
             <h3 className="text-lg font-semibold mb-3">Quick Links</h3>
             <nav className="flex flex-col space-y-2">
-              <a href="#about" className="text-slate-600 dark:text-slate-400 hover:text-blue-500 transition-colors">About</a>
-              <a href="#projects" className="text-slate-600 dark:text-slate-400 hover:text-blue-500 transition-colors">Projects</a>
-              <a href="#skills" className="text-slate-600 dark:text-slate-400 hover:text-blue-500 transition-colors">Skills</a>
-              <a href="#contact" className="text-slate-600 dark:text-slate-400 hover:text-blue-500 transition-colors">Contact</a>
+              <Button 
+                variant="link" 
+                className="h-auto p-0 justify-start text-slate-600 dark:text-slate-400 hover:text-blue-500 transition-colors"
+                onClick={() => scrollToSection('about')}
+              >
+                About
+              </Button>
+              
+              <Button 
+                variant="link" 
+                className="h-auto p-0 justify-start text-slate-600 dark:text-slate-400 hover:text-blue-500 transition-colors"
+                onClick={() => scrollToSection('projects')}
+              >
+                Projects
+              </Button>
+              
+              <Button 
+                variant="link" 
+                className="h-auto p-0 justify-start text-slate-600 dark:text-slate-400 hover:text-blue-500 transition-colors"
+                onClick={() => scrollToSection('skills')}
+              >
+                Skills
+              </Button>
+              
+              <Link to="/blog" className="text-slate-600 dark:text-slate-400 hover:text-blue-500 transition-colors">
+                Blog
+              </Link>
+              
+              <Button 
+                variant="link" 
+                className="h-auto p-0 justify-start text-slate-600 dark:text-slate-400 hover:text-blue-500 transition-colors"
+                onClick={() => scrollToSection('contact')}
+              >
+                Contact
+              </Button>
             </nav>
           </div>
 
@@ -57,7 +91,7 @@ export default function Footer() {
         </div>
 
         <div className="mt-8 pt-6 border-t border-slate-200 dark:border-slate-800 text-center text-slate-600 dark:text-slate-400 text-sm">
-          <p>© {currentYear} Your Name. All rights reserved.</p>
+          <p>© {currentYear} Soumodwip Mondal. All rights reserved.</p>
         </div>
       </div>
     </footer>

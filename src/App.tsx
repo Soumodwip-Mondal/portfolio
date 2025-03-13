@@ -1,8 +1,24 @@
-import { useState, createContext, useContext } from 'react';
-import {  BrowserRouter as Router} from 'react-router-dom';
+import { useState, createContext, useContext, useEffect } from 'react';
+import { BrowserRouter as Router, Routes, Route, Navigate, useLocation } from 'react-router-dom';
 import { useLocalStorage } from './hooks/useLocalStorage';
 import Header from './components/layout/header';
 import Home from './app/page';
+import BlogPage from './pages/BlogPage';
+
+// Scroll to top component
+function ScrollToTop() {
+  const { pathname, hash } = useLocation();
+
+  useEffect(() => {
+    // If there's no hash, scroll to top
+    if (!hash) {
+      window.scrollTo(0, 0);
+    }
+  }, [pathname, hash]);
+
+  return null;
+}
+
 const defaultContextValue = {
   viewMode: 'grid',
   setViewMode: (_value: string | ((val: string) => string)) => {},
@@ -37,7 +53,6 @@ function App() {
   const [isLoading, setIsLoading] = useState(false);
   
   // Toggle a filter on or off
-  // eslint-disable-next-line @typescript-eslint/no-unused-vars
   const toggleFilter = (filter: string) => {
     setActiveFilters(prev => 
       prev.includes(filter)
@@ -64,16 +79,22 @@ function App() {
   return (
     <AppContext.Provider value={contextValue}>
       <Router>
+        <ScrollToTop />
         <div className="flex flex-col min-h-screen">
           <Header />
-          <main className="flex-grow container mx-auto px-4 py-8">
+          <div className="flex-grow">
             {isLoading && (
               <div className="fixed inset-0 bg-background/80 flex items-center justify-center z-50">
                 <div className="animate-spin h-10 w-10 border-4 border-primary border-t-transparent rounded-full"></div>
               </div>
             )}
-            <Home />
-          </main>
+            <Routes>
+              <Route path="/" element={<Home />} />
+              <Route path="/blog" element={<BlogPage />} />
+              {/* Redirect any other routes to home */}
+              <Route path="*" element={<Navigate to="/" />} />
+            </Routes>
+          </div>
         </div>
       </Router>
     </AppContext.Provider>
