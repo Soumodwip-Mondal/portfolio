@@ -373,7 +373,7 @@ function GalaxyBackground() {
       </group>
       
       {/* Saturn-like planet with rings */}
-      <group ref={saturnRef} position={[30, 5, -20]}>
+      <group ref={saturnRef} position={[40, 8, -30]}>
         <mesh>
           <sphereGeometry args={[2, 32, 32]} />
           <meshStandardMaterial 
@@ -386,7 +386,7 @@ function GalaxyBackground() {
       </group>
       
       {/* Distant blue planet */}
-      <group ref={planetRef} position={[-25, -10, -30]}>
+      <group ref={planetRef} position={[-35, -15, -40]}>
         <mesh>
           <sphereGeometry args={[3, 32, 32]} />
           <meshStandardMaterial 
@@ -405,7 +405,7 @@ function GalaxyBackground() {
       </group>
       
       {/* Colorful nebula */}
-      <group ref={nebulaRef} position={[0, -20, -40]}>
+      <group ref={nebulaRef} position={[15, -25, -50]}>
         {/* Create nebula using multiple overlapping transparent spheres */}
         <mesh>
           <sphereGeometry args={[10, 32, 32]} />
@@ -446,15 +446,15 @@ function GalaxyBackground() {
       </mesh>
       
       {/* Distant stars/galaxies */}
-      <mesh position={[40, 20, -60]}>
+      <mesh position={[50, 25, -70]}>
         <sphereGeometry args={[1, 16, 16]} />
         <meshBasicMaterial color="#ffffff" />
       </mesh>
-      <mesh position={[-35, 15, -70]}>
+      <mesh position={[-45, 20, -80]}>
         <sphereGeometry args={[0.8, 16, 16]} />
         <meshBasicMaterial color="#ffaa00" />
       </mesh>
-      <mesh position={[25, -25, -50]}>
+      <mesh position={[35, -30, -60]}>
         <sphereGeometry args={[0.6, 16, 16]} />
         <meshBasicMaterial color="#ff5500" />
       </mesh>
@@ -625,8 +625,8 @@ function AnimatedCanvas({ isLoaded, filteredSkills, hovered, setHovered }: {
         <ambientLight intensity={0.3} />
         <pointLight position={[10, 10, 10]} intensity={0.8} />
         <spotLight position={[-10, -10, -10]} intensity={0.5} />
-        <pointLight position={[30, 5, -20]} intensity={0.3} color="#E4B45A" /> {/* Light from Saturn */}
-        <pointLight position={[-25, -10, -30]} intensity={0.2} color="#4287f5" /> {/* Light from blue planet */}
+        <pointLight position={[40, 8, -30]} intensity={0.3} color="#E4B45A" /> {/* Light from Saturn */}
+        <pointLight position={[-35, -15, -40]} intensity={0.2} color="#4287f5" /> {/* Light from blue planet */}
         
         <GalaxyBackground />
         
