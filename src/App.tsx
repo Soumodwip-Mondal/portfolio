@@ -4,6 +4,7 @@ import { useLocalStorage } from './hooks/useLocalStorage';
 import Header from './components/layout/header';
 import Home from './app/page';
 import BlogPage from './pages/BlogPage';
+import Dashboard from './components/sections/dashboard';
 
 // Scroll to top component
 function ScrollToTop() {
@@ -91,6 +92,7 @@ function App() {
             <Routes>
               <Route path="/" element={<Home />} />
               <Route path="/blog" element={<BlogPage />} />
+              <Route path="/dashboard" element={<Dashboard />} />
               {/* Redirect any other routes to home */}
               <Route path="*" element={<Navigate to="/" />} />
             </Routes>
