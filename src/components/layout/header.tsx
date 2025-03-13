@@ -69,6 +69,7 @@ export default function Header() {
           </Button>
           
           <Link to="/blog" className="hover:text-blue-500 transition-colors">Blog</Link>
+          <Link to="/dashboard" className="hover:text-blue-500 transition-colors">View Dashboard</Link>
           
           <Button 
             variant="link" 
