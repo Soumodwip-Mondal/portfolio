@@ -1,6 +1,6 @@
 import { useEffect, useRef, useState } from 'react';
 import { Canvas, useFrame } from '@react-three/fiber';
-import { OrbitControls, Text, Stars, useTexture, Trail, Float, MeshDistortMaterial } from '@react-three/drei';
+import { OrbitControls, Text, Stars, Trail, Float, MeshDistortMaterial } from '@react-three/drei';
 import { motion } from 'framer-motion';
 import * as THREE from 'three';
 
@@ -37,7 +37,7 @@ function SkillTrail({ position, color }: { position: [number, number, number], c
       </mesh>
     </Trail>
   );
-}
+} 
 
 // Skill node component for the 3D visualization
 function SkillNode({ skill, index, totalSkills, hovered, setHovered }: {
