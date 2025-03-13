@@ -14,8 +14,8 @@ export default function Home() {
         <Hero />
         <Projects />
         <InteractivePlayground />
-        <Dashboard />
         <Skills3D />
+        <Dashboard />
         <Skills />
         <Contact />
       </main>
