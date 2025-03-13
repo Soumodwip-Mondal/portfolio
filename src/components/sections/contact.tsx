@@ -1,5 +1,4 @@
 'use client';
-
 import React, { useState } from 'react';
 import { motion, AnimatePresence } from 'framer-motion';
 import { Send, Mail, MapPin, Phone, Clock, CheckCircle, Github, Linkedin, X } from 'lucide-react';
@@ -7,7 +6,6 @@ import { Button } from '../ui/button';
 import { Input } from '../ui/input';
 import { Textarea } from '../ui/textarea';
 import { Card, CardContent } from '../ui/card';
-
 export default function Contact() {
   const [formState, setFormState] = useState({
     name: '',

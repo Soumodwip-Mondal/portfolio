@@ -6,6 +6,7 @@ import { Button } from '../ui/button';
 import { Badge } from '../ui/badge';
 import { ChevronRight, ExternalLink, Sparkles } from 'lucide-react';
 import image from '../../assets/MyImage.jpg';
+
 export default function Hero() {
   const [isLoaded, setIsLoaded] = useState(false);
   // const { scrollY } = useScroll();
@@ -105,7 +106,7 @@ export default function Hero() {
   };
 
   return (
-    <section id="hero" className="min-h-screen pt-24 pb-16 flex items-center relative overflow-hidden">
+    <section id="about" className="min-h-screen pt-24 pb-16 flex items-center relative overflow-hidden">
       {/* Background elements */}
       <div className="absolute inset-0 z-0">
         <div className="absolute top-32 right-1/4 w-64 h-64 bg-blue-500/10 rounded-full blur-3xl"></div>
