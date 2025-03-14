@@ -1,9 +1,9 @@
-'use client';
+import { useState, useEffect } from 'react';
 import { Link } from 'react-router-dom';
 import { motion, AnimatePresence } from 'framer-motion';
 import { useTheme } from 'next-themes';
-import { Moon, Sun } from 'lucide-react';
 import { Button } from '../ui/button';
+import { Moon, Sun, X, Paintbrush, Bot } from 'lucide-react';
 import { useScrollToSection } from '../../hooks/useScrollToSection';
 
 interface MobileMenuProps {
@@ -12,14 +12,19 @@ interface MobileMenuProps {
 }
 
 export default function MobileMenu({ isOpen, setIsOpen }: MobileMenuProps) {
+  const [mounted, setMounted] = useState(false);
   const { theme, setTheme } = useTheme();
   const { scrollToSection } = useScrollToSection();
-  
-  const handleSectionClick = (sectionId: string) => {
-    scrollToSection(sectionId);
+
+  // Prevent hydration mismatch
+  useEffect(() => setMounted(true), []);
+  if (!mounted) return null;
+
+  const handleLinkClick = (sectionId: string) => {
     setIsOpen(false);
+    scrollToSection(sectionId);
   };
-  
+
   return (
     <AnimatePresence>
       {isOpen && (
@@ -27,62 +32,89 @@ export default function MobileMenu({ isOpen, setIsOpen }: MobileMenuProps) {
           initial={{ opacity: 0, height: 0 }}
           animate={{ opacity: 1, height: 'auto' }}
           exit={{ opacity: 0, height: 0 }}
-          className="md:hidden overflow-hidden bg-white dark:bg-slate-900 border-b border-slate-200 dark:border-slate-800"
+          className="md:hidden overflow-hidden"
         >
-          <nav className="flex flex-col p-4">
-            <Button 
-              variant="link" 
-              className="justify-start p-0 py-2 hover:text-blue-500 transition-colors"
-              onClick={() => handleSectionClick('about')}
-            >
-              About
-            </Button>
+          <div className="bg-white dark:bg-slate-900 p-4 flex flex-col space-y-4">
+            <div className="flex justify-between items-center">
+              <h2 className="font-bold text-lg">Menu</h2>
+              <Button variant="ghost" size="icon" onClick={() => setIsOpen(false)}>
+                <X size={24} />
+              </Button>
+            </div>
             
-            <Button 
-              variant="link" 
-              className="justify-start p-0 py-2 hover:text-blue-500 transition-colors"
-              onClick={() => handleSectionClick('projects')}
-            >
-              Projects
-            </Button>
-            
-            <Button 
-              variant="link" 
-              className="justify-start p-0 py-2 hover:text-blue-500 transition-colors"
-              onClick={() => handleSectionClick('skills')}
-            >
-              Skills
-            </Button>
-            
-            <Link 
-              to="/blog" 
-              className="py-2 hover:text-blue-500 transition-colors"
-              onClick={() => setIsOpen(false)}
-            >
-              Blog
-            </Link>
-            
-            <Button 
-              variant="link" 
-              className="justify-start p-0 py-2 hover:text-blue-500 transition-colors"
-              onClick={() => handleSectionClick('contact')}
-            >
-              Contact
-            </Button>
-            
-            <div className="flex items-center mt-2">
+            <div className="flex flex-col space-y-3">
               <Button 
                 variant="ghost" 
-                size="icon" 
-                onClick={() => setTheme(theme === 'dark' ? 'light' : 'dark')}
+                className="justify-start"
+                onClick={() => handleLinkClick('about')}
               >
-                {theme === 'dark' ? <Sun size={20} /> : <Moon size={20} />}
+                About
               </Button>
-              <span className="ml-2">
-                {theme === 'dark' ? 'Light Mode' : 'Dark Mode'}
-              </span>
+              
+              <Button 
+                variant="ghost" 
+                className="justify-start"
+                onClick={() => handleLinkClick('projects')}
+              >
+                Projects
+              </Button>
+              
+              <Button 
+                variant="ghost" 
+                className="justify-start"
+                onClick={() => handleLinkClick('skills')}
+              >
+                Skills
+              </Button>
+              
+              <Link 
+                to="/blog" 
+                className="px-4 py-2 rounded-md hover:bg-slate-100 dark:hover:bg-slate-800"
+                onClick={() => setIsOpen(false)}
+              >
+                Blog
+              </Link>
+              
+              <Link 
+                to="/dashboard" 
+                className="px-4 py-2 rounded-md hover:bg-slate-100 dark:hover:bg-slate-800"
+                onClick={() => setIsOpen(false)}
+              >
+                Dashboard
+              </Link>
+              
+              <Link 
+                to="/collaborate" 
+                className="px-4 py-2 rounded-md hover:bg-slate-100 dark:hover:bg-slate-800 flex items-center"
+                onClick={() => setIsOpen(false)}
+              >
+                <Paintbrush className="h-4 w-4 mr-2" />
+                Collaborative Drawing
+              </Link>
+              <Link 
+                to="/ai-assistant" 
+                className="px-4 py-2 rounded-md hover:bg-slate-100 dark:hover:bg-slate-800 flex items-center"
+                onClick={() => setIsOpen(false)}
+              >
+                <Bot className="h-4 w-4 mr-2" />
+                AI Assistant
+              </Link>
+              <Button 
+                variant="ghost" 
+                className="justify-start"
+                onClick={() => handleLinkClick('contact')}
+              >
+                Contact
+              </Button>
+              
+              <div className="flex justify-between items-center pt-2 border-t border-slate-200 dark:border-slate-700">
+                <span>Theme</span>
+                <Button variant="ghost" size="icon" onClick={() => setTheme(theme === 'dark' ? 'light' : 'dark')}>
+                  {theme === 'dark' ? <Sun size={20} /> : <Moon size={20} />}
+                </Button>
+              </div>
             </div>
-          </nav>
+          </div>
         </motion.div>
       )}
     </AnimatePresence>

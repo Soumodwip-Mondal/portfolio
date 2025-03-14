@@ -5,7 +5,8 @@ import Header from './components/layout/header';
 import Home from './app/page';
 import BlogPage from './pages/BlogPage';
 import Dashboard from './components/sections/dashboard';
-
+import CollaborativePage from './pages/CollaborativePage';
+import AIAssistantPage from './pages/AIAssistantPage';
 // Scroll to top component
 function ScrollToTop() {
   const { pathname, hash } = useLocation();
@@ -93,6 +94,8 @@ function App() {
               <Route path="/" element={<Home />} />
               <Route path="/blog" element={<BlogPage />} />
               <Route path="/dashboard" element={<Dashboard />} />
+              <Route path="/collaborate" element={<CollaborativePage />} />
+              <Route path="/ai-assistant" element={<AIAssistantPage />} />
               {/* Redirect any other routes to home */}
               <Route path="*" element={<Navigate to="/" />} />
             </Routes>
