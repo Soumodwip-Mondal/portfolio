@@ -6,6 +6,7 @@ import Contact from '../components/sections/contact';
 import Footer from '../components/layout/footer';
 import InteractivePlayground from '../components/sections/interactive-playground';
 import Dashboard from '../components/sections/dashboard';
+import AugmentedReality from '../components/sections/augmented-reality';
 
 export default function Home() {
   return (
@@ -16,6 +17,7 @@ export default function Home() {
         <InteractivePlayground />
         <Skills3D />
         <Dashboard />
+        <AugmentedReality />
         <Skills />
         <Contact />
       </main>
