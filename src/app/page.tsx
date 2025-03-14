@@ -7,7 +7,7 @@ import Footer from '../components/layout/footer';
 import InteractivePlayground from '../components/sections/interactive-playground';
 import Dashboard from '../components/sections/dashboard';
 import AugmentedReality from '../components/sections/augmented-reality';
-
+import AIAssistantPromo from '../components/sections/ai-assistant-promo';
 export default function Home() {
   return (
     <>
@@ -16,6 +16,7 @@ export default function Home() {
         <Projects />
         <InteractivePlayground />
         <Skills3D />
+        <AIAssistantPromo />
         <Dashboard />
         <AugmentedReality />
         <Skills />
