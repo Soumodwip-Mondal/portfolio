@@ -7,6 +7,7 @@ import BlogPage from './pages/BlogPage';
 import Dashboard from './components/sections/dashboard';
 import CollaborativePage from './pages/CollaborativePage';
 import AIAssistantPage from './pages/AIAssistantPage';
+import { ChatAssistant } from './components/chat/Chatassistant';
 // Scroll to top component
 function ScrollToTop() {
   const { pathname, hash } = useLocation();
@@ -100,6 +101,7 @@ function App() {
               <Route path="*" element={<Navigate to="/" />} />
             </Routes>
           </div>
+          <ChatAssistant />
         </div>
       </Router>
     </AppContext.Provider>
