@@ -6,7 +6,7 @@ import { motion } from 'framer-motion';
 import { useTheme } from 'next-themes';
 import { Avatar, AvatarFallback, AvatarImage } from '../ui/avatar'
 import { Button } from '../../components/ui/button';
-import { Moon, Sun, Menu, Paintbrush, Bot,Mic } from 'lucide-react';
+import { Moon, Sun, Menu, Paintbrush, Bot, Mic, User, Code, Lightbulb, Newspaper, LayoutDashboard, Mail } from 'lucide-react';
 import MobileMenu from './mobile-menu';
 import { useScrollToSection } from '../../hooks/useScrollToSection';
 import { GamificationButton } from '../gamification/GamificationButton';
@@ -45,51 +45,54 @@ export default function Header() {
           animate={{ opacity: 1, y: 0 }}
           className="hidden md:flex items-center gap-6"
         >
-          <Button 
-            variant="link" 
-            className="p-0 hover:text-blue-500 transition-colors"
-            onClick={() => scrollToSection('about')}
-          >
+          <Link to="#about" className="text-base hover:text-blue-500 transition-colors flex items-center" 
+                onClick={(e) => {e.preventDefault(); scrollToSection('about');}}>
+            <User className="h-4 w-4 mr-1" />
             About
-          </Button>
+          </Link>
           
-          <Button 
-            variant="link" 
-            className="p-0 hover:text-blue-500 transition-colors"
-            onClick={() => scrollToSection('projects')}
-          >
+          <Link to="#projects" className="text-base hover:text-blue-500 transition-colors flex items-center"
+                onClick={(e) => {e.preventDefault(); scrollToSection('projects');}}>
+            <Code className="h-4 w-4 mr-1" />
             Projects
-          </Button>
+          </Link>
           
-          <Button 
-            variant="link" 
-            className="p-0 hover:text-blue-500 transition-colors"
-            onClick={() => scrollToSection('skills')}
-          >
+          <Link to="#skills" className="text-base hover:text-blue-500 transition-colors flex items-center"
+                onClick={(e) => {e.preventDefault(); scrollToSection('skills');}}>
+            <Lightbulb className="h-4 w-4 mr-1" />
             Skills
-          </Button>
+          </Link>
           
-          <Link to="/blog" className="hover:text-blue-500 transition-colors">Blog</Link>
-          <Link to="/dashboard" className="hover:text-blue-500 transition-colors">Dashboard</Link>
-          <Link to="/collaborate" className="hover:text-blue-500 transition-colors flex items-center">
+          <Link to="/blog" className="text-base hover:text-blue-500 transition-colors flex items-center">
+            <Newspaper className="h-4 w-4 mr-1" />
+            Blog
+          </Link>
+          
+          <Link to="/dashboard" className="text-base hover:text-blue-500 transition-colors flex items-center">
+            <LayoutDashboard className="h-4 w-4 mr-1" />
+            Dashboard
+          </Link>
+          
+          <Link to="/collaborate" className="text-base hover:text-blue-500 transition-colors flex items-center">
             <Paintbrush className="h-4 w-4 mr-1" />
             Draw
           </Link>
-          <Link to="/ai-assistant" className="hover:text-blue-500 transition-colors flex items-center">
+          
+          <Link to="/ai-assistant" className="text-base hover:text-blue-500 transition-colors flex items-center">
             <Bot className="h-4 w-4 mr-1" />
             AI Assistant
           </Link>
-          <Link to="/voice-control" className="hover:text-blue-500 transition-colors flex items-center">
+          
+          <Link to="/voice-control" className="text-base hover:text-blue-500 transition-colors flex items-center">
             <Mic className="h-4 w-4 mr-1" />
             Voice Control
           </Link>
-          <Button 
-            variant="link" 
-            className="p-0 hover:text-blue-500 transition-colors"
-            onClick={() => scrollToSection('contact')}
-          >
+          
+          <Link to="#contact" className="text-base hover:text-blue-500 transition-colors flex items-center"
+                onClick={(e) => {e.preventDefault(); scrollToSection('contact');}}>
+            <Mail className="h-4 w-4 mr-1" />
             Contact
-          </Button>
+          </Link>
           
           <GamificationButton />
           

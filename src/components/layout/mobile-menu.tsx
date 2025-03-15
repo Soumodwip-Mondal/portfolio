@@ -45,7 +45,7 @@ export default function MobileMenu({ isOpen, setIsOpen }: MobileMenuProps) {
             <div className="flex flex-col space-y-3">
               <Button 
                 variant="ghost" 
-                className="justify-start"
+                className="justify-start text-base"
                 onClick={() => handleLinkClick('about')}
               >
                 About
@@ -53,7 +53,7 @@ export default function MobileMenu({ isOpen, setIsOpen }: MobileMenuProps) {
               
               <Button 
                 variant="ghost" 
-                className="justify-start"
+                className="justify-start text-base"
                 onClick={() => handleLinkClick('projects')}
               >
                 Projects
@@ -61,7 +61,7 @@ export default function MobileMenu({ isOpen, setIsOpen }: MobileMenuProps) {
               
               <Button 
                 variant="ghost" 
-                className="justify-start"
+                className="justify-start text-base"
                 onClick={() => handleLinkClick('skills')}
               >
                 Skills
@@ -69,7 +69,7 @@ export default function MobileMenu({ isOpen, setIsOpen }: MobileMenuProps) {
               
               <Link 
                 to="/blog" 
-                className="px-4 py-2 rounded-md hover:bg-slate-100 dark:hover:bg-slate-800"
+                className="px-4 py-2 text-base rounded-md hover:bg-slate-100 dark:hover:bg-slate-800"
                 onClick={() => setIsOpen(false)}
               >
                 Blog
@@ -77,7 +77,7 @@ export default function MobileMenu({ isOpen, setIsOpen }: MobileMenuProps) {
               
               <Link 
                 to="/dashboard" 
-                className="px-4 py-2 rounded-md hover:bg-slate-100 dark:hover:bg-slate-800"
+                className="px-4 py-2 text-base rounded-md hover:bg-slate-100 dark:hover:bg-slate-800"
                 onClick={() => setIsOpen(false)}
               >
                 Dashboard
@@ -85,7 +85,7 @@ export default function MobileMenu({ isOpen, setIsOpen }: MobileMenuProps) {
               
               <Link 
                 to="/collaborate" 
-                className="px-4 py-2 rounded-md hover:bg-slate-100 dark:hover:bg-slate-800 flex items-center"
+                className="px-4 py-2 text-base rounded-md hover:bg-slate-100 dark:hover:bg-slate-800"
                 onClick={() => setIsOpen(false)}
               >
                 <Paintbrush className="h-4 w-4 mr-2" />
@@ -93,7 +93,7 @@ export default function MobileMenu({ isOpen, setIsOpen }: MobileMenuProps) {
               </Link>
               <Link 
                 to="/ai-assistant" 
-                className="px-4 py-2 rounded-md hover:bg-slate-100 dark:hover:bg-slate-800 flex items-center"
+                className="px-4 py-2 text-base rounded-md hover:bg-slate-100 dark:hover:bg-slate-800"
                 onClick={() => setIsOpen(false)}
               >
                 <Bot className="h-4 w-4 mr-2" />
@@ -101,7 +101,7 @@ export default function MobileMenu({ isOpen, setIsOpen }: MobileMenuProps) {
               </Link>
               <Link 
                 to="/voice-control" 
-                className="px-4 py-2 rounded-md hover:bg-slate-100 dark:hover:bg-slate-800 flex items-center"
+                className="px-4 py-2 text-base rounded-md hover:bg-slate-100 dark:hover:bg-slate-800"
                 onClick={() => setIsOpen(false)}
               >
                 <Mic className="h-4 w-4 mr-2" />
@@ -109,7 +109,7 @@ export default function MobileMenu({ isOpen, setIsOpen }: MobileMenuProps) {
               </Link>
               <Button 
                 variant="ghost" 
-                className="justify-start"
+                className="justify-start text-base"
                 onClick={() => handleLinkClick('contact')}
               >
                 Contact
