@@ -10,7 +10,7 @@ import { Moon, Sun, Menu, Paintbrush, Bot, Mic, User, Code, Lightbulb, Newspaper
 import MobileMenu from './mobile-menu';
 import { useScrollToSection } from '../../hooks/useScrollToSection';
 import { GamificationButton } from '../gamification/GamificationButton';
-import image from '../../assets/anime_img.png'
+import image from '../../assets/Hello.png'
 export default function Header() {
   const [mounted, setMounted] = useState(false);
   const { theme, setTheme } = useTheme();
