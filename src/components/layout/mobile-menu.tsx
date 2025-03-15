@@ -3,7 +3,7 @@ import { Link } from 'react-router-dom';
 import { motion, AnimatePresence } from 'framer-motion';
 import { useTheme } from 'next-themes';
 import { Button } from '../ui/button';
-import { Moon, Sun, X, Paintbrush, Bot } from 'lucide-react';
+import { Moon, Sun, X, Paintbrush, Bot,Mic } from 'lucide-react';
 import { useScrollToSection } from '../../hooks/useScrollToSection';
 
 interface MobileMenuProps {
@@ -98,6 +98,14 @@ export default function MobileMenu({ isOpen, setIsOpen }: MobileMenuProps) {
               >
                 <Bot className="h-4 w-4 mr-2" />
                 AI Assistant
+              </Link>
+              <Link 
+                to="/voice-control" 
+                className="px-4 py-2 rounded-md hover:bg-slate-100 dark:hover:bg-slate-800 flex items-center"
+                onClick={() => setIsOpen(false)}
+              >
+                <Mic className="h-4 w-4 mr-2" />
+                Voice Control
               </Link>
               <Button 
                 variant="ghost" 

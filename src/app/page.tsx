@@ -8,19 +8,59 @@ import InteractivePlayground from '../components/sections/interactive-playground
 import Dashboard from '../components/sections/dashboard';
 import AugmentedReality from '../components/sections/augmented-reality';
 import AIAssistantPromo from '../components/sections/ai-assistant-promo';
+import VoiceControlPromo from '../components/sections/voice-control-promo';
+import { PersonalizedRecommendations } from '../components/personalization/PersonalizedRecommendations';
+import { SectionTracker } from '../components/personalization/SectionTracker';
+import { usePersonalization } from '../context/PersonalizationContext';
 export default function Home() {
+  const { isReturningVisitor } = usePersonalization();
   return (
     <>
       <main className="container mx-auto px-4">
-        <Hero />
-        <Projects />
-        <InteractivePlayground />
-        <Skills3D />
-        <AIAssistantPromo />
-        <Dashboard />
-        <AugmentedReality />
-        <Skills />
-        <Contact />
+      <SectionTracker sectionId="hero" interest="development">
+          <Hero />
+        </SectionTracker>
+        
+        {/* Show personalized recommendations for returning visitors */}
+        {isReturningVisitor && (
+          <PersonalizedRecommendations />
+        )}
+        
+        <SectionTracker sectionId="projects" interest="development">
+          <Projects />
+        </SectionTracker>
+        
+        <SectionTracker sectionId="interactive-playground" interest="development">
+          <InteractivePlayground />
+        </SectionTracker>
+        
+        <SectionTracker sectionId="skills-3d" interest="development">
+          <Skills3D />
+        </SectionTracker>
+        
+        <SectionTracker sectionId="ai-assistant" interest="ai">
+          <AIAssistantPromo />
+        </SectionTracker>
+        
+        <SectionTracker sectionId="voice-control" interest="ai">
+          <VoiceControlPromo />
+        </SectionTracker>
+        
+        <SectionTracker sectionId="dashboard" interest="data">
+          <Dashboard />
+        </SectionTracker>
+        
+        <SectionTracker sectionId="augmented-reality" interest="mobile">
+          <AugmentedReality />
+        </SectionTracker>
+        
+        <SectionTracker sectionId="skills" interest="development">
+          <Skills />
+        </SectionTracker>
+        
+        <SectionTracker sectionId="contact">
+          <Contact />
+        </SectionTracker>
       </main>
       <Footer />
     </>

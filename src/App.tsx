@@ -6,8 +6,13 @@ import Home from './app/page';
 import BlogPage from './pages/BlogPage';
 import Dashboard from './components/sections/dashboard';
 import CollaborativePage from './pages/CollaborativePage';
-import AIAssistantPage from './pages/AIAssistantPage';
-import { ChatAssistant } from './components/chat/Chatassistant';
+// import AIAssistantPage from './pages/AIAssistantPage';
+import { VoiceNavigation } from './components/voice/VoiceNavigation';
+import { PersonalizationProvider } from './context/PersonalizationContext';
+// import { PersonalizedGreeting } from './components/personalization/PersonalizedGreeting';
+import { ThemeCustomizer } from './components/personalization/ThemeCustomizer';
+import { LayoutManager } from './components/personalization/LayoutManager';
+import VoiceControlPage from './pages/VoiceControlPage';
 // Scroll to top component
 function ScrollToTop() {
   const { pathname, hash } = useLocation();
@@ -80,31 +85,39 @@ function App() {
   };
 
   return (
-    <AppContext.Provider value={contextValue}>
-      <Router>
-        <ScrollToTop />
-        <div className="flex flex-col min-h-screen">
-          <Header />
-          <div className="flex-grow">
-            {isLoading && (
-              <div className="fixed inset-0 bg-background/80 flex items-center justify-center z-50">
-                <div className="animate-spin h-10 w-10 border-4 border-primary border-t-transparent rounded-full"></div>
+    <PersonalizationProvider>
+      <AppContext.Provider value={contextValue}>
+        <LayoutManager>
+          <Router>
+            <ScrollToTop />
+            <div className="flex flex-col min-h-screen">
+              <Header />
+              <div className="flex-grow">
+                {isLoading && (
+                  <div className="fixed inset-0 bg-background/80 flex items-center justify-center z-50">
+                    <div className="animate-spin h-10 w-10 border-4 border-primary border-t-transparent rounded-full"></div>
+                  </div>
+                )}
+                <Routes>
+                  <Route path="/" element={<Home />} />
+                  <Route path="/blog" element={<BlogPage />} />
+                  <Route path="/dashboard" element={<Dashboard />} />
+                  <Route path="/collaborate" element={<CollaborativePage />} />
+                  {/* <Route path="/ai-assistant" element={<AIAssistantPage />} /> */}
+                  <Route path="/voice-control" element={<VoiceControlPage />} />
+                  {/* Redirect any other routes to home */}
+                  <Route path="*" element={<Navigate to="/" />} />
+                </Routes>
               </div>
-            )}
-            <Routes>
-              <Route path="/" element={<Home />} />
-              <Route path="/blog" element={<BlogPage />} />
-              <Route path="/dashboard" element={<Dashboard />} />
-              <Route path="/collaborate" element={<CollaborativePage />} />
-              <Route path="/ai-assistant" element={<AIAssistantPage />} />
-              {/* Redirect any other routes to home */}
-              <Route path="*" element={<Navigate to="/" />} />
-            </Routes>
-          </div>
-          <ChatAssistant />
-        </div>
-      </Router>
-    </AppContext.Provider>
+              {/* <ChatAssistant /> */}
+              <VoiceNavigation />
+              {/* <PersonalizedGreeting /> */}
+              <ThemeCustomizer />
+            </div>
+          </Router>
+        </LayoutManager>
+      </AppContext.Provider>
+    </PersonalizationProvider>
   );
 }
 

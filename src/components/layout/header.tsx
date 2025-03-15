@@ -6,7 +6,7 @@ import { motion } from 'framer-motion';
 import { useTheme } from 'next-themes';
 import { Avatar, AvatarFallback, AvatarImage } from '../ui/avatar'
 import { Button } from '../../components/ui/button';
-import { Moon, Sun, Menu, Paintbrush, Bot } from 'lucide-react';
+import { Moon, Sun, Menu, Paintbrush, Bot,Mic } from 'lucide-react';
 import MobileMenu from './mobile-menu';
 import { useScrollToSection } from '../../hooks/useScrollToSection';
 import { GamificationButton } from '../gamification/GamificationButton';
@@ -78,6 +78,10 @@ export default function Header() {
           <Link to="/ai-assistant" className="hover:text-blue-500 transition-colors flex items-center">
             <Bot className="h-4 w-4 mr-1" />
             AI Assistant
+          </Link>
+          <Link to="/voice-control" className="hover:text-blue-500 transition-colors flex items-center">
+            <Mic className="h-4 w-4 mr-1" />
+            Voice Control
           </Link>
           <Button 
             variant="link" 
