@@ -54,9 +54,23 @@ export default function Hero() {
     }
   };
 
-  const badgeVariants = {
+  interface BadgeVariants {
+    [key: string]: any;
+    hidden: { scale: number; opacity: number };
+    visible: (i: number) => {
+      scale: number;
+      opacity: number;
+      transition: {
+        type: string;
+        stiffness: number;
+        delay: number;
+      };
+    };
+  }
+
+  const badgeVariants: BadgeVariants = {
     hidden: { scale: 0, opacity: 0 },
-    visible: (i: number) => ({ 
+    visible: (i) => ({ 
       scale: 1, 
       opacity: 1,
       transition: { 
@@ -101,12 +115,12 @@ export default function Hero() {
     pink: "bg-pink-100 dark:bg-pink-900/30 text-pink-800 dark:text-pink-300 border-pink-200 dark:border-pink-800"
   };
 
-  const getColorClasses = (color: keyof typeof colorMap) => {
+  const getColorClasses = (color: keyof typeof colorMap): string => {
     return colorMap[color] || colorMap.blue;
   };
 
   return (
-    <section id="about" className="min-h-screen pt-24 pb-16 flex items-center relative overflow-hidden">
+    <section id="about" className="min-h-screen pt-16 pb-16 flex items-center relative overflow-hidden">
       {/* Background elements */}
       <div className="absolute inset-0 z-0">
         <div className="absolute top-32 right-1/4 w-64 h-64 bg-blue-500/10 rounded-full blur-3xl"></div>
@@ -155,7 +169,7 @@ export default function Hero() {
                 />
                 <motion.h2 
                   variants={itemVariants}
-                  className="text-sm font-medium uppercase tracking-widest text-blue-600 dark:text-blue-400 mb-2 flex items-center"
+                  className="text-sm font-medium uppercase tracking-widest text-blue-600 dark:text-blue-400 mb-4 flex items-center leading-relaxed"
                 >
                   <Sparkles className="mr-2 h-4 w-4" />
                   Full-Stack Developer And Data Analyst
@@ -182,8 +196,9 @@ export default function Hero() {
                   variants={itemVariants} 
                   className="text-xl text-slate-600 dark:text-slate-300 mb-8 max-w-lg"
                 >
-                  I build beautiful, interactive, and performant web applications with modern technologies and a focus on user experience and analize data to make informed decisions.
+                  I build beautiful, interactive, and performant web applications with modern technologies and a focus on user experience and analyze data to make informed decisions.
                 </motion.p>
+                
                 
                 <motion.div 
                   className="flex flex-wrap gap-2 mb-8"
