@@ -36,7 +36,8 @@ export default function Header() {
               <AvatarFallback>SM</AvatarFallback>
             </Avatar>
           </Link>
-          <span className="font-bold text-xl">Soumodwip Mondal</span>
+          <span className="font-bold text-xl md:block invisible md:visible">Soumodwip Mondal</span>
+
         </motion.div>
         
         {/* Rest of the code remains the same */}
