@@ -3,7 +3,7 @@ import { Link } from 'react-router-dom';
 import { motion, AnimatePresence } from 'framer-motion';
 import { useTheme } from 'next-themes';
 import { Button } from '../ui/button';
-import { Moon, Sun, X, Paintbrush, Bot,Mic } from 'lucide-react';
+import { Moon, Sun, X} from 'lucide-react';
 import { useScrollToSection } from '../../hooks/useScrollToSection';
 
 interface MobileMenuProps {
@@ -17,7 +17,7 @@ export default function MobileMenu({ isOpen, setIsOpen }: MobileMenuProps) {
   const { scrollToSection } = useScrollToSection();
 
   // Prevent hydration mismatch
-  useEffect(() => setMounted(true), []);
+  useEffect(() => setMounted(true), []); 
   if (!mounted) return null;
 
   const handleLinkClick = (sectionId: string) => {
@@ -88,7 +88,6 @@ export default function MobileMenu({ isOpen, setIsOpen }: MobileMenuProps) {
                 className="px-4 py-2 text-base rounded-md hover:bg-slate-100 dark:hover:bg-slate-800"
                 onClick={() => setIsOpen(false)}
               >
-                <Paintbrush className="h-4 w-4 mr-2" />
                 Collaborative Drawing
               </Link>
               <Link 
@@ -96,7 +95,6 @@ export default function MobileMenu({ isOpen, setIsOpen }: MobileMenuProps) {
                 className="px-4 py-2 text-base rounded-md hover:bg-slate-100 dark:hover:bg-slate-800"
                 onClick={() => setIsOpen(false)}
               >
-                <Bot className="h-4 w-4 mr-2" />
                 AI Assistant
               </Link>
               <Link 
@@ -104,7 +102,6 @@ export default function MobileMenu({ isOpen, setIsOpen }: MobileMenuProps) {
                 className="px-4 py-2 text-base rounded-md hover:bg-slate-100 dark:hover:bg-slate-800"
                 onClick={() => setIsOpen(false)}
               >
-                <Mic className="h-4 w-4 mr-2" />
                 Voice Control
               </Link>
               <Button 
