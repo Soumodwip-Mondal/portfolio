@@ -340,6 +340,9 @@ export default function Dashboard() {
           <p className="text-lg text-slate-600 dark:text-slate-300 max-w-2xl mx-auto">
             Real-time analytics and insights about my projects, skills, and portfolio performance.
           </p>
+          <p className="text-sm text-slate-600 dark:text-slate-300 max-w-2xl mx-auto">
+             Data is not correct here , This is just for fun
+          </p>
         </div>
         
         {isLoading ? (
