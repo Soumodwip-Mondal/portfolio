@@ -6,6 +6,7 @@ import { Button } from '../ui/button';
 import { Input } from '../ui/input';
 import { Textarea } from '../ui/textarea';
 import { Card, CardContent } from '../ui/card';
+
 export default function Contact() {
   const [formState, setFormState] = useState({
     name: '',
@@ -13,7 +14,7 @@ export default function Contact() {
     subject: '',
     message: ''
   });
-  
+
   const [formFocus, setFormFocus] = useState<string | null>(null);
   const [isSubmitting, setIsSubmitting] = useState(false);
   const [isSubmitted, setIsSubmitted] = useState(false);
@@ -36,18 +37,39 @@ export default function Contact() {
   const handleSubmit = async (e: React.FormEvent) => {
     e.preventDefault();
     setIsSubmitting(true);
-    
-    // Simulate form submission
-    setTimeout(() => {
+
+    const formData = new FormData();
+    formData.append('access_key', 'beb41ca4-f602-4142-a73d-1fd89c43edf2'); // Replace with your Web3Forms access key
+    formData.append('name', formState.name);
+    formData.append('email', formState.email);
+    formData.append('subject', formState.subject);
+    formData.append('message', formState.message);
+
+    try {
+      const response = await fetch('https://api.web3forms.com/submit', {
+        method: 'POST',
+        body: formData
+      });
+
+      const result = await response.json();
+
+      if (result.success) {
+        setIsSubmitting(false);
+        setIsSubmitted(true);
+        setFormState({ name: '', email: '', subject: '', message: '' });
+
+        // Reset success message after 5 seconds
+        setTimeout(() => {
+          setIsSubmitted(false);
+        }, 5000);
+      } else {
+        console.error('Form submission failed:', result);
+        setIsSubmitting(false);
+      }
+    } catch (error) {
+      console.error('Error submitting form:', error);
       setIsSubmitting(false);
-      setIsSubmitted(true);
-      setFormState({ name: '', email: '', subject: '', message: '' });
-      
-      // Reset success message after 5 seconds
-      setTimeout(() => {
-        setIsSubmitted(false);
-      }, 5000);
-    }, 1500);
+    }
   };
 
   const contactInfo = [
@@ -60,7 +82,7 @@ export default function Contact() {
   const socialLinks = [
     { icon: <Github size={16} />, name: 'GitHub', url: 'https://github.com/Soumodwip-Mondal' },
     { icon: <Linkedin size={16} />, name: 'LinkedIn', url: 'https://linkedin.com/in/soumodwip-mondal-805243298' },
-    { icon: <X size={16} />, name: 'Twitter', url: 'https://twitter.com/@SouravMond17180'}
+    { icon: <X size={16} />, name: 'Twitter', url: 'https://twitter.com/@SouravMond17180' }
   ];
 
   // Animation variants
