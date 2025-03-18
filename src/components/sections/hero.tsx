@@ -6,7 +6,7 @@ import { Button } from '../ui/button';
 import { Badge } from '../ui/badge';
 import { ChevronRight, ExternalLink, Sparkles } from 'lucide-react';
 import image from '../../assets/MyImage.jpg';
-import image2 from '../../assets/img-removebg-preview.png';
+// import image2 from '../../assets/img-removebg-preview.png';
 export default function Hero() {
   const [isLoaded, setIsLoaded] = useState(false);
   // const { scrollY } = useScroll();
@@ -253,7 +253,7 @@ export default function Hero() {
                       asChild
                       className="border-2 border-slate-300 dark:border-slate-700 hover:border-blue-500 dark:hover:border-blue-600 transition-all duration-300"
                     >
-                      <a href={image2} target="_blank" rel="noopener noreferrer" className="group px-4 flex items-center">
+                      <a href={""} target="_blank" rel="noopener noreferrer" className="group px-4 flex items-center">
                         View Resume
                         <ExternalLink className="ml-1 h-4 w-4 transition-transform group-hover:translate-y-px group-hover:translate-x-px" />
                       </a>
