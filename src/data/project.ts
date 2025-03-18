@@ -23,7 +23,7 @@ export const projects: Project[] = [
     image: data_analysis,
     imageUrl: data_analysis,
     url: 'https://example.com/project2',
-    date: "March 2023"
+    date: "2025"
   },
   {
     id: 3,
@@ -34,7 +34,7 @@ export const projects: Project[] = [
     image: "/images/project3.jpg",
     imageUrl: "/images/project3.jpg",
     url: 'https://example.com/project3',
-    date: "January 2023"
+    date: "2025"
   }
 ]
 

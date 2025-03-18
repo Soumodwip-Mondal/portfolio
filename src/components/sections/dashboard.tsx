@@ -12,7 +12,7 @@ import { Card } from '../ui/card';
 import { 
   githubContributions, 
   visitorAnalytics, 
-  skillsGrowth, 
+  // skillsGrowth, 
   projectMetrics, 
   geoDistribution, 
   techUsage, 
@@ -103,61 +103,61 @@ const VisitorAnalyticsChart = () => {
 };
 
 // Skills Growth Chart
-const SkillsGrowthChart = () => {
-  const [selectedSkills, setSelectedSkills] = useState<string[]>(['React', 'Python', 'TypeScript', 'Data Analysis']);
+// const SkillsGrowthChart = () => {
+//   const [selectedSkills, setSelectedSkills] = useState<string[]>(['React', 'Python', 'TypeScript', 'Data Analysis']);
   
-  const toggleSkill = (skill: string) => {
-    if (selectedSkills.includes(skill)) {
-      setSelectedSkills(selectedSkills.filter(s => s !== skill));
-    } else {
-      setSelectedSkills([...selectedSkills, skill]);
-    }
-  };
+//   const toggleSkill = (skill: string) => {
+//     if (selectedSkills.includes(skill)) {
+//       setSelectedSkills(selectedSkills.filter(s => s !== skill));
+//     } else {
+//       setSelectedSkills([...selectedSkills, skill]);
+//     }
+//   };
   
-  return (
-    <DashboardCard title="Skills Growth Over Time">
-      <div className="mb-4 flex flex-wrap gap-2">
-        {['React', 'Python', 'TypeScript', 'Data Analysis'].map((skill) => (
-          <Button
-            key={skill}
-            variant={selectedSkills.includes(skill) ? "default" : "outline"}
-            size="sm"
-            onClick={() => toggleSkill(skill)}
-            className="text-xs"
-          >
-            {skill}
-          </Button>
-        ))}
-      </div>
-      <div className="h-64">
-        <ResponsiveContainer width="100%" height="100%">
-          <LineChart
-            data={skillsGrowth}
-            margin={{ top: 5, right: 30, left: 20, bottom: 5 }}
-          >
-            <CartesianGrid strokeDasharray="3 3" />
-            <XAxis dataKey="year" />
-            <YAxis />
-            <Tooltip />
-            <Legend />
-            {selectedSkills.includes('React') && (
-              <Line type="monotone" dataKey="React" stroke="#61dafb" />
-            )}
-            {selectedSkills.includes('Python') && (
-              <Line type="monotone" dataKey="Python" stroke="#3776ab" />
-            )}
-            {selectedSkills.includes('TypeScript') && (
-              <Line type="monotone" dataKey="TypeScript" stroke="#007acc" />
-            )}
-            {selectedSkills.includes('Data Analysis') && (
-              <Line type="monotone" dataKey="Data Analysis" stroke="#ff7300" />
-            )}
-          </LineChart>
-        </ResponsiveContainer>
-      </div>
-    </DashboardCard>
-  );
-};
+//   return (
+//     <DashboardCard title="Skills Growth Over Time">
+//       <div className="mb-4 flex flex-wrap gap-2">
+//         {['React', 'Python', 'TypeScript', 'Data Analysis'].map((skill) => (
+//           <Button
+//             key={skill}
+//             variant={selectedSkills.includes(skill) ? "default" : "outline"}
+//             size="sm"
+//             onClick={() => toggleSkill(skill)}
+//             className="text-xs"
+//           >
+//             {skill}
+//           </Button>
+//         ))}
+//       </div>
+//       <div className="h-64">
+//         <ResponsiveContainer width="100%" height="100%">
+//           <LineChart
+//             data={skillsGrowth}
+//             margin={{ top: 5, right: 30, left: 20, bottom: 5 }}
+//           >
+//             <CartesianGrid strokeDasharray="3 3" />
+//             <XAxis dataKey="year" />
+//             <YAxis />
+//             <Tooltip />
+//             <Legend />
+//             {selectedSkills.includes('React') && (
+//               <Line type="monotone" dataKey="React" stroke="#61dafb" />
+//             )}
+//             {selectedSkills.includes('Python') && (
+//               <Line type="monotone" dataKey="Python" stroke="#3776ab" />
+//             )}
+//             {selectedSkills.includes('TypeScript') && (
+//               <Line type="monotone" dataKey="TypeScript" stroke="#007acc" />
+//             )}
+//             {selectedSkills.includes('Data Analysis') && (
+//               <Line type="monotone" dataKey="Data Analysis" stroke="#ff7300" />
+//             )}
+//           </LineChart>
+//         </ResponsiveContainer>
+//       </div>
+//     </DashboardCard>
+//   );
+// };
 
 // Project Metrics Chart
 const ProjectMetricsChart = () => {
@@ -340,6 +340,9 @@ export default function Dashboard() {
           <p className="text-lg text-slate-600 dark:text-slate-300 max-w-2xl mx-auto">
             Real-time analytics and insights about my projects, skills, and portfolio performance.
           </p>
+          <p className="text-sm text-slate-600 dark:text-slate-300 max-w-2xl mx-auto">
+             Data is not correct here , This is just for fun
+          </p>
         </div>
         
         {isLoading ? (
@@ -356,7 +359,7 @@ export default function Dashboard() {
             </div>
             
             <div className="grid grid-cols-1 md:grid-cols-2 gap-6 mb-6">
-              <SkillsGrowthChart />
+              {/* <SkillsGrowthChart /> */}
               <ProjectMetricsChart />
             </div>
             
