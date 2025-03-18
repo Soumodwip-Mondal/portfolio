@@ -24,7 +24,7 @@ export default function ARPage() {
       id: 'resume',
       title: 'Interactive Resume',
       description: 'My resume comes to life with interactive 3D elements',
-      qrImageUrl: '/images/ar/qr-resume.png',
+      qrImageUrl: '',
       arUrl: '/ar/resume-viewer.html',
       instructions: [
         'Scan the QR code with your smartphone camera',
