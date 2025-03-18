@@ -4,13 +4,13 @@ import { useState, useEffect } from 'react';
 import { Link } from 'react-router-dom';
 import { motion } from 'framer-motion';
 import { useTheme } from 'next-themes';
-import { Avatar, AvatarFallback, AvatarImage } from '../ui/avatar'
+import { Avatar, AvatarFallback, AvatarImage } from '../ui/avatar';
 import { Button } from '../../components/ui/button';
 import { Moon, Sun, Menu, Paintbrush, Bot, Mic, User, Code, Lightbulb, Newspaper, LayoutDashboard, Mail } from 'lucide-react';
 import MobileMenu from './mobile-menu';
 import { useScrollToSection } from '../../hooks/useScrollToSection';
 import { GamificationButton } from '../gamification/GamificationButton';
-
+import image from '../../assets/Hello.png'
 export default function Header() {
   const [mounted, setMounted] = useState(false);
   const { theme, setTheme } = useTheme();
@@ -31,15 +31,16 @@ export default function Header() {
           className="flex items-center gap-2"
         >
           <Link to="/">
-            <Avatar className="h-10 w-10">
-              <AvatarImage src="/images/profile.jpg" alt="Profile" />
+            <Avatar className="h-12 w-12">
+              <AvatarImage src={image} alt="Profile" />
               <AvatarFallback>SM</AvatarFallback>
             </Avatar>
           </Link>
-          <span className="font-bold text-xl">Soumodwip Mondal</span>
+          <span className="font-bold text-xl md:block invisible md:visible">Soumodwip Mondal</span>
+
         </motion.div>
         
-        {/* Desktop Navigation */}
+        {/* Rest of the code remains the same */}
         <motion.nav 
           initial={{ opacity: 0, y: -10 }}
           animate={{ opacity: 1, y: 0 }}

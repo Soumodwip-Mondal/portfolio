@@ -3,14 +3,10 @@
 import React from "react";
 import { cn } from "../../lib/utils";
 
-interface AvatarProps extends React.HTMLAttributes<HTMLDivElement> {
-  src?: string;
-  alt?: string;
-  fallback?: string;
-}
+interface AvatarProps extends React.HTMLAttributes<HTMLDivElement> {}
 
 export const Avatar = React.forwardRef<HTMLDivElement, AvatarProps>(
-  ({ className, src, alt, fallback, ...props }, ref) => (
+  ({ className, children, ...props }, ref) => (
     <div
       ref={ref}
       className={cn(
@@ -19,17 +15,7 @@ export const Avatar = React.forwardRef<HTMLDivElement, AvatarProps>(
       )}
       {...props}
     >
-      {src ? (
-        <img
-          src={src}
-          alt={alt}
-          className="aspect-square h-full w-full"
-        />
-      ) : (
-        <div className="flex h-full w-full items-center justify-center bg-muted">
-          {fallback}
-        </div>
-      )}
+      {children}
     </div>
   )
 );
@@ -38,9 +24,11 @@ Avatar.displayName = "Avatar";
 export const AvatarImage = React.forwardRef<
   HTMLImageElement,
   React.ImgHTMLAttributes<HTMLImageElement>
->(({ className, ...props }, ref) => (
+>(({ className, src, alt, ...props }, ref) => (
   <img
     ref={ref}
+    src={src}
+    alt={alt}
     className={cn("aspect-square h-full w-full", className)}
     {...props}
   />
@@ -50,7 +38,7 @@ AvatarImage.displayName = "AvatarImage";
 export const AvatarFallback = React.forwardRef<
   HTMLDivElement,
   React.HTMLAttributes<HTMLDivElement>
->(({ className, ...props }, ref) => (
+>(({ className, children, ...props }, ref) => (
   <div
     ref={ref}
     className={cn(
@@ -58,6 +46,8 @@ export const AvatarFallback = React.forwardRef<
       className
     )}
     {...props}
-  />
+  >
+    {children}
+  </div>
 ));
 AvatarFallback.displayName = "AvatarFallback";
