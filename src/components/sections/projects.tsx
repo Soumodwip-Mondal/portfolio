@@ -241,7 +241,7 @@ export default function Projects() {
             animate={{ opacity: 1, y: 0 }}
             transition={{ delay: 0.4, duration: 0.6 }}
           >
-            Explore my latest work showcasing creative solutions and technical expertise
+            Explore my latest work showcasing creative solutions and technical expertise. My Portfolio is my best project. Currently I am working on it. Many project is going to be added soon.
           </motion.p>
         </div>
         
