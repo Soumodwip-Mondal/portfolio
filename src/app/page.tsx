@@ -12,6 +12,8 @@ import VoiceControlPromo from '../components/sections/voice-control-promo';
 import { PersonalizedRecommendations } from '../components/personalization/PersonalizedRecommendations';
 import { SectionTracker } from '../components/personalization/SectionTracker';
 import { usePersonalization } from '../context/PersonalizationContext';
+import HireMePopup from '../components/shared/hire-me-popup';
+
 export default function Home() {
   const { isReturningVisitor } = usePersonalization();
   return (
@@ -63,6 +65,9 @@ export default function Home() {
         </SectionTracker>
       </main>
       <Footer />
+      
+      {/* Hire Me Popup that appears after 10 seconds for testing */}
+      <HireMePopup timeToShow={10000} />
     </>
   );
 }
