@@ -5,10 +5,9 @@ import Skills3D from '../components/sections/skills-3d';
 import Contact from '../components/sections/contact';
 import Footer from '../components/layout/footer';
 import InteractivePlayground from '../components/sections/interactive-playground';
-import Dashboard from '../components/sections/dashboard';
+// import Dashboard from '../components/sections/dashboard';
 import AugmentedReality from '../components/sections/augmented-reality';
-import AIAssistantPromo from '../components/sections/ai-assistant-promo';
-import VoiceControlPromo from '../components/sections/voice-control-promo';
+
 import { PersonalizedRecommendations } from '../components/personalization/PersonalizedRecommendations';
 import { SectionTracker } from '../components/personalization/SectionTracker';
 import { usePersonalization } from '../context/PersonalizationContext';
@@ -40,17 +39,7 @@ export default function Home() {
           <Skills3D />
         </SectionTracker>
         
-        <SectionTracker sectionId="ai-assistant" interest="ai">
-          <AIAssistantPromo />
-        </SectionTracker>
-        
-        <SectionTracker sectionId="voice-control" interest="ai">
-          <VoiceControlPromo />
-        </SectionTracker>
-        
-        <SectionTracker sectionId="dashboard" interest="data">
-          <Dashboard />
-        </SectionTracker>
+      
         
         <SectionTracker sectionId="augmented-reality" interest="mobile">
           <AugmentedReality />
