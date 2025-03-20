@@ -43,7 +43,7 @@ export default function Projects() {
   const [activeFilter, setActiveFilter] = useState('all');
   const controls = useAnimation();
   const [mousePosition, setMousePosition] = useState({ x: 0, y: 0 });
-  const [showSparkle, setShowSparkle] = useState(false);
+  const [showSparkle, setShowSparkle] = useState(true);
   const sectionRef = useRef<HTMLElement>(null);
   const isInView = useInView(sectionRef, { once: false, amount: 0.2 });
   
@@ -322,9 +322,11 @@ export default function Projects() {
                   </motion.div>
                 )}
                 
-                {/* Project card */}
+                {/* Project card with focus/fade effect */}
                 <ProjectCard 
-                  project={project} 
+                  project={project}
+                  isFocused={hoveredIndex === index}
+                  anyCardFocused={hoveredIndex !== null} 
                 />
               </div>
             </motion.div>

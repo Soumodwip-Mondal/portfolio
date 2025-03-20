@@ -11,9 +11,11 @@ import { Project } from '../../types/project';
 
 interface ProjectCardProps {
   project: Project;
+  isFocused?: boolean;
+  anyCardFocused?: boolean;
 }
 
-export default function ProjectCard({ project }: ProjectCardProps) {
+export default function ProjectCard({ project, isFocused, anyCardFocused }: ProjectCardProps) {
   const cardRef = useRef<HTMLDivElement>(null);
   const isInView = useInView(cardRef, { once: true, amount: 0.2 });
   
@@ -51,96 +53,118 @@ export default function ProjectCard({ project }: ProjectCardProps) {
   // Optimize animations with useReducedMotion and conditional rendering
   const shouldReduceMotion = typeof window !== 'undefined' && window.matchMedia?.('(prefers-reduced-motion: reduce)').matches;
 
-  // Performance optimized shimmer effect
-  // Removed as it was not being used
-
-  // Card entrance animation
-  const entranceVariants = {
-    hidden: { 
-      opacity: 0, 
-      y: 20 
-    },
-    visible: { 
-      opacity: 1, 
-      y: 0,
-      transition: { 
-        type: 'spring', 
-        stiffness: 100,
-        duration: 0.5
-      }
-    }
-  };
-
-  // Border gradient animation - optimized while preserving the dynamic thick border look
-  // Removed as it was not being used
-
-  // Optimized diagonal border flow
+  // Enhanced diagonal border flow with complementary colors and dynamic speed based on focus
   const diagonalBorderVariants = {
     initial: {},
-    animate: {
+    animate: (custom: { isFocused: boolean, anyCardFocused: boolean }) => ({
       background: shouldReduceMotion 
         ? "linear-gradient(135deg, #3b82f6 0%, #8b5cf6 100%)" 
         : [
           "linear-gradient(135deg, #3b82f6 0%, #8b5cf6 100%)",
           "linear-gradient(135deg, #8b5cf6 0%, #3b82f6 100%)",
+          "linear-gradient(135deg, #f59e0b 0%, #ef4444 100%)",  
           "linear-gradient(135deg, #3b82f6 0%, #8b5cf6 100%)"
         ],
+      filter: custom.isFocused ? 'brightness(1.2)' : custom.anyCardFocused ? 'brightness(0.7)' : 'brightness(1)',
       transition: {
-        duration: shouldReduceMotion ? 0 : 3,
+        duration: shouldReduceMotion ? 0 : custom.isFocused ? 3 : custom.anyCardFocused ? 6 : 4,
         repeat: shouldReduceMotion ? 0 : Infinity,
         repeatType: "reverse" as const
       }
-    }
+    })
   };
+
+  // Dynamic animations based on focus state handled inline
 
   return (
     <motion.div
       ref={cardRef}
       initial={isInView ? "visible" : "hidden"}
       animate="visible"
-      variants={entranceVariants}
+      variants={{
+        hidden: { 
+          opacity: 0, 
+          y: 20 
+        },
+        visible: { 
+          opacity: 1, 
+          y: 0,
+          transition: { 
+            type: 'spring', 
+            stiffness: 100,
+            duration: 0.5
+          }
+        }
+      }}
       onMouseMove={handleMouseMove}
       onMouseLeave={handleMouseLeave}
       style={{ 
         rotateX, 
         rotateY,
         transformStyle: "preserve-3d",
-        perspective: 1000, 
+        perspective: 1000,
+        scale: isFocused ? 1.05 : anyCardFocused ? 0.95 : 1,
+        opacity: isFocused ? 1 : anyCardFocused ? 0.6 : 1,
+        filter: isFocused ? 'brightness(1.1)' : anyCardFocused ? 'brightness(0.8) blur(1px)' : 'brightness(1)',
+        transition: 'all 0.4s ease-out'
       }}
       className="relative group h-full"
     >
       {/* Optimized border animation with diagonal color flow */}
       <motion.div 
-        className="absolute -inset-[2px] rounded-xl bg-gradient-to-br from-blue-500 to-purple-500 z-[-1] p-[10px]"
+        className="absolute -inset-[2px] rounded-xl bg-gradient-to-br from-blue-500 to-purple-500 z-[-1] p-[2px]"
         initial="initial"
         animate="animate"
         variants={diagonalBorderVariants}
+        custom={{ isFocused, anyCardFocused }}
       >
-        {/* Top left corner accent */}
+        {/* Top left corner accent with enhanced glow */}
         <motion.div 
-          className="absolute top-0 left-0 w-8 h-8 bg-gradient-to-br from-amber-500 to-orange-600 rounded-tl-lg"
+          className="absolute top-0 left-0 w-8 h-8 bg-gradient-to-br from-blue-500 to-purple-500 rounded-tl-lg"
+          initial="initial"
           animate={{
-            scale: shouldReduceMotion ? 1 : [1, 1.1, 1],
-            opacity: shouldReduceMotion ? 0.8 : [0.7, 0.9, 0.7],
+            scale: shouldReduceMotion ? 1 : [1, 1.2, 1],
+            opacity: shouldReduceMotion ? 0.8 : [0.7, 1, 0.7],
+            boxShadow: shouldReduceMotion 
+              ? "0 0 10px rgba(59, 130, 246, 0.5)" 
+              : [
+                "0 0 10px rgba(59, 130, 246, 0.5)", 
+                "0 0 20px rgba(59, 130, 246, 0.8)", 
+                "0 0 10px rgba(59, 130, 246, 0.5)"
+              ]
           }}
           transition={{ 
             duration: 2, 
             repeat: shouldReduceMotion ? 0 : Infinity, 
             repeatType: "reverse" as const 
           }}
+          style={{
+            filter: isFocused ? 'brightness(1.2)' : anyCardFocused ? 'brightness(0.7)' : 'brightness(1)'
+          }}
         />
         
-        {/* Bottom right corner accent */}
+        {/* Bottom right corner accent with enhanced glow */}
         <motion.div 
-          className="absolute bottom-0 right-0 w-8 h-8 bg-gradient-to-tl from-pink-500 to-rose-600 rounded-br-lg"
+          className="absolute bottom-0 right-0 w-8 h-8 bg-gradient-to-tl from-amber-500 to-orange-600 rounded-br-lg"
+          initial="initial"
           animate={{
-            scale: shouldReduceMotion ? 1 : [1, 1.1, 1],
-            opacity: shouldReduceMotion ? 0.8 : [0.7, 0.9, 0.7],
+            scale: shouldReduceMotion ? 1 : [1, 1.2, 1],
+            opacity: shouldReduceMotion ? 0.8 : [0.7, 1, 0.7],
+            boxShadow: shouldReduceMotion 
+              ? "0 0 10px rgba(245, 158, 11, 0.5)" 
+              : [
+                "0 0 10px rgba(245, 158, 11, 0.5)", 
+                "0 0 20px rgba(245, 158, 11, 0.8)", 
+                "0 0 10px rgba(245, 158, 11, 0.5)"
+              ]
           }}
           transition={{ 
             duration: 2.2, 
             repeat: shouldReduceMotion ? 0 : Infinity, 
             repeatType: "reverse" as const 
+          }}
+          style={{
+            filter: isFocused ? 'brightness(1.2)' : anyCardFocused ? 'brightness(0.7)' : 'brightness(1)'
           }}
         />
       </motion.div>
