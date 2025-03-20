@@ -1,16 +1,19 @@
+import { lazy, Suspense } from 'react';
 import Hero from '../components/sections/hero';
-import Projects from '../components/sections/projects';
-import Skills from '../components/sections/skills';
-import Skills3D from '../components/sections/skills-3d';
-import Contact from '../components/sections/contact';
-import Footer from '../components/layout/footer';
-import InteractivePlayground from '../components/sections/interactive-playground';
-// import Dashboard from '../components/sections/dashboard';
-import AugmentedReality from '../components/sections/augmented-reality';
+
+// Lazy load non-critical components
+const Projects = lazy(() => import('../components/sections/projects'));
+const Skills = lazy(() => import('../components/sections/skills'));
+const Skills3D = lazy(() => import('../components/sections/skills-3d'));
+const Contact = lazy(() => import('../components/sections/contact'));
+const Footer = lazy(() => import('../components/layout/footer'));
+const InteractivePlayground = lazy(() => import('../components/sections/interactive-playground'));
+const AugmentedReality = lazy(() => import('../components/sections/augmented-reality'));
 
 import { PersonalizedRecommendations } from '../components/personalization/PersonalizedRecommendations';
 import { SectionTracker } from '../components/personalization/SectionTracker';
 import { usePersonalization } from '../context/PersonalizationContext';
+import { LoadingSpinner } from '../components/ui/loading-spinner';
 import HireMePopup from '../components/shared/hire-me-popup';
 
 export default function Home() {
@@ -28,32 +31,46 @@ export default function Home() {
         )}
         
         <SectionTracker sectionId="projects" interest="development">
-          <Projects />
+          <Suspense fallback={<LoadingSpinner />}>
+            <Projects />
+          </Suspense>
         </SectionTracker>
         
         <SectionTracker sectionId="interactive-playground" interest="development">
-          <InteractivePlayground />
+          <Suspense fallback={<LoadingSpinner />}>
+            <InteractivePlayground />
+          </Suspense>
         </SectionTracker>
         
         <SectionTracker sectionId="skills-3d" interest="development">
-          <Skills3D />
+          <Suspense fallback={<LoadingSpinner />}>
+            <Skills3D />
+          </Suspense>
         </SectionTracker>
         
       
         
         <SectionTracker sectionId="augmented-reality" interest="mobile">
-          <AugmentedReality />
+          <Suspense fallback={<LoadingSpinner />}>
+            <AugmentedReality />
+          </Suspense>
         </SectionTracker>
         
         <SectionTracker sectionId="skills" interest="development">
-          <Skills />
+          <Suspense fallback={<LoadingSpinner />}>
+            <Skills />
+          </Suspense>
         </SectionTracker>
         
         <SectionTracker sectionId="contact">
-          <Contact />
+          <Suspense fallback={<LoadingSpinner />}>
+            <Contact />
+          </Suspense>
         </SectionTracker>
       </main>
-      <Footer />
+      <Suspense fallback={<LoadingSpinner />}>
+        <Footer />
+      </Suspense>
       
       {/* Hire Me Popup that appears after 10 seconds for testing */}
       <HireMePopup timeToShow={10000} />
