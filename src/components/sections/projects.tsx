@@ -322,10 +322,9 @@ export default function Projects() {
                   </motion.div>
                 )}
                 
-                {/* Project card with hover state passed from parent */}
+                {/* Project card */}
                 <ProjectCard 
                   project={project} 
-                  isHovered={hoveredIndex === index ? true : hoveredIndex !== null ? false : undefined}
                 />
               </div>
             </motion.div>
