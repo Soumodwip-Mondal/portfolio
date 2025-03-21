@@ -13,7 +13,7 @@ const AugmentedReality = lazy(() => import('../components/sections/augmented-rea
 import { PersonalizedRecommendations } from '../components/personalization/PersonalizedRecommendations';
 import { SectionTracker } from '../components/personalization/SectionTracker';
 import { usePersonalization } from '../context/PersonalizationContext';
-import { LoadingSpinner } from '../components/ui/loading-spinner';
+import LoadingSpinner from '../components/ui/loading-spinner';
 import HireMePopup from '../components/shared/hire-me-popup';
 
 export default function Home() {
