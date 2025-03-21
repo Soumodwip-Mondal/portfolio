@@ -2,7 +2,7 @@
 
 import { motion } from 'framer-motion';
 
-export default function EnhancedLoadingSpinner() {
+export default function LoadingSpinner() {
   return (
     <div className="flex flex-col items-center justify-center min-h-[200px] p-4">
       <div className="relative">
