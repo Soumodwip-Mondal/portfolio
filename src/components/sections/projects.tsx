@@ -39,6 +39,8 @@ const CategoryIcon = ({ category }: { category: string }) => {
       return <Code className="h-4 w-4" />;
     case 'analytics':
       return <BarChart3 className="h-4 w-4" />;
+    case 'group':
+      return <Sparkles className="h-4 w-4" />;
     default:
       return <Sparkles className="h-4 w-4" />;
   }
