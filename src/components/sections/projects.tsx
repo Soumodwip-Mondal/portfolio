@@ -6,7 +6,7 @@ import { Button } from '../ui/button';
 import ProjectCard from '../shared/project-card';
 import { projects } from '../../data/project';
 import { Project } from '../../types/project';
-import { ChevronRight, ChevronUp, Star, Sparkles, Filter, Globe, Brain, Palette, Cpu, Database, Code, BarChart3 } from 'lucide-react';
+import { ChevronRight, ChevronUp, Star, Sparkles, Filter, Globe, Brain, Palette, Cpu, Database, Code, BarChart3, Group } from 'lucide-react';
 
 // Category-specific colors
 const categoryColors: Record<string, string> = {
@@ -40,7 +40,7 @@ const CategoryIcon = ({ category }: { category: string }) => {
     case 'analytics':
       return <BarChart3 className="h-4 w-4" />;
     case 'group':
-      return <Sparkles className="h-4 w-4" />;
+      return <Group className="h-4 w-4" />;
     default:
       return <Sparkles className="h-4 w-4" />;
   }
