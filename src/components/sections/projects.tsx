@@ -6,16 +6,18 @@ import { Button } from '../ui/button';
 import ProjectCard from '../shared/project-card';
 import { projects } from '../../data/project';
 import { Project } from '../../types/project';
-import { ChevronRight, Star, Sparkles, Filter, Globe, Smartphone, Palette, Cpu, Database } from 'lucide-react';
+import { ChevronRight, ChevronUp, Star, Sparkles, Filter, Globe, Brain, Palette, Cpu, Database, Code, BarChart3 } from 'lucide-react';
 
 // Category-specific colors
 const categoryColors: Record<string, string> = {
   all: 'from-blue-600 to-purple-600',
-  web: 'from-blue-600 to-cyan-500',
-  mobile: 'from-emerald-600 to-teal-500',
-  design: 'from-pink-500 to-rose-500',
+  web: 'from-green-600 to-cyan-500',
   ai: 'from-violet-600 to-purple-600',
-  data: 'from-amber-500 to-orange-500'
+  data: 'from-amber-500 to-orange-500',
+  ml:'from-pink-500 to-rose-500',
+  analytics:'from-emerald-600 to-teal-500',
+  python: 'from-yellow-500 to-amber-500',
+  group: 'from-amber-500 to-orange-500',
 };
 
 // Category-specific icons
@@ -25,22 +27,28 @@ const CategoryIcon = ({ category }: { category: string }) => {
       return <Filter className="h-4 w-4" />;
     case 'web':
       return <Globe className="h-4 w-4" />;
-    case 'mobile':
-      return <Smartphone className="h-4 w-4" />;
+    case 'ml':
+      return <Brain className="h-4 w-4" />;
     case 'design':
       return <Palette className="h-4 w-4" />;
     case 'ai':
       return <Cpu className="h-4 w-4" />;
     case 'data':
       return <Database className="h-4 w-4" />;
+    case 'python':
+      return <Code className="h-4 w-4" />;
+    case 'analytics':
+      return <BarChart3 className="h-4 w-4" />;
     default:
       return <Sparkles className="h-4 w-4" />;
   }
 };
 
+
 export default function Projects() {
   const [hoveredIndex, setHoveredIndex] = useState<number | null>(null);
   const [activeFilter, setActiveFilter] = useState('all');
+  const [showAll, setShowAll] = useState(false); // State to track if all projects should be shown
   const controls = useAnimation();
   const [mousePosition, setMousePosition] = useState({ x: 0, y: 0 });
   const [showSparkle, setShowSparkle] = useState(true);
@@ -123,13 +131,11 @@ export default function Projects() {
     hover: { 
       scale: 1.05,
       y: -3,
-      boxShadow: "0 20px 25px -5px rgba(59, 130, 246, 0.25), 0 10px 10px -5px rgba(59, 130, 246, 0.1)",
       transition: { type: "spring", stiffness: 400, damping: 10 }
     },
     tap: { 
       scale: 0.97,
       y: -1,
-      boxShadow: "0 5px 15px -3px rgba(59, 130, 246, 0.15), 0 4px 6px -2px rgba(59, 130, 246, 0.05)",
     }
   };
 
@@ -147,12 +153,25 @@ export default function Projects() {
     ? projects 
     : projects.filter((project: Project) => project.category === activeFilter);
 
+  // Get visible projects - limit to 3 per category if showAll is false
+  const visibleProjects = showAll ? filteredProjects : filteredProjects.slice(0, 3);
+
   // Get unique categories for filter buttons
   const categories = ['all', ...new Set(projects.map(project => project.category))];
 
   // Get the appropriate gradient color for the active category
   const getActiveCategoryGradient = (category: string) => {
     return categoryColors[category] || categoryColors['all'];
+  };
+
+  // Handle click on explore button
+  const handleExploreClick = () => {
+    setShowAll(true);
+  };
+  
+  // Handle click on show less button
+  const handleShowLessClick = () => {
+    setShowAll(false);
   };
 
   return (
@@ -245,19 +264,22 @@ export default function Projects() {
           </motion.p>
         </div>
         
-        {/* Enhanced filter buttons with animations */}
+        {/* Enhanced filter buttons with animations - Fixed overflow with flex-wrap and increased gap */}
         <motion.div 
-          className="flex flex-wrap justify-center gap-3 mb-12"
+          className="flex justify-center mb-12"
           initial={{ opacity: 0, y: 20 }}
           animate={{ opacity: 1, y: 0 }}
           transition={{ delay: 0.6, duration: 0.5 }}
         >
-          <div className="p-1 bg-card/50 backdrop-blur-sm border border-border/50 rounded-full flex flex-wrap justify-center shadow-lg">
+          <div className="p-1 bg-card/50 backdrop-blur-sm border border-border/50 rounded-full inline-flex flex-wrap justify-center shadow-lg max-w-full gap-1">
             {categories.map((category) => (
               <motion.button
                 key={category}
-                onClick={() => setActiveFilter(category)}
-                className={`px-4 py-2 rounded-full text-sm font-medium transition-all duration-300 flex items-center gap-2 ${
+                onClick={() => {
+                  setActiveFilter(category);
+                  setShowAll(false); // Reset showAll when changing categories
+                }}
+                className={`px-4 py-2 m-1 rounded-full text-sm font-medium transition-all duration-300 flex items-center gap-2 ${
                   activeFilter === category 
                     ? `bg-gradient-to-r ${getActiveCategoryGradient(category)} text-white shadow-md` 
                     : 'hover:bg-muted'
@@ -283,20 +305,20 @@ export default function Projects() {
         >
           <AnimatePresence mode="wait">
             <motion.div
-              key={activeFilter}
+              key={`${activeFilter}-${showAll}`}
               initial={{ opacity: 0, y: 10 }}
               animate={{ opacity: 1, y: 0 }}
               exit={{ opacity: 0, y: -10 }}
               transition={{ duration: 0.3 }}
             >
-              Showing {filteredProjects.length} of {projects.length} projects
+              Showing {visibleProjects.length} of {filteredProjects.length} projects
             </motion.div>
           </AnimatePresence>
         </motion.div>
         
         {/* Projects grid with enhanced animations */}
         <div className="grid grid-cols-1 md:grid-cols-2 lg:grid-cols-3 gap-6 mb-12"> 
-          {filteredProjects.map((project: Project, index: number) => (
+          {visibleProjects.map((project: Project, index: number) => (
             <motion.div
               key={project.id}
               className="h-full"
@@ -333,39 +355,80 @@ export default function Projects() {
           ))}
         </div>
         
-        {/* Enhanced CTA button */}
-        <motion.div 
-          className="text-center"
-          variants={buttonVariants}
-          initial="hidden"
-          animate="visible"
-          whileHover="hover"
-          whileTap="tap"
-        >
-          <Button 
-            size="lg"
-            className="bg-gradient-to-r from-primary to-purple-600 hover:from-primary/90 hover:to-purple-600/90 text-primary-foreground shadow-lg group relative overflow-hidden"
-            onClick={() => window.open('/projects', '_blank')}
-          >
-            <span className="relative z-10 flex items-center">
-              Explore All Projects <ChevronRight className="ml-2 h-5 w-5 transition-transform duration-300 group-hover:translate-x-1" />
-            </span>
-            
-            {/* Button background animation */}
-            <motion.span 
-              className="absolute inset-0 bg-gradient-to-r from-blue-600 to-purple-700"
-              animate={{
-                backgroundPosition: ['0% 50%', '100% 50%', '0% 50%'],
-              }}
-              transition={{ 
-                duration: 5, 
-                repeat: Infinity,
-                ease: "linear"
-              }}
-              style={{ backgroundSize: '200% 100%' }}
-            />
-          </Button>
-        </motion.div>
+        {/* CTA buttons - Show either "Explore All" or "Show Less" button */}
+        <AnimatePresence mode="wait">
+          {!showAll && filteredProjects.length > 3 ? (
+            <motion.div 
+              key="explore-button"
+              className="text-center"
+              variants={buttonVariants}
+              initial="hidden"
+              animate="visible"
+              exit={{ opacity: 0, y: -20, transition: { duration: 0.3 } }}
+              whileHover="hover"
+              whileTap="tap"
+            >
+              <Button 
+                size="lg"
+                className="bg-gradient-to-r from-primary to-purple-600 hover:from-primary/90 hover:to-purple-600/90 text-primary-foreground group relative overflow-hidden"
+                onClick={handleExploreClick}
+              >
+                <span className="relative z-10 flex items-center">
+                  Explore All Projects <ChevronRight className="ml-2 h-5 w-5 transition-transform duration-300 group-hover:translate-x-1" />
+                </span>
+                
+                <motion.span 
+                  className="absolute inset-0 bg-gradient-to-r from-blue-600 to-purple-700"
+                  animate={{
+                    backgroundPosition: ['0% 50%', '100% 50%', '0% 50%'],
+                  }}
+                  transition={{ 
+                    duration: 5, 
+                    repeat: Infinity,
+                    ease: "linear"
+                  }}
+                  style={{ backgroundSize: '200% 100%' }}
+                />
+              </Button>
+            </motion.div>
+          ) : (
+            showAll && filteredProjects.length > 3 && (
+              <motion.div 
+                key="show-less-button"
+                className="text-center"
+                variants={buttonVariants}
+                initial="hidden"
+                animate="visible"
+                exit={{ opacity: 0, y: -20, transition: { duration: 0.3 } }}
+                whileHover="hover"
+                whileTap="tap"
+              >
+                <Button 
+                  size="lg"
+                  className="bg-gradient-to-r from-purple-600 to-primary hover:from-purple-600/90 hover:to-primary/90 text-primary-foreground group relative overflow-hidden"
+                  onClick={handleShowLessClick}
+                >
+                  <span className="relative z-10 flex items-center">
+                    Show Less <ChevronUp className="ml-2 h-5 w-5 transition-transform duration-300 group-hover:-translate-y-1" />
+                  </span>
+                  
+                  <motion.span 
+                    className="absolute inset-0 bg-gradient-to-r from-purple-700 to-blue-600"
+                    animate={{
+                      backgroundPosition: ['0% 50%', '100% 50%', '0% 50%'],
+                    }}
+                    transition={{ 
+                      duration: 5, 
+                      repeat: Infinity,
+                      ease: "linear"
+                    }}
+                    style={{ backgroundSize: '200% 100%' }}
+                  />
+                </Button>
+              </motion.div>
+            )
+          )}
+        </AnimatePresence>
       </div>
     </motion.section>
   );
