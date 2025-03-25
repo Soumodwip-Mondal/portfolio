@@ -5,6 +5,7 @@ import pizza_data from '../assets/Pizza_data.png';
 import myPortfolio from '../assets/myportfolio.png'
 import devvit from '../assets/devvit.png'
 import love from '../assets/love.png'
+import jeevan from '../assets/jeevan.png'
 export const projects: Project[] = [
   
   {
@@ -114,10 +115,10 @@ export const projects: Project[] = [
     title: "Jeevan Vase",
     description: "Website for a NGO and Individual.",
     category: "group",
-    tags: ["Python", "Pandas", "Matplotlib"],
-    image: data_analysis,
-    imageUrl: data_analysis,
-    url: 'https://github.com/Soumodwip-Mondal/Marketing-Analytics-Exploratory-Statistical-Analysis-task.git',
+    tags: ["TypeScript", "React.js", "Shacn","Socket io","Tailwind CSS","Node.js"],
+    image: jeevan,
+    imageUrl: jeevan,
+    url: 'https://github.com/Soumodwip-Mondal/Jeevan-verse2.git',
     date: "2025"
   },
   {
