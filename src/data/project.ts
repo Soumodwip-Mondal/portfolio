@@ -6,6 +6,8 @@ import myPortfolio from '../assets/myportfolio.png'
 import devvit from '../assets/devvit.png'
 import love from '../assets/love.png'
 import jeevan from '../assets/jeevan.png'
+import mess from '../assets/mess.png'
+import python from '../assets/python_pro.png'
 export const projects: Project[] = [
   
   {
@@ -33,12 +35,12 @@ export const projects: Project[] = [
   },
   {
     id: 3,
-    title: "Project 3",
-    description: "Description for project 3",
+    title: "Basic to Advanced python project",
+    description: "",
     category: "python",
-    tags: ["Figma", "Adobe XD"],
-    image: "/images/project3.jpg",
-    imageUrl: "/images/project3.jpg",
+    tags: ["Python","numpy"],
+    image: python,
+    imageUrl: python,
     url: 'https://github.com/Soumodwip-Mondal/Python-Projects.git',
     date: "2025"
   },
@@ -79,6 +81,17 @@ export const projects: Project[] = [
   },
   {
     id: 7,
+    title: "Mess management System",
+    description: "This is an ongoing project",
+    category: "web",
+    tags: ["TypeScript", "React", "Tailwind CSS", "Next.js"],
+    image: mess,
+    imageUrl: mess,
+    url: 'https://github.com/Soumodwip-Mondal/Python-Projects.git',
+    date: "2025"
+  },
+  {
+    id: 8,
     title: "Basic ML Project",
     description: "I have created a basic machine learning project using Python and Scikit-learn. I have used the Iris dataset to train the model.",
     category: "ml",
@@ -89,7 +102,7 @@ export const projects: Project[] = [
     date: "2025"
   },
   {
-    id: 8,
+    id: 9,
     title: "ML Project",
     description: "I have created a basic machine learning project using Python and Scikit-learn. I have used the Iris dataset to train the model.",
     category: "ml",
@@ -100,10 +113,10 @@ export const projects: Project[] = [
     date: "2025"
   },
   {
-    id: 9,
+    id: 10,
     title: "Making Predictions Using data",
     description: "I have done a statistical analysis of the marketing data using Python and Pandas. I have also used Matplotlib to visualize the data.",
-    category: "data",
+    category: "analytics",
     tags: ["Python", "Pandas", "Matplotlib"],
     image: data_analysis,
     imageUrl: data_analysis,
@@ -111,7 +124,7 @@ export const projects: Project[] = [
     date: "2025"
   },
   {
-    id: 9,
+    id: 11,
     title: "Jeevan Vase",
     description: "Website for a NGO and Individual.",
     category: "group",
@@ -122,7 +135,7 @@ export const projects: Project[] = [
     date: "2025"
   },
   {
-    id: 10,
+    id: 12,
     title: "Pizza Sales Data Analysis",
     description: "I have done a analysis of the marketing data using Python and Pandas. I have also used Matplotlib to visualize the data.",
     category: "analytics",
