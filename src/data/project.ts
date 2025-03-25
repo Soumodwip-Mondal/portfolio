@@ -1,6 +1,10 @@
 import { Project } from '../types/project';
 import speech_reco from "../assets/speech_reco.png";
 import data_analysis from "../assets/data-analisis.png";
+import pizza_data from '../assets/Pizza_data.png';
+import myPortfolio from '../assets/myportfolio.png'
+import devvit from '../assets/devvit.png'
+import love from '../assets/love.png'
 export const projects: Project[] = [
   
   {
@@ -9,8 +13,8 @@ export const projects: Project[] = [
     description: "This my best Project I put all my ideas and creativity in this project. This is a mixture of all the technologies I have learned so far. It has multiple features like AI Assistant, 3D Animation, Voice Controll Navigation, Collaborate Drawing, Blogs.",
     category: "web",
     tags: ["TypeScript", "React", "Tailwind CSS", "Freamer Motion","Three JS","lucide-react","Speech Recognition"],
-    image: "/images/project3.jpg",
-    imageUrl: "/images/project3.jpg",
+    image: myPortfolio,
+    imageUrl: myPortfolio,
     url: 'https://soumodwipmondal.vercel.app/',
     date: "2025"
   },
@@ -43,8 +47,8 @@ export const projects: Project[] = [
     description: "Express your love to your loved ones with this simple web app. I have created this project using React and Basic CSS.",
     category: "web",
     tags: ["React", "CSS",'JavaScript'],
-    image: "/images/project3.jpg",
-    imageUrl: "/images/project3.jpg",
+    image: love,
+    imageUrl: love,
     url: 'https://web-gotlove.vercel.app/',
     date: "2025"
   },
@@ -67,8 +71,8 @@ export const projects: Project[] = [
     description: "",
     category: "web",
     tags: ["TypeScript", "React", "Tailwind CSS", "Devvit"],
-    image: "/images/project3.jpg",
-    imageUrl: "/images/project3.jpg",
+    image: devvit,
+    imageUrl: devvit,
     url: 'https://github.com/Soumodwip-Mondal/Python-Projects.git',
     date: "2025"
   },
@@ -118,13 +122,13 @@ export const projects: Project[] = [
   },
   {
     id: 10,
-    title: "Making Predictions Using data",
-    description: "I have done a statistical analysis of the marketing data using Python and Pandas. I have also used Matplotlib to visualize the data.",
+    title: "Pizza Sales Data Analysis",
+    description: "I have done a analysis of the marketing data using Python and Pandas. I have also used Matplotlib to visualize the data.",
     category: "analytics",
     tags: ["Python", "Pandas", "Matplotlib"],
-    image: data_analysis,
-    imageUrl: data_analysis,
-    url: 'https://github.com/Soumodwip-Mondal/Marketing-Analytics-Exploratory-Statistical-Analysis-task.git',
+    image: pizza_data,
+    imageUrl: pizza_data,
+    url: 'https://github.com/Soumodwip-Mondal/PizzaSales_Data_analysis.git',
     date: "2025"
   },
 ]
