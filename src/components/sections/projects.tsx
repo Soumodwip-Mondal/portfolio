@@ -1,14 +1,17 @@
 'use client';
 
-import { useState, useEffect, useRef } from 'react';
+import { useState, useEffect, useRef, useMemo } from 'react';
 import { motion, useAnimation, AnimatePresence, useInView } from 'framer-motion';
 import { Button } from '../ui/button';
-import ProjectCard from '../shared/project-card';
+import { lazy, Suspense } from 'react';
 import { projects } from '../../data/project';
 import { Project } from '../../types/project';
 import { ChevronRight, ChevronUp, Star, Sparkles, Filter, Globe, Brain, Palette, Cpu, Database, Code, BarChart3, Group } from 'lucide-react';
 
-// Category-specific colors
+// Lazy load non-critical components
+const ProjectCard = lazy(() => import('../shared/project-card'));
+
+// Category-specific colors - moved outside component to avoid re-creation
 const categoryColors: Record<string, string> = {
   all: 'from-blue-600 to-purple-600',
   web: 'from-green-600 to-cyan-500',
@@ -20,161 +23,184 @@ const categoryColors: Record<string, string> = {
   group: 'from-amber-500 to-orange-500',
 };
 
-// Category-specific icons
+// Category-specific icons - Memoized component
 const CategoryIcon = ({ category }: { category: string }) => {
-  switch (category) {
-    case 'all':
-      return <Filter className="h-4 w-4" />;
-    case 'web':
-      return <Globe className="h-4 w-4" />;
-    case 'ml':
-      return <Brain className="h-4 w-4" />;
-    case 'design':
-      return <Palette className="h-4 w-4" />;
-    case 'ai':
-      return <Cpu className="h-4 w-4" />;
-    case 'data':
-      return <Database className="h-4 w-4" />;
-    case 'python':
-      return <Code className="h-4 w-4" />;
-    case 'analytics':
-      return <BarChart3 className="h-4 w-4" />;
-    case 'group':
-      return <Group className="h-4 w-4" />;
-    default:
-      return <Sparkles className="h-4 w-4" />;
+  const iconMap = {
+    all: <Filter className="h-4 w-4" />,
+    web: <Globe className="h-4 w-4" />,
+    ml: <Brain className="h-4 w-4" />,
+    design: <Palette className="h-4 w-4" />,
+    ai: <Cpu className="h-4 w-4" />,
+    data: <Database className="h-4 w-4" />,
+    python: <Code className="h-4 w-4" />,
+    analytics: <BarChart3 className="h-4 w-4" />,
+    group: <Group className="h-4 w-4" />,
+  };
+  
+  return iconMap[category as keyof typeof iconMap] || <Sparkles className="h-4 w-4" />;
+};
+
+// Pre-defined animation variants - moved outside component
+const headingVariants = {
+  hidden: { y: -50, opacity: 0 },
+  visible: { 
+    y: 0, 
+    opacity: 1,
+    transition: { 
+      type: "spring",
+      stiffness: 80,
+      damping: 12,
+      duration: 0.8
+    }
   }
 };
 
+const sparkleVariants = {
+  hidden: { scale: 0, opacity: 0, rotate: -15 },
+  visible: { 
+    scale: [0, 1.4, 0.9, 1.2, 0], 
+    opacity: [0, 0.8, 1, 0.6, 0], 
+    rotate: [-15, 5, -5, 10, 0],
+    transition: { duration: 1.8, ease: "easeInOut" } 
+  }
+};
+
+const filterVariants = {
+  inactive: { scale: 1, y: 0 },
+  active: { 
+    scale: 1.08, 
+    y: -2,
+    transition: { type: "spring", stiffness: 300, damping: 10 }
+  }
+};
+
+const buttonVariants = {
+  hidden: { opacity: 0, scale: 0.8, y: 20 },
+  visible: { 
+    opacity: 1, 
+    scale: 1,
+    y: 0,
+    transition: { 
+      delay: 1.0,
+      type: "spring",
+      stiffness: 100,
+      damping: 12
+    }
+  },
+  hover: { 
+    scale: 1.05,
+    y: -3,
+    transition: { type: "spring", stiffness: 400, damping: 10 }
+  },
+  tap: { 
+    scale: 0.97,
+    y: -1,
+  }
+};
+
+// Simple loading fallback component
+const CardSkeleton = () => (
+  <div className="h-[320px] rounded-lg bg-gray-200 dark:bg-gray-800 animate-pulse"></div>
+);
 
 export default function Projects() {
   const [hoveredIndex, setHoveredIndex] = useState<number | null>(null);
   const [activeFilter, setActiveFilter] = useState('all');
-  const [showAll, setShowAll] = useState(false); // State to track if all projects should be shown
+  const [showAll, setShowAll] = useState(false);
   const controls = useAnimation();
   const [mousePosition, setMousePosition] = useState({ x: 0, y: 0 });
-  const [showSparkle, setShowSparkle] = useState(true);
+  const [showSparkle, setShowSparkle] = useState(false); // Start false to reduce initial load animations
   const sectionRef = useRef<HTMLElement>(null);
   const isInView = useInView(sectionRef, { once: false, amount: 0.2 });
   
-  // Track mouse position for enhanced effects
+  // Memoize categories to prevent recalculation
+  const categories = useMemo(() => 
+    ['all', ...Array.from(new Set(projects.map(project => project.category)))], 
+    []
+  );
+  
+  // Optimize mouse tracking with throttling/debouncing
   useEffect(() => {
-    const handleMouseMove = (e: { clientX: any; clientY: any; }) => {
-      setMousePosition({ x: e.clientX, y: e.clientY });
+    let timeoutId: NodeJS.Timeout;
+    
+    const handleMouseMove = (e: MouseEvent) => {
+      clearTimeout(timeoutId);
+      timeoutId = setTimeout(() => {
+        setMousePosition({ x: e.clientX, y: e.clientY });
+      }, 50); // 50ms throttle
     };
     
     window.addEventListener('mousemove', handleMouseMove);
-    return () => window.removeEventListener('mousemove', handleMouseMove);
+    return () => {
+      window.removeEventListener('mousemove', handleMouseMove);
+      clearTimeout(timeoutId);
+    };
   }, []);
   
-  // Control sparkle effect timing with improved randomness
+  // Replace interval with requestAnimationFrame for better performance
   useEffect(() => {
-    const interval = setInterval(() => {
-      setShowSparkle(true);
-      setTimeout(() => setShowSparkle(false), 1200);
-    }, Math.random() * 2000 + 2000); // Random interval between 2-4 seconds
+    if (!isInView) return; // Don't run effect if not in view
     
-    return () => clearInterval(interval);
-  }, []);
+    let sparkleTimeout: NodeJS.Timeout;
+    let animationFrameId: number;
+    let lastTime = 0;
+    const minInterval = 2000;
+    
+    const animateSparkle = (timestamp: number) => {
+      if (timestamp - lastTime > minInterval) {
+        setShowSparkle(true);
+        lastTime = timestamp;
+        
+        sparkleTimeout = setTimeout(() => {
+          setShowSparkle(false);
+        }, 1200);
+      }
+      
+      animationFrameId = requestAnimationFrame(animateSparkle);
+    };
+    
+    animationFrameId = requestAnimationFrame(animateSparkle);
+    
+    return () => {
+      cancelAnimationFrame(animationFrameId);
+      clearTimeout(sparkleTimeout);
+    };
+  }, [isInView]);
 
-  // Enhanced entrance animation sequence
   useEffect(() => {
     if (isInView) {
       controls.start('visible');
     }
   }, [controls, isInView]);
 
-  const headingVariants = {
-    hidden: { y: -50, opacity: 0 },
-    visible: { 
-      y: 0, 
-      opacity: 1,
-      transition: { 
-        type: "spring",
-        stiffness: 80,
-        damping: 12,
-        duration: 0.8
-      }
-    }
-  };
-
-  const sparkleVariants = {
-    hidden: { scale: 0, opacity: 0, rotate: -15 },
-    visible: { 
-      scale: [0, 1.4, 0.9, 1.2, 0], 
-      opacity: [0, 0.8, 1, 0.6, 0], 
-      rotate: [-15, 5, -5, 10, 0],
-      transition: { duration: 1.8, ease: "easeInOut" } 
-    }
-  };
-
-  const filterVariants = {
-    inactive: { scale: 1, y: 0 },
-    active: { 
-      scale: 1.08, 
-      y: -2,
-      transition: { type: "spring", stiffness: 300, damping: 10 }
-    }
-  };
-
-  const buttonVariants = {
-    hidden: { opacity: 0, scale: 0.8, y: 20 },
-    visible: { 
-      opacity: 1, 
-      scale: 1,
-      y: 0,
-      transition: { 
-        delay: 1.0,
-        type: "spring",
-        stiffness: 100,
-        damping: 12
-      }
-    },
-    hover: { 
-      scale: 1.05,
-      y: -3,
-      transition: { type: "spring", stiffness: 400, damping: 10 }
-    },
-    tap: { 
-      scale: 0.97,
-      y: -1,
-    }
-  };
-
-  // Enhanced dynamic parallax effect
-  const getParallaxStyle = (depth = 0.05) => {
-    const x = (window.innerWidth / 2 - mousePosition.x) * depth;
-    const y = (window.innerHeight / 2 - mousePosition.y) * depth;
-    return {
-      transform: `translate(${x}px, ${y}px)`
+  // Memoize parallax calculation
+  const getParallaxStyle = useMemo(() => {
+    return (depth = 0.05) => {
+      if (typeof window === 'undefined') return {}; // SSR check
+      
+      const x = (window.innerWidth / 2 - mousePosition.x) * depth;
+      const y = (window.innerHeight / 2 - mousePosition.y) * depth;
+      return {
+        transform: `translate(${x}px, ${y}px)`
+      };
     };
-  };
+  }, [mousePosition.x, mousePosition.y]);
 
-  // Filter projects based on active filter
-  const filteredProjects: Project[] = activeFilter === 'all' 
-    ? projects 
-    : projects.filter((project: Project) => project.category === activeFilter);
+  // Memoize filtered projects to prevent recalculation on each render
+  const filteredProjects = useMemo(() => 
+    activeFilter === 'all' 
+      ? projects 
+      : projects.filter(project => project.category === activeFilter),
+    [activeFilter]
+  );
 
-  // Get visible projects - limit to 3 per category if showAll is false
-  const visibleProjects = showAll ? filteredProjects : filteredProjects.slice(0, 3);
+  // Memoize visible projects
+  const visibleProjects = useMemo(() => 
+    showAll ? filteredProjects : filteredProjects.slice(0, 3),
+    [showAll, filteredProjects]
+  );
 
-  // Get unique categories for filter buttons
-  const categories = ['all', ...new Set(projects.map(project => project.category))];
 
-  // Get the appropriate gradient color for the active category
-  const getActiveCategoryGradient = (category: string) => {
-    return categoryColors[category] || categoryColors['all'];
-  };
-
-  // Handle click on explore button
-  const handleExploreClick = () => {
-    setShowAll(true);
-  };
-  
-  // Handle click on show less button
-  const handleShowLessClick = () => {
-    setShowAll(false);
-  };
 
   return (
     <motion.section 
@@ -185,35 +211,19 @@ export default function Projects() {
       variants={headingVariants}
       className="py-28 relative overflow-hidden"
     >
-      {/* Enhanced animated background elements with parallax */}
+      {/* Reduce number of animated background elements */}
       <motion.div 
         className="absolute -top-10 left-1/4 w-[28rem] h-[28rem] bg-gradient-to-br from-blue-400/20 to-sky-300/15 rounded-full filter blur-[100px] opacity-80 z-0" 
         animate={{ 
           x: [0, 30, 0],
           y: [0, -30, 0],
-          scale: [1, 1.05, 0.98, 1]
         }}
         transition={{ 
-          duration: 15, 
+          duration: 20, // Slower animation for better performance
           repeat: Infinity,
           repeatType: "mirror"
         }}
         style={getParallaxStyle(0.02)}
-      />
-      
-      <motion.div 
-        className="absolute bottom-20 right-1/4 w-[20rem] h-[20rem] bg-gradient-to-tr from-purple-400/15 to-pink-300/10 rounded-full filter blur-[80px] opacity-70 z-0" 
-        animate={{ 
-          x: [0, -20, 0],
-          y: [0, 20, 0],
-          scale: [1, 0.95, 1.02, 1]
-        }}
-        transition={{ 
-          duration: 18, 
-          repeat: Infinity,
-          repeatType: "mirror"
-        }}
-        style={getParallaxStyle(0.03)}
       />
 
       <div className="container mx-auto px-4 relative z-10">
@@ -234,11 +244,9 @@ export default function Projects() {
               className="absolute inset-0 rounded-full bg-gradient-to-r from-blue-500/20 to-purple-500/20 blur-xl" 
               animate={{ 
                 rotate: [0, 360], 
-                scale: [0.8, 1.2, 0.8],
-                opacity: [0.5, 0.8, 0.5]
               }}
               transition={{ 
-                duration: 8, 
+                duration: 12, // Slower for better performance
                 repeat: Infinity,
                 ease: "linear"
               }}
@@ -266,7 +274,7 @@ export default function Projects() {
           </motion.p>
         </div>
         
-        {/* Enhanced filter buttons with animations - Fixed overflow with flex-wrap and increased gap */}
+        {/* Filter buttons with improved performance */}
         <motion.div 
           className="flex justify-center mb-12"
           initial={{ opacity: 0, y: 20 }}
@@ -279,11 +287,11 @@ export default function Projects() {
                 key={category}
                 onClick={() => {
                   setActiveFilter(category);
-                  setShowAll(false); // Reset showAll when changing categories
+                  setShowAll(false);
                 }}
                 className={`px-4 py-2 m-1 rounded-full text-sm font-medium transition-all duration-300 flex items-center gap-2 ${
                   activeFilter === category 
-                    ? `bg-gradient-to-r ${getActiveCategoryGradient(category)} text-white shadow-md` 
+                    ? `bg-gradient-to-r ${categoryColors[category]} text-white shadow-md` 
                     : 'hover:bg-muted'
                 }`}
                 variants={filterVariants}
@@ -318,7 +326,7 @@ export default function Projects() {
           </AnimatePresence>
         </motion.div>
         
-        {/* Projects grid with enhanced animations */}
+        {/* Projects grid with lazy loading and reduced animations */}
         <div className="grid grid-cols-1 md:grid-cols-2 lg:grid-cols-3 gap-6 mb-12"> 
           {visibleProjects.map((project: Project, index: number) => (
             <motion.div
@@ -327,14 +335,14 @@ export default function Projects() {
               initial={{ opacity: 0, y: 20 }}
               animate={{ opacity: 1, y: 0 }}
               transition={{ 
-                delay: index * 0.1,
+                delay: Math.min(index * 0.1, 0.3), // Limit max delay to 0.3s
                 duration: 0.5
               }}
               onMouseEnter={() => setHoveredIndex(index)}
               onMouseLeave={() => setHoveredIndex(null)}
             >
               <div className="relative h-full group">
-                {/* Sparkle effect for featured projects */}
+                {/* Only show sparkle for featured projects when needed */}
                 {project.featured && showSparkle && hoveredIndex === index && (
                   <motion.div
                     className="absolute -top-4 -right-4 z-20 text-yellow-400"
@@ -346,12 +354,14 @@ export default function Projects() {
                   </motion.div>
                 )}
                 
-                {/* Project card with focus/fade effect */}
-                <ProjectCard 
-                  project={project}
-                  isFocused={hoveredIndex === index}
-                  anyCardFocused={hoveredIndex !== null} 
-                />
+                {/* Lazy loaded project card */}
+                <Suspense fallback={<CardSkeleton />}>
+                  <ProjectCard 
+                    project={project}
+                    isFocused={hoveredIndex === index}
+                    anyCardFocused={hoveredIndex !== null} 
+                  />
+                </Suspense>
               </div>
             </motion.div>
           ))}
@@ -373,7 +383,7 @@ export default function Projects() {
               <Button 
                 size="lg"
                 className="bg-gradient-to-r from-primary to-purple-600 hover:from-primary/90 hover:to-purple-600/90 text-primary-foreground group relative overflow-hidden"
-                onClick={handleExploreClick}
+                onClick={() => setShowAll(true)}
               >
                 <span className="relative z-10 flex items-center">
                   Explore All Projects <ChevronRight className="ml-2 h-5 w-5 transition-transform duration-300 group-hover:translate-x-1" />
@@ -385,7 +395,7 @@ export default function Projects() {
                     backgroundPosition: ['0% 50%', '100% 50%', '0% 50%'],
                   }}
                   transition={{ 
-                    duration: 5, 
+                    duration: 8, // Increased duration for better performance
                     repeat: Infinity,
                     ease: "linear"
                   }}
@@ -408,7 +418,7 @@ export default function Projects() {
                 <Button 
                   size="lg"
                   className="bg-gradient-to-r from-purple-600 to-primary hover:from-purple-600/90 hover:to-primary/90 text-primary-foreground group relative overflow-hidden"
-                  onClick={handleShowLessClick}
+                  onClick={() => setShowAll(false)}
                 >
                   <span className="relative z-10 flex items-center">
                     Show Less <ChevronUp className="ml-2 h-5 w-5 transition-transform duration-300 group-hover:-translate-y-1" />
@@ -420,7 +430,7 @@ export default function Projects() {
                       backgroundPosition: ['0% 50%', '100% 50%', '0% 50%'],
                     }}
                     transition={{ 
-                      duration: 5, 
+                      duration: 8, // Increased duration for better performance
                       repeat: Infinity,
                       ease: "linear"
                     }}
