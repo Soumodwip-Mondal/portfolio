@@ -1,16 +1,20 @@
 'use client';
 
-import { useState, useEffect } from 'react';
+import { useState, useEffect, lazy, Suspense } from 'react';
 import { Link } from 'react-router-dom';
 import { motion } from 'framer-motion';
 import { useTheme } from 'next-themes';
 import { Avatar, AvatarFallback, AvatarImage } from '../ui/avatar';
 import { Button } from '../../components/ui/button';
 import { Moon, Sun, Menu, Paintbrush, Bot, Mic, User, Code, Lightbulb, Newspaper, LayoutDashboard, Mail } from 'lucide-react';
-import MobileMenu from './mobile-menu';
 import { useScrollToSection } from '../../hooks/useScrollToSection';
-import { GamificationButton } from '../gamification/GamificationButton';
-import image from '../../assets/Hello.png'
+// Lazy load non-critical components
+const MobileMenu = lazy(() => import('./mobile-menu'));
+const GamificationButton = lazy(() => import('../gamification/GamificationButton').then(module => ({ default: module.GamificationButton })));
+
+// Import image with explicit width and height for better CLS
+import image from '../../assets/Hello.png';
+
 export default function Header() {
   const [mounted, setMounted] = useState(false);
   const { theme, setTheme } = useTheme();
@@ -20,6 +24,19 @@ export default function Header() {
   // Prevent hydration mismatch
   useEffect(() => setMounted(true), []);
   if (!mounted) return null;
+
+  // Memoize navigation links for performance
+  const navLinks = [
+    { to: "#about", icon: <User className="h-4 w-4 mr-1" />, label: "About", section: 'about' },
+    { to: "#projects", icon: <Code className="h-4 w-4 mr-1" />, label: "Projects", section: 'projects' },
+    { to: "#skills", icon: <Lightbulb className="h-4 w-4 mr-1" />, label: "Skills", section: 'skills' },
+    { to: "/blog", icon: <Newspaper className="h-4 w-4 mr-1" />, label: "Blog" },
+    { to: "/dashboard", icon: <LayoutDashboard className="h-4 w-4 mr-1" />, label: "Dashboard" },
+    { to: "/collaborate", icon: <Paintbrush className="h-4 w-4 mr-1" />, label: "Draw" },
+    { to: "/ai-assistant", icon: <Bot className="h-4 w-4 mr-1" />, label: "AI Assistant" },
+    { to: "/voice-control", icon: <Mic className="h-4 w-4 mr-1" />, label: "Voice Control" },
+    { to: "#contact", icon: <Mail className="h-4 w-4 mr-1" />, label: "Contact", section: 'contact' },
+  ];
 
   return (
     <header className="sticky top-0 z-50 backdrop-blur-md bg-white/70 dark:bg-slate-900/70 border-b border-slate-200 dark:border-slate-800">
@@ -32,87 +49,71 @@ export default function Header() {
         >
           <Link to="/">
             <Avatar className="h-12 w-12">
-              <AvatarImage src={image} alt="Profile" />
+              <AvatarImage src={image} alt="Profile" width={48} height={48} loading="eager" />
               <AvatarFallback>SM</AvatarFallback>
             </Avatar>
           </Link>
-          <span className="font-bold text-xl md:block invisible md:visible">Soumodwip Mondal</span>
-
+          <span className="font-bold text-xl hidden md:block">Soumodwip Mondal</span>
         </motion.div>
         
-        {/* Rest of the code remains the same */}
         <motion.nav 
           initial={{ opacity: 0, y: -10 }}
           animate={{ opacity: 1, y: 0 }}
           className="hidden md:flex items-center gap-6"
         >
-          <Link to="#about" className="text-base hover:text-blue-500 transition-colors flex items-center" 
-                onClick={(e) => {e.preventDefault(); scrollToSection('about');}}>
-            <User className="h-4 w-4 mr-1" />
-            About
-          </Link>
+          {navLinks.map((link) => (
+            <Link 
+              key={link.to}
+              to={link.to} 
+              className="text-base hover:text-blue-500 transition-colors flex items-center"
+              onClick={(e) => {
+                if (link.section) {
+                  e.preventDefault();
+                  scrollToSection(link.section);
+                }
+              }}
+            >
+              {link.icon}
+              {link.label}
+            </Link>
+          ))}
           
-          <Link to="#projects" className="text-base hover:text-blue-500 transition-colors flex items-center"
-                onClick={(e) => {e.preventDefault(); scrollToSection('projects');}}>
-            <Code className="h-4 w-4 mr-1" />
-            Projects
-          </Link>
+          <Suspense fallback={<div className="w-8 h-8"></div>}>
+            <GamificationButton />
+          </Suspense>
           
-          <Link to="#skills" className="text-base hover:text-blue-500 transition-colors flex items-center"
-                onClick={(e) => {e.preventDefault(); scrollToSection('skills');}}>
-            <Lightbulb className="h-4 w-4 mr-1" />
-            Skills
-          </Link>
-          
-          <Link to="/blog" className="text-base hover:text-blue-500 transition-colors flex items-center">
-            <Newspaper className="h-4 w-4 mr-1" />
-            Blog
-          </Link>
-          
-          <Link to="/dashboard" className="text-base hover:text-blue-500 transition-colors flex items-center">
-            <LayoutDashboard className="h-4 w-4 mr-1" />
-            Dashboard
-          </Link>
-          
-          <Link to="/collaborate" className="text-base hover:text-blue-500 transition-colors flex items-center">
-            <Paintbrush className="h-4 w-4 mr-1" />
-            Draw
-          </Link>
-          
-          <Link to="/ai-assistant" className="text-base hover:text-blue-500 transition-colors flex items-center">
-            <Bot className="h-4 w-4 mr-1" />
-            AI Assistant
-          </Link>
-          
-          <Link to="/voice-control" className="text-base hover:text-blue-500 transition-colors flex items-center">
-            <Mic className="h-4 w-4 mr-1" />
-            Voice Control
-          </Link>
-          
-          <Link to="#contact" className="text-base hover:text-blue-500 transition-colors flex items-center"
-                onClick={(e) => {e.preventDefault(); scrollToSection('contact');}}>
-            <Mail className="h-4 w-4 mr-1" />
-            Contact
-          </Link>
-          
-          <GamificationButton />
-          
-          <Button variant="ghost" size="icon" onClick={() => setTheme(theme === 'dark' ? 'light' : 'dark')}>
+          <Button 
+            variant="ghost" 
+            size="icon" 
+            onClick={() => setTheme(theme === 'dark' ? 'light' : 'dark')}
+            aria-label={theme === 'dark' ? 'Switch to light mode' : 'Switch to dark mode'}
+          >
             {theme === 'dark' ? <Sun size={20} /> : <Moon size={20} />}
           </Button>
         </motion.nav>
         
         {/* Mobile Navigation Toggle */}
         <div className="md:hidden flex items-center">
-          <GamificationButton />
-          <Button variant="ghost" size="icon" onClick={() => setMenuOpen(!menuOpen)}>
+          <Suspense fallback={<div className="w-8 h-8"></div>}>
+            <GamificationButton />
+          </Suspense>
+          <Button 
+            variant="ghost" 
+            size="icon" 
+            onClick={() => setMenuOpen(!menuOpen)}
+            aria-label="Toggle menu"
+          >
             <Menu size={24} />
           </Button>
         </div>
       </div>
       
-      {/* Mobile Navigation Menu */}
-      <MobileMenu isOpen={menuOpen} setIsOpen={setMenuOpen} />
+      {/* Mobile Navigation Menu - Only render when needed */}
+      {menuOpen && (
+        <Suspense fallback={<div className="h-64 w-full bg-white/80 dark:bg-slate-900/80 animate-pulse"></div>}>
+          <MobileMenu isOpen={menuOpen} setIsOpen={setMenuOpen} />
+        </Suspense>
+      )}
     </header>
   );
 }
