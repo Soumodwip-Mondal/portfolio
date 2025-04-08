@@ -5,8 +5,10 @@ import { motion, AnimatePresence } from 'framer-motion';
 import { Button } from '../ui/button';
 import { Badge } from '../ui/badge';
 import { ChevronRight, ExternalLink, Sparkles } from 'lucide-react';
+import { Link } from 'react-router-dom'; // Import Link from react-router-dom
 import image from '../../assets/MyImage.jpg';
-// import image2 from '../../assets/img-removebg-preview.png';
+import resume from '../../assets/Soumodwip_Mondal_Resume.pdf'; // Uncommented the resume import
+
 export default function Hero() {
   const [isLoaded, setIsLoaded] = useState(false);
   // const { scrollY } = useScroll();
@@ -21,6 +23,7 @@ export default function Hero() {
   // Skills with color variants
   const skills: { name: string; color: keyof typeof colorMap }[] = [
     { name: 'JavaScript', color: 'blue' },
+    { name: 'TypeScript', color: 'orange' },
     { name: 'React', color: 'cyan' },
     { name: 'Data Analysis', color: 'indigo' },
     { name: 'Tailwind CSS', color: 'sky' },
@@ -112,7 +115,8 @@ export default function Hero() {
     sky: "bg-sky-100 dark:bg-sky-900/30 text-sky-800 dark:text-sky-300 border-sky-200 dark:border-sky-800",
     violet: "bg-violet-100 dark:bg-violet-900/30 text-violet-800 dark:text-violet-300 border-violet-200 dark:border-violet-800",
     green: "bg-green-100 dark:bg-green-900/30 text-green-800 dark:text-green-300 border-green-200 dark:border-green-800",
-    pink: "bg-pink-100 dark:bg-pink-900/30 text-pink-800 dark:text-pink-300 border-pink-200 dark:border-pink-800"
+    pink: "bg-pink-100 dark:bg-pink-900/30 text-pink-800 dark:text-pink-300 border-pink-200 dark:border-pink-800",
+    orange: "bg-orange-100 dark:bg-orange-900/30 text-orange-800 dark:text-orange-300 border-orange-200 dark:border-orange-800"
   };
 
   const getColorClasses = (color: keyof typeof colorMap): string => {
@@ -235,10 +239,11 @@ export default function Hero() {
                       size="lg"
                       className="bg-gradient-to-r from-blue-600 to-purple-600 hover:from-blue-700 hover:to-purple-700 transition-all duration-300 shadow-md hover:shadow-lg hover:shadow-blue-500/20"
                     >
-                      <a href="#contact" className="group px-5 flex items-center">
+                      {/* Changed from <a> to <Link> for internal navigation */}
+                      <Link to="contact" className="group px-5 flex items-center">
                         Contact Me
                         <ChevronRight className="ml-1 h-4 w-4 transition-transform group-hover:translate-x-1" />
-                      </a>
+                      </Link>
                     </Button>
                   </motion.div>
                   
@@ -253,7 +258,8 @@ export default function Hero() {
                       asChild
                       className="border-2 border-slate-300 dark:border-slate-700 hover:border-blue-500 dark:hover:border-blue-600 transition-all duration-300"
                     >
-                      <a href={""} target="_blank" rel="noopener noreferrer" className="group px-4 flex items-center">
+                      {/* Keep <a> tag for external resource, but use the imported resume variable */}
+                      <a href={resume} target="_blank" rel="noopener noreferrer" className="group px-4 flex items-center">
                         View Resume
                         <ExternalLink className="ml-1 h-4 w-4 transition-transform group-hover:translate-y-px group-hover:translate-x-px" />
                       </a>

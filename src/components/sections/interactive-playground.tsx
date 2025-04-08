@@ -4,22 +4,25 @@ import { useState, useRef, useEffect } from 'react';
 import { motion } from 'framer-motion';
 import { Button } from '../ui/button';
 import { Card } from '../ui/card';
-// import { projects } from '../../data/project';
 import { Play, Pause, Maximize2, Minimize2, RefreshCw } from 'lucide-react';
 import * as React from "react";
 import { cn } from "../../lib/utils";
 import { MemoryGame } from '../gamification/MemoryGame';
+import LiveCodeEditor from '../shared/code-editor'; // Import the new code editor
 
 // Tabs Component Implementation
-const TabsContext = React.createContext<{
-  selectedTab: string;
-  setSelectedTab: (value: string) => void;
-} | null>(null);
+interface TabsContextType {
+  selectedTab: string | undefined;
+  setSelectedTab: React.Dispatch<React.SetStateAction<string | undefined>>;
+}
 
-const Tabs = React.forwardRef<
-  HTMLDivElement,
-  React.HTMLAttributes<HTMLDivElement> & { defaultValue: string }
->(({ className, defaultValue, ...props }, ref) => {
+const TabsContext = React.createContext<TabsContextType | undefined>(undefined);
+
+interface TabsProps extends React.HTMLAttributes<HTMLDivElement> {
+  defaultValue?: string;
+}
+
+const Tabs = React.forwardRef<HTMLDivElement, TabsProps>(({ className, defaultValue, ...props }, ref) => {
   const [selectedTab, setSelectedTab] = React.useState(defaultValue);
 
   return (
@@ -30,10 +33,7 @@ const Tabs = React.forwardRef<
 });
 Tabs.displayName = "Tabs";
 
-const TabsList = React.forwardRef<
-  HTMLDivElement,
-  React.HTMLAttributes<HTMLDivElement>
->(({ className, ...props }, ref) => (
+const TabsList = React.forwardRef<HTMLDivElement, React.HTMLAttributes<HTMLDivElement>>(({ className, ...props }, ref) => (
   <div
     ref={ref}
     className={cn(
@@ -45,10 +45,11 @@ const TabsList = React.forwardRef<
 ));
 TabsList.displayName = "TabsList";
 
-const TabsTrigger = React.forwardRef<
-  HTMLButtonElement,
-  React.ButtonHTMLAttributes<HTMLButtonElement> & { value: string }
->(({ className, value, ...props }, ref) => {
+interface TabsTriggerProps extends React.ButtonHTMLAttributes<HTMLButtonElement> {
+  value: string;
+}
+
+const TabsTrigger = React.forwardRef<HTMLButtonElement, TabsTriggerProps>(({ className, value, ...props }, ref) => {
   const context = React.useContext(TabsContext);
   if (!context) {
     throw new Error("TabsTrigger must be used within a Tabs");
@@ -77,10 +78,11 @@ const TabsTrigger = React.forwardRef<
 });
 TabsTrigger.displayName = "TabsTrigger";
 
-const TabsContent = React.forwardRef<
-  HTMLDivElement,
-  React.HTMLAttributes<HTMLDivElement> & { value: string }
->(({ className, value, ...props }, ref) => {
+interface TabsContentProps extends React.HTMLAttributes<HTMLDivElement> {
+  value: string;
+}
+
+const TabsContent = React.forwardRef<HTMLDivElement, TabsContentProps>(({ className, value, ...props }, ref) => {
   const context = React.useContext(TabsContext);
   if (!context) {
     throw new Error("TabsContent must be used within a Tabs");
@@ -106,23 +108,23 @@ const TabsContent = React.forwardRef<
 TabsContent.displayName = "TabsContent";
 
 // Slider Component Implementation
-interface SliderProps {
+interface SliderProps extends Omit<React.HTMLAttributes<HTMLDivElement>, 'onChange'> {
   min?: number;
   max?: number;
   step?: number;
   value?: number;
   defaultValue?: number;
   onChange?: (value: number) => void;
-  className?: string;
   disabled?: boolean;
-  id?: string;
   name?: string;
 }
 
 const Slider = React.forwardRef<HTMLInputElement, SliderProps>(
   ({ className, min = 0, max = 100, step = 1, value, defaultValue, onChange, ...props }, ref) => {
-    const handleChange = (e: React.ChangeEvent<HTMLInputElement>) => {
-      const newValue = Number(e.target.value);
+    interface ChangeEvent extends React.ChangeEvent<HTMLInputElement> {}
+
+    const handleChange = (e: ChangeEvent): void => {
+      const newValue: number = Number(e.target.value);
       onChange?.(newValue);
     };
 
@@ -243,131 +245,33 @@ render(<Welcome />);
   }
 ];
 
-// Code Editor Component
-function CodeEditor({ initialCode, onCodeChange }: { initialCode: string, onCodeChange: (code: string) => void }) {
-  const [code, setCode] = useState(initialCode);
-  
-  const handleChange = (e: React.ChangeEvent<HTMLTextAreaElement>) => {
-    setCode(e.target.value);
-    onCodeChange(e.target.value);
-  };
-  
-  return (
-    <div className="rounded-md overflow-hidden border border-slate-200 dark:border-slate-700">
-      <div className="bg-slate-100 dark:bg-slate-800 px-4 py-2 flex justify-between items-center">
-        <div className="flex space-x-2">
-          <div className="w-3 h-3 rounded-full bg-red-500"></div>
-          <div className="w-3 h-3 rounded-full bg-yellow-500"></div>
-          <div className="w-3 h-3 rounded-full bg-green-500"></div>
-        </div>
-        <div className="text-sm text-slate-500 dark:text-slate-400">script.jsx</div>
-      </div>
-      <textarea
-        value={code}
-        onChange={handleChange}
-        className="w-full h-64 p-4 font-mono text-sm bg-slate-50 dark:bg-slate-900 text-slate-800 dark:text-slate-200 focus:outline-none"
-        spellCheck="false"
-      />
-    </div>
-  );
-}
-
-// Preview Component
-function CodePreview({ code }: { code: string }) {
-  const iframeRef = useRef<HTMLIFrameElement>(null);
-  const [error, setError] = useState<string | null>(null);
-  
-  useEffect(() => {
-    const timeout = setTimeout(() => {
-      try {
-        if (iframeRef.current) {
-          const iframe = iframeRef.current;
-          const document = iframe.contentDocument;
-          const documentContents = `
-            <!DOCTYPE html>
-            <html>
-              <head>
-                <meta charset="utf-8">
-                <meta name="viewport" content="width=device-width, initial-scale=1">
-                <title>Preview</title>
-                <script src="https://unpkg.com/react@17/umd/react.development.js"></script>
-                <script src="https://unpkg.com/react-dom@17/umd/react-dom.development.js"></script>
-                <script src="https://unpkg.com/@babel/standalone/babel.min.js"></script>
-                <link href="https://cdn.jsdelivr.net/npm/tailwindcss@2.2.19/dist/tailwind.min.css" rel="stylesheet">
-                <style>
-                  body { padding: 1rem; }
-                </style>
-              </head>
-              <body>
-                <div id="root"></div>
-                <script type="text/babel">
-                  const render = (Component) => {
-                    ReactDOM.render(Component, document.getElementById('root'));
-                  };
-                  
-                  try {
-                    ${code}
-                  } catch (error) {
-                    document.getElementById('root').innerHTML = 
-                      '<div class="p-4 bg-red-100 text-red-700 rounded">' + 
-                      '<strong>Error:</strong> ' + error.message + '</div>';
-                  }
-                </script>
-              </body>
-            </html>
-          `;
-          
-          document?.open();
-          document?.write(documentContents);
-          document?.close();
-          setError(null);
-        }
-      } catch (err) {
-        setError(err instanceof Error ? err.message : 'An error occurred');
-      }
-    }, 1000);
-    
-    return () => clearTimeout(timeout);
-  }, [code]);
-  
-  return (
-    <div className="rounded-md overflow-hidden border border-slate-200 dark:border-slate-700 h-64">
-      <div className="bg-slate-100 dark:bg-slate-800 px-4 py-2 flex justify-between items-center">
-        <div className="text-sm text-slate-500 dark:text-slate-400">Preview</div>
-        <RefreshCw className="w-4 h-4 text-slate-500 dark:text-slate-400" />
-      </div>
-      {error ? (
-        <div className="p-4 bg-red-100 dark:bg-red-900/20 text-red-700 dark:text-red-400">
-          <strong>Error:</strong> {error}
-        </div>
-      ) : (
-        <iframe
-          ref={iframeRef}
-          title="preview"
-          className="w-full h-full bg-white dark:bg-slate-950"
-          sandbox="allow-scripts"
-        />
-      )}
-    </div>
-  );
-}
-
 // UI Component Playground
-function UIComponentPlayground({ components }: { components: any[] }) {
+interface UIComponent {
+  name: string;
+  props: {
+    [key: string]: string[] | boolean[] | string | boolean | undefined;
+  };
+}
+
+function UIComponentPlayground({ components }: { components: UIComponent[] }) {
   const [selectedComponent, setSelectedComponent] = useState(components[0]);
-  const [props, setProps] = useState<Record<string, any>>({});
+  const [props, setProps] = useState<{ [key: string]: any }>({});
   
   useEffect(() => {
     // Initialize with first values
-    const initialProps: Record<string, any> = {};
+    const initialProps: { [key: string]: string | boolean } = {};
     Object.entries(selectedComponent.props).forEach(([key, values]) => {
-      initialProps[key] = Array.isArray(values) ? values[0] : values;
+      initialProps[key] = Array.isArray(values) ? values[0] : (values ?? '');
     });
     setProps(initialProps);
   }, [selectedComponent]);
   
-  const handlePropChange = (prop: string, value: any) => {
-    setProps(prev => ({ ...prev, [prop]: value }));
+  interface Props {
+    [key: string]: string | boolean;
+  }
+
+  const handlePropChange = (prop: string, value: string | boolean): void => {
+    setProps((prev: Props) => ({ ...prev, [prop]: value }));
   };
   
   // Render the selected component with current props
@@ -423,7 +327,7 @@ function UIComponentPlayground({ components }: { components: any[] }) {
               </label>
               {Array.isArray(values) ? (
                 <div className="flex flex-wrap gap-2">
-                  {values.map((value: any) => (
+                  {values.map((value) => (
                     <Button
                       key={String(value)}
                       size="sm"
@@ -457,7 +361,7 @@ function UIComponentPlayground({ components }: { components: any[] }) {
 // Before/After Slider Component
 function BeforeAfterSlider() {
   const [sliderValue, setSliderValue] = useState(50);
-  const containerRef = useRef<HTMLDivElement>(null);
+  const containerRef = useRef(null);
   
   return (
     <div className="space-y-4">
@@ -504,8 +408,13 @@ function BeforeAfterSlider() {
 }
 
 // Mini App Component
-function MiniApp({ demoData }: { demoData: { month: string; value: number }[] }) {
-  const [data, setData] = useState(demoData);
+interface DemoDataItem {
+  month: string;
+  value: number;
+}
+
+function MiniApp({ demoData }: { demoData: DemoDataItem[] }) {
+  const [data, setData] = useState<DemoDataItem[]>(demoData);
   const [chartType, setChartType] = useState('bar');
   const [isPlaying, setIsPlaying] = useState(false);
   
@@ -520,10 +429,10 @@ function MiniApp({ demoData }: { demoData: { month: string; value: number }[] })
   
   // Auto-update data when playing
   useEffect(() => {
-    let interval: number | undefined;
+    let interval: ReturnType<typeof setInterval>;
     
     if (isPlaying) {
-      interval = window.setInterval(() => {
+      interval = setInterval(() => {
         randomizeData();
       }, 2000);
     }
@@ -531,7 +440,7 @@ function MiniApp({ demoData }: { demoData: { month: string; value: number }[] })
     return () => {
       if (interval) clearInterval(interval);
     };
-  }, [isPlaying, data]);
+  }, [isPlaying]);
   
   // Calculate max value for scaling
   const maxValue = Math.max(...data.map(d => d.value));
@@ -627,10 +536,39 @@ function MiniApp({ demoData }: { demoData: { month: string; value: number }[] })
   );
 }
 
+// Code Editor Demo using our improved component
+function CodeEditorDemo() {
+  const [isFullscreen, setIsFullscreen] = useState(false);
+  const initialCode = demoProjects.find(p => p.id === 'code-editor')?.initialCode || '';
+  
+  return (
+    <div className={`${isFullscreen ? 'fixed inset-0 z-50 bg-white dark:bg-slate-900 p-6' : ''}`}>
+      <div className="relative">
+        <Button
+          variant="outline"
+          size="sm"
+          className="absolute top-0 right-0 z-10"
+          onClick={() => setIsFullscreen(!isFullscreen)}
+        >
+          {isFullscreen ? <Minimize2 className="w-4 h-4" /> : <Maximize2 className="w-4 h-4" />}
+        </Button>
+        <LiveCodeEditor initialCode={initialCode} />
+      </div>
+    </div>
+  );
+}
+
 // Tabs Component
 function TabsComponent() {
-  if (typeof document === 'undefined') {
-    return null; // SSR check
+  // SSR check
+  const [isMounted, setIsMounted] = useState(false);
+  
+  useEffect(() => {
+    setIsMounted(true);
+  }, []);
+  
+  if (!isMounted) {
+    return null;
   }
   
   return (
@@ -663,29 +601,6 @@ function TabsComponent() {
         <MemoryGame />
       </TabsContent>
     </Tabs>
-  );
-}
-
-// Code Editor Demo
-function CodeEditorDemo() {
-  const [code, setCode] = useState(demoProjects.find(p => p.id === 'code-editor')?.initialCode || '');
-  const [isFullscreen, setIsFullscreen] = useState(false);
-  
-  return (
-    <div className={`grid grid-cols-1 md:grid-cols-2 gap-6 ${isFullscreen ? 'fixed inset-0 z-50 bg-white dark:bg-slate-900 p-6' : ''}`}>
-      <div className="relative">
-        <CodeEditor initialCode={code} onCodeChange={setCode} />
-        <Button
-          variant="outline"
-          size="sm"
-          className="absolute top-2 right-2"
-          onClick={() => setIsFullscreen(!isFullscreen)}
-        >
-          {isFullscreen ? <Minimize2 className="w-4 h-4" /> : <Maximize2 className="w-4 h-4" />}
-        </Button>
-      </div>
-      <CodePreview code={code} />
-    </div>
   );
 }
 
@@ -730,4 +645,4 @@ export default function InteractivePlayground() {
       </motion.div>
     </section>
   );
-} 
+}
