@@ -14,10 +14,10 @@ You can check it out live here:
 
 ## 📈 Future Plans
 
-- Add a blog section  
-- Dark mode toggle  
+- Improve the blog section  
+- Real time code editor
 - More interactive data visualizations  
-- Integrate with a backend CMS (like Sanity or Contentful)
+- will add some more game 
 
 ## 🙋‍♂️ About Me
 
