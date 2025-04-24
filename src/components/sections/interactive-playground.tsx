@@ -8,7 +8,7 @@ import { Play, Pause, Maximize2, Minimize2, RefreshCw } from 'lucide-react';
 import * as React from "react";
 import { cn } from "../../lib/utils";
 import { MemoryGame } from '../gamification/MemoryGame';
-import LiveCodeEditor from '../shared/code-editor'; // Import the new code editor
+import LiveCodeEditor from '../shared/code-editor'; // Import the code editor and its props
 
 // Tabs Component Implementation
 interface TabsContextType {
@@ -37,7 +37,7 @@ const TabsList = React.forwardRef<HTMLDivElement, React.HTMLAttributes<HTMLDivEl
   <div
     ref={ref}
     className={cn(
-      "inline-flex h-10 items-center justify-center rounded-md bg-slate-100 p-1 text-slate-500 dark:bg-slate-800 dark:text-slate-400",
+      "flex h-auto sm:h-10 flex-wrap gap-1 sm:gap-0 items-center justify-center rounded-md bg-slate-100 p-1 text-slate-500 dark:bg-slate-800 dark:text-slate-400",
       className
     )}
     {...props}
@@ -280,9 +280,9 @@ function UIComponentPlayground({ components }: { components: UIComponent[] }) {
       case 'Button':
         return (
           <Button
-            variant={props.variant}
-            size={props.size}
-            disabled={props.disabled}
+            variant={props.variant as any}
+            size={props.size as any}
+            disabled={!!props.disabled}
           >
             {props.text}
           </Button>
@@ -305,12 +305,13 @@ function UIComponentPlayground({ components }: { components: UIComponent[] }) {
   
   return (
     <div className="space-y-6">
-      <div className="flex space-x-4">
+      <div className="flex flex-wrap gap-2">
         {components.map(comp => (
           <Button
             key={comp.name}
             variant={selectedComponent.name === comp.name ? 'default' : 'outline'}
             onClick={() => setSelectedComponent(comp)}
+            size="sm"
           >
             {comp.name}
           </Button>
@@ -350,7 +351,7 @@ function UIComponentPlayground({ components }: { components: UIComponent[] }) {
           ))}
         </div>
         
-        <div className="bg-slate-100 dark:bg-slate-800 rounded-lg p-8 flex items-center justify-center">
+        <div className="bg-slate-100 dark:bg-slate-800 rounded-lg p-4 sm:p-8 flex items-center justify-center">
           {renderComponent()}
         </div>
       </div>
@@ -367,7 +368,7 @@ function BeforeAfterSlider() {
     <div className="space-y-4">
       <div 
         ref={containerRef}
-        className="relative h-80 overflow-hidden rounded-lg border border-slate-200 dark:border-slate-700"
+        className="relative h-60 sm:h-80 overflow-hidden rounded-lg border border-slate-200 dark:border-slate-700"
       >
         {/* Before side (placeholder) */}
         <div className="absolute inset-0 bg-slate-300 dark:bg-slate-700">
@@ -447,8 +448,8 @@ function MiniApp({ demoData }: { demoData: DemoDataItem[] }) {
   
   return (
     <div className="space-y-6">
-      <div className="flex justify-between items-center">
-        <div className="space-x-2">
+      <div className="flex flex-col sm:flex-row justify-between gap-4 sm:items-center">
+        <div className="flex flex-wrap gap-2">
           <Button
             variant={chartType === 'bar' ? 'default' : 'outline'}
             size="sm"
@@ -465,7 +466,7 @@ function MiniApp({ demoData }: { demoData: DemoDataItem[] }) {
           </Button>
         </div>
         
-        <div className="space-x-2">
+        <div className="flex flex-wrap gap-2">
           <Button
             variant="outline"
             size="sm"
@@ -485,10 +486,10 @@ function MiniApp({ demoData }: { demoData: DemoDataItem[] }) {
         </div>
       </div>
       
-      <div className="bg-white dark:bg-slate-800 rounded-lg p-6 border border-slate-200 dark:border-slate-700">
+      <div className="bg-white dark:bg-slate-800 rounded-lg p-4 sm:p-6 border border-slate-200 dark:border-slate-700">
         <h3 className="text-lg font-semibold mb-4">Data Visualization Demo</h3>
         
-        <div className="h-64 flex items-end space-x-2">
+        <div className="h-48 sm:h-64 flex items-end space-x-1 sm:space-x-2">
           {chartType === 'bar' ? (
             // Bar chart
             data.map((item, index) => (
@@ -523,7 +524,7 @@ function MiniApp({ demoData }: { demoData: DemoDataItem[] }) {
           )}
         </div>
         
-        <div className="mt-4 grid grid-cols-6 gap-2">
+        <div className="mt-4 grid grid-cols-3 sm:grid-cols-6 gap-2">
           {data.map((item, index) => (
             <div key={index} className="text-center">
               <div className="font-medium">{item.value}</div>
@@ -536,23 +537,139 @@ function MiniApp({ demoData }: { demoData: DemoDataItem[] }) {
   );
 }
 
-// Code Editor Demo using our improved component
+// Define the missing CodeEditorProps interface
+interface CodeEditorProps {
+  initialCode: string;
+  onChange?: (code: string) => void;
+  onRun?: (result: any) => void;
+  manualExecution?: boolean;
+}
+
+const EnhancedCodeEditor = React.forwardRef<{ runCode: () => void }, CodeEditorProps>(
+  ({ initialCode, onChange, onRun, manualExecution = true }, ref) => {
+    const [code, setCode] = useState(initialCode);
+    const [result, setResult] = useState<React.ReactNode | null>(null);
+    const [error, setError] = useState<string | null>(null);
+    const [isRunning, setIsRunning] = useState(false);
+    
+    // Function to handle code changes
+    const handleCodeChange = (newCode: string) => {
+      setCode(newCode);
+      if (onChange) onChange(newCode);
+    };
+    
+    // Function to run code
+    const runCode = () => {
+      setIsRunning(true);
+      setError(null);
+      
+      try {
+        // This should be replaced by the actual code execution logic
+        // from your LiveCodeEditor component
+        const executionResult = "Code execution placeholder";
+        setResult(executionResult);
+        if (onRun) onRun(executionResult);
+      } catch (err) {
+        setError(err instanceof Error ? err.message : String(err));
+      } finally {
+        setIsRunning(false);
+      }
+    };
+    
+    // Make the runCode function available to parent components
+    React.useImperativeHandle(ref, () => ({
+      runCode
+    }));
+    
+    return (
+      <div className="space-y-4">
+        <div className="relative rounded-md border border-slate-300 dark:border-slate-700 bg-slate-100 dark:bg-slate-800 min-h-[250px]">
+          {/* This is where your code editor component goes */}
+          <LiveCodeEditor
+            initialCode={code}
+            onCodeChange={handleCodeChange}
+            manualExecution={manualExecution}
+          />
+        </div>
+        
+        {error && (
+          <div className="p-3 rounded-md bg-red-100 dark:bg-red-900/20 text-red-700 dark:text-red-300 text-sm">
+            <strong>Error:</strong> {error}
+          </div>
+        )}
+        
+        <div className="p-4 rounded-md border border-slate-300 dark:border-slate-700 min-h-[100px] bg-white dark:bg-slate-900">
+          <h3 className="text-sm font-medium text-slate-500 dark:text-slate-400 mb-2">
+            Output: {isRunning && <span className="text-blue-500">Running...</span>}
+          </h3>
+          <div className="output-area">
+            {result ? result : <span className="text-slate-400">Run your code to see the output</span>}
+          </div>
+        </div>
+      </div>
+    );
+  }
+);
+EnhancedCodeEditor.displayName = "EnhancedCodeEditor";
+
+// Code Editor Demo with Run Button
 function CodeEditorDemo() {
   const [isFullscreen, setIsFullscreen] = useState(false);
-  const initialCode = demoProjects.find(p => p.id === 'code-editor')?.initialCode || '';
+  const [code, setCode] = useState(demoProjects.find(p => p.id === 'code-editor')?.initialCode || '');
+  const [output, setOutput] = useState<any>(null);
+  const editorRef = useRef<{ runCode: () => void }>(null);
+  
+  // Function to handle running code
+  const runCode = () => {
+    if (editorRef.current) {
+      editorRef.current.runCode();
+    }
+  };
+  
+  // Handle output changes
+  const handleOutput = (result: any) => {
+    setOutput(result);
+    // You can do additional processing with the output here
+    console.log("Code execution result:", result);
+  };
   
   return (
-    <div className={`${isFullscreen ? 'fixed inset-0 z-50 bg-white dark:bg-slate-900 p-6' : ''}`}>
+    <div className={`${isFullscreen ? 'fixed inset-0 z-50 bg-white dark:bg-slate-900 p-2 sm:p-6' : ''}`}>
       <div className="relative">
-        <Button
-          variant="outline"
-          size="sm"
-          className="absolute top-0 right-0 z-10"
-          onClick={() => setIsFullscreen(!isFullscreen)}
-        >
-          {isFullscreen ? <Minimize2 className="w-4 h-4" /> : <Maximize2 className="w-4 h-4" />}
-        </Button>
-        <LiveCodeEditor initialCode={initialCode} />
+        <div className="flex justify-between items-center mb-4">
+          <Button 
+            variant="default" 
+            size="sm"
+            onClick={runCode}
+            className="bg-green-600 hover:bg-green-700 text-white flex items-center"
+          >
+            <Play className="w-4 h-4 mr-2" /> Run Code
+          </Button>
+          
+          <Button
+            variant="outline"
+            size="sm"
+            onClick={() => setIsFullscreen(!isFullscreen)}
+          >
+            {isFullscreen ? <Minimize2 className="w-4 h-4" /> : <Maximize2 className="w-4 h-4" />}
+          </Button>
+        </div>
+        
+        <div className="min-h-[350px] sm:min-h-[400px]">
+          <EnhancedCodeEditor
+            ref={editorRef}
+            initialCode={code}
+            onChange={setCode}
+            onRun={handleOutput}
+          />
+        </div>
+        
+        {/* Display output information if needed */}
+        {output && (
+          <div className="mt-4 p-3 bg-slate-100 dark:bg-slate-800 rounded-md">
+            <p className="text-sm">Latest execution completed successfully.</p>
+          </div>
+        )}
       </div>
     </div>
   );
@@ -573,7 +690,7 @@ function TabsComponent() {
   
   return (
     <Tabs defaultValue="code-editor" className="w-full">
-      <TabsList className="grid grid-cols-5">
+      <TabsList className="grid grid-cols-2 sm:grid-cols-3 md:grid-cols-5 gap-1 sm:gap-0">
         <TabsTrigger value="code-editor">Code Editor</TabsTrigger>
         <TabsTrigger value="ui-components">UI Components</TabsTrigger>
         <TabsTrigger value="before-after">Before/After</TabsTrigger>
@@ -607,33 +724,33 @@ function TabsComponent() {
 // Main Interactive Playground Component
 export default function InteractivePlayground() {
   return (
-    <section id="interactive-playground" className="py-20">
+    <section id="interactive-playground" className="py-12 sm:py-20">
       <motion.div
         initial={{ opacity: 0, y: 20 }}
         whileInView={{ opacity: 1, y: 0 }}
         transition={{ duration: 0.5 }}
         className="container mx-auto px-4"
       >
-        <div className="text-center mb-12">
-          <h2 className="text-4xl font-bold bg-gradient-to-r from-blue-600 to-purple-600 dark:from-blue-400 dark:to-purple-400 bg-clip-text text-transparent mb-4">
+        <div className="text-center mb-8 sm:mb-12">
+          <h2 className="text-3xl sm:text-4xl font-bold bg-gradient-to-r from-blue-600 to-purple-600 dark:from-blue-400 dark:to-purple-400 bg-clip-text text-transparent mb-4">
             Interactive Project Playground
           </h2>
-          <p className="text-lg text-slate-600 dark:text-slate-300 max-w-2xl mx-auto">
+          <p className="text-base sm:text-lg text-slate-600 dark:text-slate-300 max-w-2xl mx-auto">
             Don't just look at my projects—interact with them! Try out live demos, modify code, and see how things work.
           </p>
         </div>
         
         <div className="bg-white dark:bg-slate-900 rounded-xl shadow-xl border border-slate-200 dark:border-slate-800 overflow-hidden">
-          <div className="p-6">
+          <div className="p-3 sm:p-6">
             <TabsComponent />
           </div>
         </div>
         
-        <div className="mt-12 text-center">
-          <p className="text-slate-600 dark:text-slate-400 mb-6">
+        <div className="mt-8 sm:mt-12 text-center">
+          <p className="text-sm sm:text-base text-slate-600 dark:text-slate-400 mb-4 sm:mb-6">
             Want to see more of my work? Check out my full projects or get in touch!
           </p>
-          <div className="flex justify-center space-x-4">
+          <div className="flex flex-wrap justify-center gap-3 sm:space-x-4">
             <Button asChild>
               <a href="#projects">View All Projects</a>
             </Button>
