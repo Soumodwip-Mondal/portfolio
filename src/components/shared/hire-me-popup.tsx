@@ -9,7 +9,7 @@ interface HireMePopupProps {
   timeToShow?: number; // Time in milliseconds before showing the popup
 }
 
-export default function HireMePopup({ timeToShow = 90000 }: HireMePopupProps) {
+export default function HireMePopup({ timeToShow = 15000 }: HireMePopupProps) {
   const [isVisible, setIsVisible] = useState(false);
   const [isDismissed, setIsDismissed] = useState(false);
 

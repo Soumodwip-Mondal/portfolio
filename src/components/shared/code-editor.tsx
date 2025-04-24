@@ -120,7 +120,12 @@ export function CodePreview({ code }: { code: string }) {
   );
 }
 
-export default function LiveCodeEditor({ initialCode = "" }) {
+export default function LiveCodeEditor({ initialCode = '',
+}: {
+  initialCode?: string,
+  onCodeChange?: (code: string) => void,
+  manualExecution?: boolean
+}) {
   const [code, setCode] = useState(initialCode);
 
   return (
