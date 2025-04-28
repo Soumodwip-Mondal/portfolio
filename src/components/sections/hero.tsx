@@ -6,7 +6,7 @@ import { Button } from '../ui/button';
 import { Badge } from '../ui/badge';
 import { ChevronRight, ExternalLink, Sparkles } from 'lucide-react';
 import { Link } from 'react-router-dom'; // Import Link from react-router-dom
-import image from '../../assets/MyImage.jpg';
+import image from '../../assets/myPhoto.jpg';
 import resume from '../../assets/Soumodwip_Mondal_Resume.pdf'; // Uncommented the resume import
 
 export default function Hero() {
