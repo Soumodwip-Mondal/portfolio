@@ -22,14 +22,21 @@ export default function Hero() {
 
   // Skills with color variants
   const skills: { name: string; color: keyof typeof colorMap }[] = [
-    { name: 'JavaScript', color: 'blue' },
-    { name: 'TypeScript', color: 'orange' },
-    { name: 'React', color: 'cyan' },
     { name: 'Data Analysis', color: 'indigo' },
-    { name: 'Tailwind CSS', color: 'sky' },
+    { name: 'Business Analysis', color: 'zinc' },
     { name: 'Python', color: 'violet' },
     { name: 'Tableau', color: 'green' },
     { name: 'SQL', color: 'pink' },
+    { name: 'Data Warehousing', color: 'slate' },
+    { name: 'ML', color: 'yellow' },
+    { name: 'ETL', color: 'red' },
+    {name:'Big Data', color: 'emerald'},
+    { name: 'Azure', color: 'fuchsia' },
+    { name: 'Excel', color: 'teal' },
+    { name: 'JavaScript', color: 'cyan' },
+    { name: 'TypeScript', color: 'orange' },
+    { name: 'React', color: 'stone' },
+    { name: 'Tailwind CSS', color: 'sky' },
   ];
 
   // Animation variants
@@ -108,16 +115,30 @@ export default function Hero() {
     }
   };
 
-  const colorMap = {
-    blue: "bg-blue-100 dark:bg-blue-900/30 text-blue-800 dark:text-blue-300 border-blue-200 dark:border-blue-800",
-    cyan: "bg-cyan-100 dark:bg-cyan-900/30 text-cyan-800 dark:text-cyan-300 border-cyan-200 dark:border-cyan-800",
-    indigo: "bg-indigo-100 dark:bg-indigo-900/30 text-indigo-800 dark:text-indigo-300 border-indigo-200 dark:border-indigo-800",
-    sky: "bg-sky-100 dark:bg-sky-900/30 text-sky-800 dark:text-sky-300 border-sky-200 dark:border-sky-800",
-    violet: "bg-violet-100 dark:bg-violet-900/30 text-violet-800 dark:text-violet-300 border-violet-200 dark:border-violet-800",
-    green: "bg-green-100 dark:bg-green-900/30 text-green-800 dark:text-green-300 border-green-200 dark:border-green-800",
-    pink: "bg-pink-100 dark:bg-pink-900/30 text-pink-800 dark:text-pink-300 border-pink-200 dark:border-pink-800",
-    orange: "bg-orange-100 dark:bg-orange-900/30 text-orange-800 dark:text-orange-300 border-orange-200 dark:border-orange-800"
-  };
+const colorMap = {
+  blue: "bg-blue-100 dark:bg-blue-900/30 text-blue-800 dark:text-blue-300 border-blue-200 dark:border-blue-800",
+  cyan: "bg-cyan-100 dark:bg-cyan-900/30 text-cyan-800 dark:text-cyan-300 border-cyan-200 dark:border-cyan-800",
+  indigo: "bg-indigo-100 dark:bg-indigo-900/30 text-indigo-800 dark:text-indigo-300 border-indigo-200 dark:border-indigo-800",
+  sky: "bg-sky-100 dark:bg-sky-900/30 text-sky-800 dark:text-sky-300 border-sky-200 dark:border-sky-800",
+  violet: "bg-violet-100 dark:bg-violet-900/30 text-violet-800 dark:text-violet-300 border-violet-200 dark:border-violet-800",
+  green: "bg-green-100 dark:bg-green-900/30 text-green-800 dark:text-green-300 border-green-200 dark:border-green-800",
+  pink: "bg-pink-100 dark:bg-pink-900/30 text-pink-800 dark:text-pink-300 border-pink-200 dark:border-pink-800",
+  orange: "bg-orange-100 dark:bg-orange-900/30 text-orange-800 dark:text-orange-300 border-orange-200 dark:border-orange-800",
+  yellow: "bg-yellow-100 dark:bg-yellow-900/30 text-yellow-800 dark:text-yellow-300 border-yellow-200 dark:border-yellow-800",
+  red: "bg-red-100 dark:bg-red-900/30 text-red-800 dark:text-red-300 border-red-200 dark:border-red-800",
+  purple: "bg-purple-100 dark:bg-purple-900/30 text-purple-800 dark:text-purple-300 border-purple-200 dark:border-purple-800",
+  emerald: "bg-emerald-100 dark:bg-emerald-900/30 text-emerald-800 dark:text-emerald-300 border-emerald-200 dark:border-emerald-800",
+  teal: "bg-teal-100 dark:bg-teal-900/30 text-teal-800 dark:text-teal-300 border-teal-200 dark:border-teal-800",
+  lime: "bg-lime-100 dark:bg-lime-900/30 text-lime-800 dark:text-lime-300 border-lime-200 dark:border-lime-800",
+  amber: "bg-amber-100 dark:bg-amber-900/30 text-amber-800 dark:text-amber-300 border-amber-200 dark:border-amber-800",
+  rose: "bg-rose-100 dark:bg-rose-900/30 text-rose-800 dark:text-rose-300 border-rose-200 dark:border-rose-800",
+  fuchsia: "bg-fuchsia-100 dark:bg-fuchsia-900/30 text-fuchsia-800 dark:text-fuchsia-300 border-fuchsia-200 dark:border-fuchsia-800",
+  slate: "bg-slate-100 dark:bg-slate-900/30 text-slate-800 dark:text-slate-300 border-slate-200 dark:border-slate-800",
+  gray: "bg-gray-100 dark:bg-gray-900/30 text-gray-800 dark:text-gray-300 border-gray-200 dark:border-gray-800",
+  zinc: "bg-zinc-100 dark:bg-zinc-900/30 text-zinc-800 dark:text-zinc-300 border-zinc-200 dark:border-zinc-800",
+  neutral: "bg-neutral-100 dark:bg-neutral-900/30 text-neutral-800 dark:text-neutral-300 border-neutral-200 dark:border-neutral-800",
+  stone: "bg-stone-100 dark:bg-stone-900/30 text-stone-800 dark:text-stone-300 border-stone-200 dark:border-stone-800"
+};
 
   const getColorClasses = (color: keyof typeof colorMap): string => {
     return colorMap[color] || colorMap.blue;
@@ -165,27 +186,21 @@ export default function Hero() {
                 animate="visible"
                 className="relative"
               >
-                <motion.div
-                  initial={{ opacity: 0, width: 0 }}
-                  animate={{ opacity: 1, width: "40%" }}
-                  transition={{ delay: 0.2, duration: 0.8 }}
-                  className="h-1 bg-gradient-to-r from-blue-600 to-purple-600 dark:from-blue-500 dark:to-purple-500 mb-4"
-                />
                 <motion.h2 
                   variants={itemVariants}
                   className="text-sm font-medium uppercase tracking-widest text-blue-600 dark:text-blue-400 mb-4 flex items-center leading-relaxed"
                 >
-                  <Sparkles className="mr-2 h-4 w-4" />
-                  Full-Stack Developer And Data Analyst
+                  <Sparkles className="mr-2 h-4 w-4" />                   
+                    Data Analyst & Problem Solver
                 </motion.h2>
                 <motion.h1 
                   variants={itemVariants}
                   className="text-4xl md:text-6xl font-bold mb-4 leading-tight"
                 >
-                  Crafting{" "}
+                  Turning{" "} 
                   <span className="relative">
                     <span className="relative z-10 bg-gradient-to-r from-blue-600 to-purple-600 dark:from-blue-400 dark:to-purple-400 bg-clip-text text-transparent">
-                      Digital Experiences
+                      Complex Data
                     </span>
                     <motion.span
                       className="absolute -bottom-2 left-0 w-full h-3 bg-blue-200 dark:bg-blue-900/50 -z-10"
@@ -194,13 +209,13 @@ export default function Hero() {
                       transition={{ delay: 0.8, duration: 0.6 }}
                     />
                   </span>{" "}
-                  that Matter
+                  into Clear, Actionable Insights
                 </motion.h1>
                 <motion.p 
                   variants={itemVariants} 
                   className="text-xl text-slate-600 dark:text-slate-300 mb-8 max-w-lg"
                 >
-                  I build beautiful, interactive, and performant web applications with modern technologies and a focus on user experience and analyze data to make informed decisions.
+                 I specialize in transforming raw datasets into compelling stories through analysis, visualization, and statistical modeling — enabling smarter decisions and measurable business impact. Skilled in Python, SQL, and Tableau, I bridge the gap between data and strategy.
                 </motion.p>
                 
                 
