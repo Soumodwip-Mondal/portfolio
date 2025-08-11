@@ -35,6 +35,8 @@ const categoryColors: Record<string, string> = {
   'data analysis':'from-emerald-600 to-teal-500',
   python: 'from-yellow-500 to-amber-500',
   group: 'from-amber-500 to-orange-500',
+  'customer segmentation': 'from-blue-500 to-cyan-500',
+  'sentiment analysis': 'from-purple-500 to-pink-500'
 };
 
 // Category-specific icons - Improved component with better icon mapping
@@ -53,7 +55,7 @@ const CategoryIcon = ({ category }: { category: string }) => {
     'sentiment analysis': <MessageSquare className="h-4 w-4" />,
   };
   
-  // Normalize category name for consistent matching
+  // Normalize category to match keys in iconMap
   const normalizedCategory = category.toLowerCase().trim();
   
   return iconMap[normalizedCategory as keyof typeof iconMap] || <Sparkles className="h-4 w-4" />;
