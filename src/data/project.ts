@@ -75,7 +75,7 @@ export const projects: Project[] = [
     id: 7,
     title: "Blinkit Sales Data Analysis",
     description: "This interactive Power BI dashboard is built to analyze retail sales performance across multiple dimensions like item types, fat content, outlet characteristics, and geographic locations. It provides actionable insights for decision-makers to evaluate key metrics such as total sales, average sales, number of items sold, and average customer ratings..",
-    category: "database",
+    category: "data analysis",
     tags: ["PowerBI", "Data Analysis", "Data Visualization"],
     image: visulization,
     imageUrl: visulization,
