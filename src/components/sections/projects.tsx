@@ -32,7 +32,7 @@ const categoryColors: Record<string, string> = {
   ai: 'from-violet-600 to-purple-600',
   database: 'from-amber-500 to-orange-500',
   ml:'from-pink-500 to-rose-500',
-  analytics:'from-emerald-600 to-teal-500',
+  'data analysis':'from-emerald-600 to-teal-500',
   python: 'from-yellow-500 to-amber-500',
   group: 'from-amber-500 to-orange-500',
 };
