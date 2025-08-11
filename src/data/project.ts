@@ -52,7 +52,7 @@ export const projects: Project[] = [
     id: 4,
     title: "Building an Enterprise-Lebel Data Warehouse",
     description: "This project involves designing and implementing a data warehouse for an enterprise, focusing on data integration, storage, and retrieval to support business intelligence and analytics.",
-    category: "Database",
+    category: "database",
     tags: ["PostgreSQL", "Data Integration", "Data Warehousing", "ETL","Data analysis"],
     image: data_warehouse,
     imageUrl: data_warehouse,
@@ -75,7 +75,7 @@ export const projects: Project[] = [
     id: 7,
     title: "Blinkit Sales Data Analysis",
     description: "This interactive Power BI dashboard is built to analyze retail sales performance across multiple dimensions like item types, fat content, outlet characteristics, and geographic locations. It provides actionable insights for decision-makers to evaluate key metrics such as total sales, average sales, number of items sold, and average customer ratings..",
-    category: "Database",
+    category: "database",
     tags: ["PowerBI", "Data Analysis", "Data Visualization"],
     image: visulization,
     imageUrl: visulization,
@@ -83,10 +83,10 @@ export const projects: Project[] = [
     date: "June,2025"
   },
       {
-    id: 7,
+    id: 8,
     title: "Spotify Streaming Data Analysis",
     description: ". It covers an end-to-end process of normalizing a denormalized dataset, performing SQL queries of varying complexity (easy, medium, and medium to hard), and optimizing query performance.",
-    category: "Database",
+    category: "database",
     tags: ["PostgreSQL", "Data Analysis", "Query Optimization", "Data Visualization"],
     image: spotify_logo,
     imageUrl: spotify_logo,
@@ -94,10 +94,10 @@ export const projects: Project[] = [
     date: "June,2025"
   },
     {
-    id: 8,
+    id: 9,
     title: "Pizza Sales Data Analysis",
     description: "I have done a analysis of the marketing data using Python and Pandas. I have also used Matplotlib to visualize the data.",
-    category: "trend analysis",
+    category: "data analysis",
     tags: ["Python", "Pandas", "Matplotlib"],
     image: pizza_data,
     imageUrl: pizza_data,
@@ -105,7 +105,7 @@ export const projects: Project[] = [
     date: "2025"
   },
   {
-    id: 9,
+    id: 10,
     title: "Express Your Love",
     description: "Express your love to your loved ones with this simple web app. I have created this project using React and Basic CSS.",
     category: "web",
@@ -116,7 +116,7 @@ export const projects: Project[] = [
     date: "2025"
   },
   {
-    id: 10,
+    id: 11,
     title: "Speech Recognition",
     description: "Can you believe that you can control your computer by just speaking? Yes, it's possible with the help of AI. I have created a simple speech recognition project using Python and Gemeni-api.",
     category: "python",
@@ -129,7 +129,7 @@ export const projects: Project[] = [
   }
   ,
   {
-    id: 11,
+    id: 12,
     title: "ML Project",
     description: "This is ongoing project",
     category: "ml",
@@ -140,7 +140,7 @@ export const projects: Project[] = [
     date: "2025"
   },
   {
-    id: 12,
+    id: 13,
     title: "Making Predictions Using data",
     description: "I have done a statistical analysis of the marketing data using Python and Pandas. I have also used Matplotlib to visualize the data.",
     category: "trend analysis",
@@ -151,7 +151,7 @@ export const projects: Project[] = [
     date: "2025"
   },
   {
-    id: 13,
+    id: 14,
     title: "Jeevan Vase",
     description: "Website for a NGO and Individual.",
     category: "group",
