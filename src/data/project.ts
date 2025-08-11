@@ -3,7 +3,7 @@ import speech_reco from "../assets/speech_reco.png";
 import data_analysis from "../assets/data-analisis.png";
 import pizza_data from '../assets/Pizza_data.png';
 import myPortfolio from '../assets/myportfolio.png'
-import data_warehouse from '../assets/data_warehouse.png'
+import data_warehouse from '../assets/Data_Warehouse.png'
 import final_cluster from '../assets/final_clusters.png'
 import spotify_logo from '../assets/spotify_logo.png'
 import love from '../assets/love.png'
