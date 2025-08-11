@@ -7,9 +7,6 @@ const Skills = lazy(() => import('../components/sections/skills'));
 const Skills3D = lazy(() => import('../components/sections/skills-3d'));
 const Contact = lazy(() => import('../components/sections/contact'));
 const Footer = lazy(() => import('../components/layout/footer'));
-const InteractivePlayground = lazy(() => import('../components/sections/interactive-playground'));
-const AugmentedReality = lazy(() => import('../components/sections/augmented-reality'));
-
 import { PersonalizedRecommendations } from '../components/personalization/PersonalizedRecommendations';
 import { SectionTracker } from '../components/personalization/SectionTracker';
 import { usePersonalization } from '../context/PersonalizationContext';
@@ -36,26 +33,11 @@ export default function Home() {
           </Suspense>
         </SectionTracker>
         
-        <SectionTracker sectionId="interactive-playground" interest="development">
-          <Suspense fallback={<LoadingSpinner />}>
-            <InteractivePlayground />
-          </Suspense>
-        </SectionTracker>
-        
         <SectionTracker sectionId="skills-3d" interest="development">
           <Suspense fallback={<LoadingSpinner />}>
             <Skills3D />
           </Suspense>
         </SectionTracker>
-        
-      
-        
-        <SectionTracker sectionId="augmented-reality" interest="mobile">
-          <Suspense fallback={<LoadingSpinner />}>
-            <AugmentedReality />
-          </Suspense>
-        </SectionTracker>
-        
         <SectionTracker sectionId="skills" interest="development">
           <Suspense fallback={<LoadingSpinner />}>
             <Skills />

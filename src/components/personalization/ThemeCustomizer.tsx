@@ -21,8 +21,8 @@ export const ThemeCustomizer = () => {
   const { setTheme: setNextTheme } = useTheme();
   
   const themes: { value: ThemeOption; label: string; icon: React.ReactNode }[] = [
+    { value: 'dark', label: 'Dark', icon: <Moon className="h-4 w-4" /> }, // Moved dark first
     { value: 'light', label: 'Light', icon: <Sun className="h-4 w-4" /> },
-    { value: 'dark', label: 'Dark', icon: <Moon className="h-4 w-4" /> },
     { value: 'purple', label: 'Purple', icon: <Palette className="h-4 w-4 text-purple-500" /> },
     { value: 'blue', label: 'Blue', icon: <Palette className="h-4 w-4 text-blue-500" /> },
     { value: 'green', label: 'Green', icon: <Palette className="h-4 w-4 text-green-500" /> },
@@ -40,8 +40,13 @@ export const ThemeCustomizer = () => {
   
   // Apply theme when component mounts or preferences change
   useEffect(() => {
-    applyTheme(preferences.theme);
-  }, [preferences.theme]);
+    // Set default theme to dark if no theme is set
+    const defaultTheme = preferences.theme || 'dark';
+    if (preferences.theme !== defaultTheme) {
+      setTheme(defaultTheme);
+    }
+    applyTheme(defaultTheme);
+  }, [preferences.theme, setTheme]);
   
   const handleThemeChange = (theme: ThemeOption) => {
     setTheme(theme);
@@ -58,8 +63,8 @@ export const ThemeCustomizer = () => {
       document.documentElement.style.removeProperty('--primary');
       document.documentElement.style.removeProperty('--primary-foreground');
     } else {
-      // For custom themes, set light mode as base
-      setNextTheme('light');
+      // For custom themes, set dark mode as base instead of light
+      setNextTheme('dark');
       
       // Apply custom theme colors using HSL values to match Tailwind CSS variables
       if (theme === 'purple') {
@@ -180,4 +185,4 @@ export const ThemeCustomizer = () => {
       </AnimatePresence>
     </>
   );
-}; 
+};

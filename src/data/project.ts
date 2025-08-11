@@ -3,11 +3,13 @@ import speech_reco from "../assets/speech_reco.png";
 import data_analysis from "../assets/data-analisis.png";
 import pizza_data from '../assets/Pizza_data.png';
 import myPortfolio from '../assets/myportfolio.png'
-import devvit from '../assets/devvit.png'
+import data_warehouse from '../assets/data_warehouse.png'
+import final_cluster from '../assets/final_clusters.png'
+import spotify_logo from '../assets/spotify_logo.png'
 import love from '../assets/love.png'
+import feed_back from '../assets/feed_back.png'
 import jeevan from '../assets/jeevan.png'
-import mess from '../assets/mess.png'
-import python from '../assets/python_pro.png'
+import mall_customer from '../assets/mall_customer.png'
 export const projects: Project[] = [
   
   {
@@ -24,28 +26,73 @@ export const projects: Project[] = [
 
   {
     id: 2,
-    title: "Marketing-Analytics-Exploratory-Statistical-Analysis",
-    description: "I have done a statistical analysis of the marketing data using Python and Pandas. I have also used Matplotlib to visualize the data.",
-    category: "data",
-    tags: ["Python", "Pandas", "Matplotlib"],
-    image: data_analysis,
-    imageUrl: data_analysis,
-    url: 'https://github.com/Soumodwip-Mondal/Marketing-Analytics-Exploratory-Statistical-Analysis-task.git',
-    date: "2025"
+    title: "ShopEasy Marketing Strategy and Customer Feedback Analysis",
+    description: "This project analyzes key performance metrics, customer feedback, and marketing content to uncover issues and deliver actionable, data-driven recommendations for improving overall performance.",
+    category: "marketing analysis",
+    tags: ["Python","SQL", "Power BI", "NLTK","Sentiment Analysis"],
+    image: feed_back,
+    imageUrl: feed_back,
+    url: 'https://github.com/Soumodwip-Mondal/Marketing-Data-Analysis2',
+    date: "11/05/2025"
   },
-  {
+    {
     id: 3,
-    title: "Basic to Advanced python project",
-    description: "",
-    category: "python",
-    tags: ["Python","numpy"],
-    image: python,
-    imageUrl: python,
-    url: 'https://github.com/Soumodwip-Mondal/Python-Projects.git',
-    date: "2025"
+    title: "Credit Card Customer Segmentation and Behavior Analysis",
+    description: " Segment credit card customers based on spending patterns and repayment behavior to help businesses design targeted offers, improve retention, and detect risky customers.",
+    category: "customer segmentation",
+    tags: ["Python", "Pandas", "Matplotlib"],
+    image: final_cluster,
+    imageUrl: final_cluster,
+    url: 'https://github.com/Soumodwip-Mondal/Credit-Card-Customer-Segmentaion',
+    date: "11/08/2025"
   },
   {
     id: 4,
+    title: "Building an Enterprise-Lebel Data Warehouse",
+    description: "This project involves designing and implementing a data warehouse for an enterprise, focusing on data integration, storage, and retrieval to support business intelligence and analytics.",
+    category: "Database",
+    tags: ["PostgreSQL", "Data Integration", "Data Warehousing", "ETL","Data analysis"],
+    image: data_warehouse,
+    imageUrl: data_warehouse,
+    url: 'https://github.com/Soumodwip-Mondal/SQL-Data-Warehouse-and-Analysics-Project',
+    featured: true,
+    date: "August 2025"
+  },
+  {
+    id:5,
+    title: "Mall Customer Segmentation and Behavior Analysis",
+    description: " Segment credit card customers based on spending patterns and repayment behavior to help businesses design targeted offers, improve retention, and detect risky customers.",
+    category: "customer segmentation",
+    tags: ["Python", "Pandas", "Matplotlib", "Sicit Learn", "Kmean", "Seaborn"],
+    image: mall_customer,
+    imageUrl: mall_customer,
+    url: 'https://github.com/Soumodwip-Mondal/Credit-Card-Customer-Segmentaion',
+    date: "11/08/2025"
+  },
+      {
+    id: 6,
+    title: "Spotify Streaming Data Analysis",
+    description: "I have done a analysis of the marketing data using Python and Pandas. I have also used Matplotlib to visualize the data.",
+    category: "Database",
+    tags: ["PostgreSQL", "Data Analysis", "Query Optimization", "Data Visualization"],
+    image: spotify_logo,
+    imageUrl: spotify_logo,
+    url: 'https://github.com/Soumodwip-Mondal/PizzaSales_Data_analysis.git',
+    date: "June,2025"
+  },
+    {
+    id: 5,
+    title: "Pizza Sales Data Analysis",
+    description: "I have done a analysis of the marketing data using Python and Pandas. I have also used Matplotlib to visualize the data.",
+    category: "trend analysis",
+    tags: ["Python", "Pandas", "Matplotlib"],
+    image: pizza_data,
+    imageUrl: pizza_data,
+    url: 'https://github.com/Soumodwip-Mondal/PizzaSales_Data_analysis.git',
+    date: "2025"
+  },
+  {
+    id: 6,
     title: "Express Your Love",
     description: "Express your love to your loved ones with this simple web app. I have created this project using React and Basic CSS.",
     category: "web",
@@ -56,7 +103,7 @@ export const projects: Project[] = [
     date: "2025"
   },
   {
-    id: 5,
+    id: 7,
     title: "Speech Recognition",
     description: "Can you believe that you can control your computer by just speaking? Yes, it's possible with the help of AI. I have created a simple speech recognition project using Python and Gemeni-api.",
     category: "python",
@@ -69,42 +116,9 @@ export const projects: Project[] = [
   }
   ,
   {
-    id: 6,
-    title: "Devvit Game",
-    description: "",
-    category: "web",
-    tags: ["TypeScript", "React", "Tailwind CSS", "Devvit"],
-    image: devvit,
-    imageUrl: devvit,
-    url: 'https://github.com/Soumodwip-Mondal/Python-Projects.git',
-    date: "2025"
-  },
-  {
-    id: 7,
-    title: "Mess management System",
-    description: "This is an ongoing project",
-    category: "web",
-    tags: ["TypeScript", "React", "Tailwind CSS", "Next.js"],
-    image: mess,
-    imageUrl: mess,
-    url: 'https://github.com/Soumodwip-Mondal/Python-Projects.git',
-    date: "2025"
-  },
-  {
     id: 8,
-    title: "Basic ML Project",
-    description: "I have created a basic machine learning project using Python and Scikit-learn. I have used the Iris dataset to train the model.",
-    category: "ml",
-    tags: ["Figma", "Adobe XD"],
-    image: "/images/project3.jpg",
-    imageUrl: "/images/project3.jpg",
-    url: 'https://github.com/Soumodwip-Mondal/portfolio.git',
-    date: "2025"
-  },
-  {
-    id: 9,
     title: "ML Project",
-    description: "I have created a basic machine learning project using Python and Scikit-learn. I have used the Iris dataset to train the model.",
+    description: "This is ongoing project",
     category: "ml",
     tags: ["Figma", "Adobe XD"],
     image: "/images/project3.jpg",
@@ -116,7 +130,7 @@ export const projects: Project[] = [
     id: 10,
     title: "Making Predictions Using data",
     description: "I have done a statistical analysis of the marketing data using Python and Pandas. I have also used Matplotlib to visualize the data.",
-    category: "analytics",
+    category: "trend analysis",
     tags: ["Python", "Pandas", "Matplotlib"],
     image: data_analysis,
     imageUrl: data_analysis,
@@ -133,18 +147,8 @@ export const projects: Project[] = [
     imageUrl: jeevan,
     url: 'https://github.com/Soumodwip-Mondal/Jeevan-verse2.git',
     date: "2025"
-  },
-  {
-    id: 12,
-    title: "Pizza Sales Data Analysis",
-    description: "I have done a analysis of the marketing data using Python and Pandas. I have also used Matplotlib to visualize the data.",
-    category: "analytics",
-    tags: ["Python", "Pandas", "Matplotlib"],
-    image: pizza_data,
-    imageUrl: pizza_data,
-    url: 'https://github.com/Soumodwip-Mondal/PizzaSales_Data_analysis.git',
-    date: "2025"
-  },
+  }
+
 ]
 
 export default projects;
