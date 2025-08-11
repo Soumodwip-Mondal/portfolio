@@ -25,6 +25,19 @@ import {
 // Lazy load non-critical components
 const ProjectCard = lazy(() => import('../shared/project-card'));
 
+// Utility function to normalize category names
+const normalizeCategory = (category: string): string => {
+  return category.toLowerCase().trim().replace(/\s+/g, ' ');
+};
+
+// Utility function to format category for display
+const formatCategoryDisplay = (category: string): string => {
+  return category
+    .split(' ')
+    .map(word => word.charAt(0).toUpperCase() + word.slice(1))
+    .join(' ');
+};
+
 // Category-specific colors - moved outside component to avoid re-creation
 const categoryColors: Record<string, string> = {
   all: 'from-blue-600 to-purple-600',
@@ -55,11 +68,10 @@ const CategoryIcon = ({ category }: { category: string }) => {
   };
   
   // Normalize category to match keys in iconMap
-  const normalizedCategory = category.toLowerCase().trim();
+  const normalizedCategory = normalizeCategory(category);
   
   return iconMap[normalizedCategory] || <Sparkles className="h-4 w-4" />;
 };
-
 
 // Pre-defined animation variants - moved outside component
 const headingVariants = {
@@ -134,11 +146,23 @@ export default function Projects() {
   const sectionRef = useRef<HTMLElement>(null);
   const isInView = useInView(sectionRef, { once: false, amount: 0.2 });
   
-  // Memoize categories to prevent recalculation
-  const categories = useMemo(() => 
-    ['all', ...Array.from(new Set(projects.map(project => project.category)))], 
+  // Normalize project categories and create unique set
+  const normalizedProjects = useMemo(() => 
+    projects.map(project => ({
+      ...project,
+      category: normalizeCategory(project.category)
+    })), 
     []
   );
+
+  // Memoize categories to prevent recalculation - ensure all categories are normalized
+  const categories = useMemo(() => {
+    const uniqueCategories = Array.from(
+      new Set(normalizedProjects.map(project => project.category))
+    ).sort(); // Sort for consistent ordering
+    
+    return ['all', ...uniqueCategories];
+  }, [normalizedProjects]);
   
   // Optimize mouse tracking with throttling/debouncing
   useEffect(() => {
@@ -217,12 +241,16 @@ export default function Projects() {
   }, [mousePosition.x, mousePosition.y]);
 
   // Memoize filtered projects to prevent recalculation on each render
-  const filteredProjects = useMemo(() => 
-    activeFilter === 'all' 
-      ? projects 
-      : projects.filter(project => project.category.toLowerCase() === activeFilter.toLowerCase()),
-    [activeFilter]
-  );
+  const filteredProjects = useMemo(() => {
+    if (activeFilter === 'all') {
+      return normalizedProjects;
+    }
+    
+    const normalizedFilter = normalizeCategory(activeFilter);
+    return normalizedProjects.filter(project => 
+      project.category === normalizedFilter
+    );
+  }, [activeFilter, normalizedProjects]);
 
   // Memoize visible projects
   const visibleProjects = useMemo(() => 
@@ -325,24 +353,29 @@ export default function Projects() {
           transition={{ delay: 0.6, duration: 0.5 }}
         >
           <div className="p-1 bg-card/50 backdrop-blur-sm border border-border/50 rounded-full inline-flex flex-wrap justify-center shadow-lg max-w-full gap-1">
-            {categories.map((category) => (
-              <motion.button
-                key={category}
-                onClick={() => handleFilterChange(category)}
-                className={`px-4 py-2 m-1 rounded-full text-sm font-medium transition-all duration-300 flex items-center gap-2 ${
-                  activeFilter === category 
-                    ? `bg-gradient-to-r ${categoryColors[category.toLowerCase()] || categoryColors.all} text-white shadow-md` 
-                    : 'hover:bg-muted'
-                }`}
-                variants={filterVariants}
-                animate={activeFilter === category ? 'active' : 'inactive'}
-                whileHover={{ scale: activeFilter === category ? 1.08 : 1.05 }}
-                whileTap={{ scale: 0.98 }}
-              >
-                <CategoryIcon category={category} />
-                <span>{category.charAt(0).toUpperCase() + category.slice(1)}</span>
-              </motion.button>
-            ))}
+            {categories.map((category) => {
+              const normalizedCategory = normalizeCategory(category);
+              const displayCategory = formatCategoryDisplay(category);
+              
+              return (
+                <motion.button
+                  key={normalizedCategory}
+                  onClick={() => handleFilterChange(category)}
+                  className={`px-4 py-2 m-1 rounded-full text-sm font-medium transition-all duration-300 flex items-center gap-2 ${
+                    activeFilter === category 
+                      ? `bg-gradient-to-r ${categoryColors[normalizedCategory] || categoryColors.all} text-white shadow-md` 
+                      : 'hover:bg-muted'
+                  }`}
+                  variants={filterVariants}
+                  animate={activeFilter === category ? 'active' : 'inactive'}
+                  whileHover={{ scale: activeFilter === category ? 1.08 : 1.05 }}
+                  whileTap={{ scale: 0.98 }}
+                >
+                  <CategoryIcon category={category} />
+                  <span>{displayCategory}</span>
+                </motion.button>
+              );
+            })}
           </div>
         </motion.div>
 
