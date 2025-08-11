@@ -10,6 +10,7 @@ import love from '../assets/love.png'
 import feed_back from '../assets/feed_back.png'
 import jeevan from '../assets/jeevan.png'
 import mall_customer from '../assets/mall_customer.png'
+import ml from '../assets/ml1.png'
 export const projects: Project[] = [
   
   {
@@ -121,8 +122,8 @@ export const projects: Project[] = [
     description: "This is ongoing project",
     category: "ml",
     tags: ["Figma", "Adobe XD"],
-    image: "/images/project3.jpg",
-    imageUrl: "/images/project3.jpg",
+    image: ml,
+    imageUrl: ml,
     url: 'https://github.com/Soumodwip-Mondal/Python-Projects.git',
     date: "2025"
   },
