@@ -1,6 +1,6 @@
 'use client';
-
-import { useState, useEffect, useRef, useMemo } from 'react';
+import { useState, useEffect, useRef, useMemo, useCallback } from 'react';
+import React from 'react';
 import { motion, useAnimation, AnimatePresence, useInView } from 'framer-motion';
 import { Button } from '../ui/button';
 import { lazy, Suspense } from 'react';
@@ -31,17 +31,16 @@ const categoryColors: Record<string, string> = {
   web: 'from-green-600 to-cyan-500',
   ai: 'from-violet-600 to-purple-600',
   database: 'from-amber-500 to-orange-500',
-  ml:'from-pink-500 to-rose-500',
-  'data analysis':'from-emerald-600 to-teal-500',
+  ml: 'from-pink-500 to-rose-500',
+  'data analysis': 'from-emerald-600 to-teal-500',
   python: 'from-yellow-500 to-amber-500',
   group: 'from-amber-500 to-orange-500',
   'customer segmentation': 'from-blue-500 to-cyan-500',
   'sentiment analysis': 'from-purple-500 to-pink-500'
 };
 
-// Category-specific icons - Improved component with better icon mapping
 const CategoryIcon = ({ category }: { category: string }) => {
-  const iconMap = {
+  const iconMap: Record<string, React.ReactElement> = {
     // General categories
     all: <Filter className="h-4 w-4" />,
     web: <Globe className="h-4 w-4" />,
@@ -58,8 +57,9 @@ const CategoryIcon = ({ category }: { category: string }) => {
   // Normalize category to match keys in iconMap
   const normalizedCategory = category.toLowerCase().trim();
   
-  return iconMap[normalizedCategory as keyof typeof iconMap] || <Sparkles className="h-4 w-4" />;
+  return iconMap[normalizedCategory] || <Sparkles className="h-4 w-4" />;
 };
+
 
 // Pre-defined animation variants - moved outside component
 const headingVariants = {
@@ -68,7 +68,7 @@ const headingVariants = {
     y: 0, 
     opacity: 1,
     transition: { 
-      type: "spring",
+      type: "spring" as const,
       stiffness: 80,
       damping: 12,
       duration: 0.8
@@ -91,7 +91,7 @@ const filterVariants = {
   active: { 
     scale: 1.08, 
     y: -2,
-    transition: { type: "spring", stiffness: 300, damping: 10 }
+    transition: { type: "spring" as const, stiffness: 300, damping: 10 }
   }
 };
 
@@ -103,7 +103,7 @@ const buttonVariants = {
     y: 0,
     transition: { 
       delay: 1.0,
-      type: "spring",
+      type: "spring" as const,
       stiffness: 100,
       damping: 12
     }
@@ -111,7 +111,7 @@ const buttonVariants = {
   hover: { 
     scale: 1.05,
     y: -3,
-    transition: { type: "spring", stiffness: 400, damping: 10 }
+    transition: { type: "spring" as const, stiffness: 400, damping: 10 }
   },
   tap: { 
     scale: 0.97,
@@ -130,7 +130,7 @@ export default function Projects() {
   const [showAll, setShowAll] = useState(false);
   const controls = useAnimation();
   const [mousePosition, setMousePosition] = useState({ x: 0, y: 0 });
-  const [showSparkle, setShowSparkle] = useState(false); // Start false to reduce initial load animations
+  const [showSparkle, setShowSparkle] = useState(false);
   const sectionRef = useRef<HTMLElement>(null);
   const isInView = useInView(sectionRef, { once: false, amount: 0.2 });
   
@@ -148,19 +148,24 @@ export default function Projects() {
       clearTimeout(timeoutId);
       timeoutId = setTimeout(() => {
         setMousePosition({ x: e.clientX, y: e.clientY });
-      }, 50); // 50ms throttle
+      }, 50);
     };
     
-    window.addEventListener('mousemove', handleMouseMove);
+    if (typeof window !== 'undefined') {
+      window.addEventListener('mousemove', handleMouseMove);
+    }
+    
     return () => {
-      window.removeEventListener('mousemove', handleMouseMove);
+      if (typeof window !== 'undefined') {
+        window.removeEventListener('mousemove', handleMouseMove);
+      }
       clearTimeout(timeoutId);
     };
   }, []);
   
   // Replace interval with requestAnimationFrame for better performance
   useEffect(() => {
-    if (!isInView) return; // Don't run effect if not in view
+    if (!isInView) return;
     
     let sparkleTimeout: NodeJS.Timeout;
     let animationFrameId: number;
@@ -177,13 +182,19 @@ export default function Projects() {
         }, 1200);
       }
       
-      animationFrameId = requestAnimationFrame(animateSparkle);
+      if (typeof window !== 'undefined') {
+        animationFrameId = requestAnimationFrame(animateSparkle);
+      }
     };
     
-    animationFrameId = requestAnimationFrame(animateSparkle);
+    if (typeof window !== 'undefined') {
+      animationFrameId = requestAnimationFrame(animateSparkle);
+    }
     
     return () => {
-      cancelAnimationFrame(animationFrameId);
+      if (typeof window !== 'undefined') {
+        cancelAnimationFrame(animationFrameId);
+      }
       clearTimeout(sparkleTimeout);
     };
   }, [isInView]);
@@ -194,16 +205,14 @@ export default function Projects() {
     }
   }, [controls, isInView]);
 
-  // Memoize parallax calculation
-  const getParallaxStyle = useMemo(() => {
-    return (depth = 0.05) => {
-      if (typeof window === 'undefined') return {}; // SSR check
-      
-      const x = (window.innerWidth / 2 - mousePosition.x) * depth;
-      const y = (window.innerHeight / 2 - mousePosition.y) * depth;
-      return {
-        transform: `translate(${x}px, ${y}px)`
-      };
+  // Memoize parallax calculation with proper SSR handling
+  const getParallaxStyle = useCallback((depth = 0.05) => {
+    if (typeof window === 'undefined') return {};
+    
+    const x = (window.innerWidth / 2 - mousePosition.x) * depth;
+    const y = (window.innerHeight / 2 - mousePosition.y) * depth;
+    return {
+      transform: `translate(${x}px, ${y}px)`
     };
   }, [mousePosition.x, mousePosition.y]);
 
@@ -221,6 +230,19 @@ export default function Projects() {
     [showAll, filteredProjects]
   );
 
+  const handleFilterChange = useCallback((category: string) => {
+    setActiveFilter(category);
+    setShowAll(false);
+  }, []);
+
+  const handleShowAll = useCallback(() => {
+    setShowAll(true);
+  }, []);
+
+  const handleShowLess = useCallback(() => {
+    setShowAll(false);
+  }, []);
+
   return (
     <motion.section 
       id="projects"
@@ -230,20 +252,22 @@ export default function Projects() {
       variants={headingVariants}
       className="py-28 relative overflow-hidden"
     >
-      {/* Reduce number of animated background elements */}
-      <motion.div 
-        className="absolute -top-10 left-1/4 w-[28rem] h-[28rem] bg-gradient-to-br from-blue-400/20 to-sky-300/15 rounded-full filter blur-[100px] opacity-80 z-0" 
-        animate={{ 
-          x: [0, 30, 0],
-          y: [0, -30, 0],
-        }}
-        transition={{ 
-          duration: 20, // Slower animation for better performance
-          repeat: Infinity,
-          repeatType: "mirror"
-        }}
-        style={getParallaxStyle(0.02)}
-      />
+      {/* Animated background with SSR check */}
+      {typeof window !== 'undefined' && (
+        <motion.div 
+          className="absolute -top-10 left-1/4 w-[28rem] h-[28rem] bg-gradient-to-br from-blue-400/20 to-sky-300/15 rounded-full filter blur-[100px] opacity-80 z-0" 
+          animate={{ 
+            x: [0, 30, 0],
+            y: [0, -30, 0],
+          }}
+          transition={{ 
+            duration: 20,
+            repeat: Infinity,
+            repeatType: "mirror"
+          }}
+          style={getParallaxStyle(0.02)}
+        />
+      )}
 
       <div className="container mx-auto px-4 relative z-10">
         {/* Heading with enhanced animation */}
@@ -265,7 +289,7 @@ export default function Projects() {
                 rotate: [0, 360], 
               }}
               transition={{ 
-                duration: 12, // Slower for better performance
+                duration: 12,
                 repeat: Infinity,
                 ease: "linear"
               }}
@@ -304,10 +328,7 @@ export default function Projects() {
             {categories.map((category) => (
               <motion.button
                 key={category}
-                onClick={() => {
-                  setActiveFilter(category);
-                  setShowAll(false);
-                }}
+                onClick={() => handleFilterChange(category)}
                 className={`px-4 py-2 m-1 rounded-full text-sm font-medium transition-all duration-300 flex items-center gap-2 ${
                   activeFilter === category 
                     ? `bg-gradient-to-r ${categoryColors[category.toLowerCase()] || categoryColors.all} text-white shadow-md` 
@@ -354,7 +375,7 @@ export default function Projects() {
               initial={{ opacity: 0, y: 20 }}
               animate={{ opacity: 1, y: 0 }}
               transition={{ 
-                delay: Math.min(index * 0.1, 0.3), // Limit max delay to 0.3s
+                delay: Math.min(index * 0.1, 0.3),
                 duration: 0.5
               }}
               onMouseEnter={() => setHoveredIndex(index)}
@@ -402,7 +423,7 @@ export default function Projects() {
               <Button 
                 size="lg"
                 className="bg-gradient-to-r from-primary to-purple-600 hover:from-primary/90 hover:to-purple-600/90 text-primary-foreground group relative overflow-hidden"
-                onClick={() => setShowAll(true)}
+                onClick={handleShowAll}
               >
                 <span className="relative z-10 flex items-center">
                   Explore All Projects <ChevronRight className="ml-2 h-5 w-5 transition-transform duration-300 group-hover:translate-x-1" />
@@ -414,7 +435,7 @@ export default function Projects() {
                     backgroundPosition: ['0% 50%', '100% 50%', '0% 50%'],
                   }}
                   transition={{ 
-                    duration: 8, // Increased duration for better performance
+                    duration: 8,
                     repeat: Infinity,
                     ease: "linear"
                   }}
@@ -437,7 +458,7 @@ export default function Projects() {
                 <Button 
                   size="lg"
                   className="bg-gradient-to-r from-purple-600 to-primary hover:from-purple-600/90 hover:to-primary/90 text-primary-foreground group relative overflow-hidden"
-                  onClick={() => setShowAll(false)}
+                  onClick={handleShowLess}
                 >
                   <span className="relative z-10 flex items-center">
                     Show Less <ChevronUp className="ml-2 h-5 w-5 transition-transform duration-300 group-hover:-translate-y-1" />
@@ -449,7 +470,7 @@ export default function Projects() {
                       backgroundPosition: ['0% 50%', '100% 50%', '0% 50%'],
                     }}
                     transition={{ 
-                      duration: 8, // Increased duration for better performance
+                      duration: 8,
                       repeat: Infinity,
                       ease: "linear"
                     }}
