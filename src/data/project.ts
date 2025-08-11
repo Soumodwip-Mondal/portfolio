@@ -8,6 +8,7 @@ import final_cluster from '../assets/final_clusters.png'
 import spotify_logo from '../assets/spotify_logo.png'
 import love from '../assets/love.png'
 import feed_back from '../assets/feed_back.png'
+import visulization from '../assets/visualization.png'
 import jeevan from '../assets/jeevan.png'
 import mall_customer from '../assets/mall_customer.png'
 import ml from '../assets/ml1.png'
@@ -29,8 +30,8 @@ export const projects: Project[] = [
     id: 2,
     title: "ShopEasy Marketing Strategy and Customer Feedback Analysis",
     description: "This project analyzes key performance metrics, customer feedback, and marketing content to uncover issues and deliver actionable, data-driven recommendations for improving overall performance.",
-    category: "marketing analysis",
-    tags: ["Python","SQL", "Power BI", "NLTK","Sentiment Analysis"],
+    category: "data analysis",
+    tags: ["Python","SQL", "Power BI", "NLTK","Sentiment Analysis","marketting analysis"],
     image: feed_back,
     imageUrl: feed_back,
     url: 'https://github.com/Soumodwip-Mondal/Marketing-Data-Analysis2',
@@ -41,7 +42,7 @@ export const projects: Project[] = [
     title: "Credit Card Customer Segmentation and Behavior Analysis",
     description: " Segment credit card customers based on spending patterns and repayment behavior to help businesses design targeted offers, improve retention, and detect risky customers.",
     category: "customer segmentation",
-    tags: ["Python", "Pandas", "Matplotlib"],
+    tags: ["Python", "Pandas", "Matplotlib","Sicit Learn", "Kmean", "Seaborn", "Clustering","PCA","Dimensionality Reduction","Data Visualization"],
     image: final_cluster,
     imageUrl: final_cluster,
     url: 'https://github.com/Soumodwip-Mondal/Credit-Card-Customer-Segmentaion',
@@ -70,19 +71,30 @@ export const projects: Project[] = [
     url: 'https://github.com/Soumodwip-Mondal/Credit-Card-Customer-Segmentaion',
     date: "11/08/2025"
   },
+        {
+    id: 7,
+    title: "Blinkit Sales Data Analysis",
+    description: "This interactive Power BI dashboard is built to analyze retail sales performance across multiple dimensions like item types, fat content, outlet characteristics, and geographic locations. It provides actionable insights for decision-makers to evaluate key metrics such as total sales, average sales, number of items sold, and average customer ratings..",
+    category: "Database",
+    tags: ["PowerBI", "Data Analysis", "Data Visualization"],
+    image: visulization,
+    imageUrl: visulization,
+    url: 'https://github.com/Soumodwip-Mondal/Blinkit_data_visulization_and_analysis/',
+    date: "June,2025"
+  },
       {
-    id: 6,
+    id: 7,
     title: "Spotify Streaming Data Analysis",
-    description: "I have done a analysis of the marketing data using Python and Pandas. I have also used Matplotlib to visualize the data.",
+    description: ". It covers an end-to-end process of normalizing a denormalized dataset, performing SQL queries of varying complexity (easy, medium, and medium to hard), and optimizing query performance.",
     category: "Database",
     tags: ["PostgreSQL", "Data Analysis", "Query Optimization", "Data Visualization"],
     image: spotify_logo,
     imageUrl: spotify_logo,
-    url: 'https://github.com/Soumodwip-Mondal/PizzaSales_Data_analysis.git',
+    url: 'https://github.com/Soumodwip-Mondal/spotify_data_analysis_using_postgresSQL',
     date: "June,2025"
   },
     {
-    id: 5,
+    id: 8,
     title: "Pizza Sales Data Analysis",
     description: "I have done a analysis of the marketing data using Python and Pandas. I have also used Matplotlib to visualize the data.",
     category: "trend analysis",
@@ -93,7 +105,7 @@ export const projects: Project[] = [
     date: "2025"
   },
   {
-    id: 6,
+    id: 9,
     title: "Express Your Love",
     description: "Express your love to your loved ones with this simple web app. I have created this project using React and Basic CSS.",
     category: "web",
@@ -104,7 +116,7 @@ export const projects: Project[] = [
     date: "2025"
   },
   {
-    id: 7,
+    id: 10,
     title: "Speech Recognition",
     description: "Can you believe that you can control your computer by just speaking? Yes, it's possible with the help of AI. I have created a simple speech recognition project using Python and Gemeni-api.",
     category: "python",
@@ -117,7 +129,7 @@ export const projects: Project[] = [
   }
   ,
   {
-    id: 8,
+    id: 11,
     title: "ML Project",
     description: "This is ongoing project",
     category: "ml",
@@ -128,7 +140,7 @@ export const projects: Project[] = [
     date: "2025"
   },
   {
-    id: 10,
+    id: 12,
     title: "Making Predictions Using data",
     description: "I have done a statistical analysis of the marketing data using Python and Pandas. I have also used Matplotlib to visualize the data.",
     category: "trend analysis",
@@ -139,7 +151,7 @@ export const projects: Project[] = [
     date: "2025"
   },
   {
-    id: 11,
+    id: 13,
     title: "Jeevan Vase",
     description: "Website for a NGO and Individual.",
     category: "group",

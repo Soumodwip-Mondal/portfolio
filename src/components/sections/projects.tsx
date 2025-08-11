@@ -14,15 +14,11 @@ import {
   Filter, 
   Globe, 
   Brain, 
+  BarChart3,
   Cpu, 
   Database, 
   Code, 
   Users,
-  TrendingUp,
-  MapPin,
-  Settings,
-  UserX,
-  Shield,
   MessageSquare
 } from 'lucide-react';
 
@@ -39,14 +35,6 @@ const categoryColors: Record<string, string> = {
   analytics:'from-emerald-600 to-teal-500',
   python: 'from-yellow-500 to-amber-500',
   group: 'from-amber-500 to-orange-500',
-  'customer segmentation': 'from-blue-500 to-indigo-500',
-  'sentiment analysis': 'from-green-500 to-emerald-500',
-  'supply chain optimization': 'from-purple-500 to-violet-500',
-  'fraud detection': 'from-red-500 to-pink-500',
-  'market trend analysis': 'from-cyan-500 to-blue-500',
-  'geospatial analysis': 'from-teal-500 to-green-500',
-  'predictive maintenance': 'from-orange-500 to-red-500',
-  'customer churn prediction': 'from-indigo-500 to-purple-500',
 };
 
 // Category-specific icons - Improved component with better icon mapping
@@ -58,20 +46,11 @@ const CategoryIcon = ({ category }: { category: string }) => {
     ml: <Brain className="h-4 w-4" />,
     ai: <Cpu className="h-4 w-4" />,
     database: <Database className="h-4 w-4" />,
+    'data analysis': <BarChart3 className="h-4 w-4" />,
     python: <Code className="h-4 w-4" />,
     group: <Users className="h-4 w-4" />,
-    
-    // Specific project categories with appropriate icons
     'customer segmentation': <Users className="h-4 w-4" />,
     'sentiment analysis': <MessageSquare className="h-4 w-4" />,
-    'supply chain optimization': <Settings className="h-4 w-4" />,
-    'fraud detection': <Shield className="h-4 w-4" />,
-    'trend analysis': <TrendingUp className="h-4 w-4" />,
-    'geospatial analysis': <MapPin className="h-4 w-4" />,
-    'predictive maintenance': <Settings className="h-4 w-4" />,
-    'churn prediction': <UserX className="h-4 w-4" />,
-    
-    // Legacy entries (keeping for backward compatibility)
   };
   
   // Normalize category name for consistent matching
