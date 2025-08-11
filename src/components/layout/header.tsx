@@ -6,11 +6,10 @@ import { motion } from 'framer-motion';
 import { useTheme } from 'next-themes';
 import { Avatar, AvatarFallback, AvatarImage } from '../ui/avatar';
 import { Button } from '../../components/ui/button';
-import { Moon, Sun, Menu, Paintbrush, Bot, Mic, User, Code, Lightbulb, Newspaper, LayoutDashboard, Mail } from 'lucide-react';
+import { Moon, Sun, Menu, Paintbrush, Mic, User, Code, Lightbulb, Newspaper, LayoutDashboard, Mail } from 'lucide-react';
 import { useScrollToSection } from '../../hooks/useScrollToSection';
 // Lazy load non-critical components
 const MobileMenu = lazy(() => import('./mobile-menu'));
-const GamificationButton = lazy(() => import('../gamification/GamificationButton').then(module => ({ default: module.GamificationButton })));
 
 // Import image with explicit width and height for better CLS
 import image from '../../assets/Hello.png';
@@ -33,7 +32,6 @@ export default function Header() {
     { to: "/blog", icon: <Newspaper className="h-4 w-4 mr-1" />, label: "Blog" },
     { to: "/dashboard", icon: <LayoutDashboard className="h-4 w-4 mr-1" />, label: "Dashboard" },
     { to: "/collaborate", icon: <Paintbrush className="h-4 w-4 mr-1" />, label: "Draw" },
-    { to: "/ai-assistant", icon: <Bot className="h-4 w-4 mr-1" />, label: "AI Assistant" },
     { to: "/voice-control", icon: <Mic className="h-4 w-4 mr-1" />, label: "Voice Control" },
     { to: "#contact", icon: <Mail className="h-4 w-4 mr-1" />, label: "Contact", section: 'contact' },
   ];
@@ -78,9 +76,6 @@ export default function Header() {
             </Link>
           ))}
           
-          <Suspense fallback={<div className="w-8 h-8"></div>}>
-            <GamificationButton />
-          </Suspense>
           
           <Button 
             variant="ghost" 
@@ -94,9 +89,6 @@ export default function Header() {
         
         {/* Mobile Navigation Toggle */}
         <div className="md:hidden flex items-center">
-          <Suspense fallback={<div className="w-8 h-8"></div>}>
-            <GamificationButton />
-          </Suspense>
           <Button 
             variant="ghost" 
             size="icon" 

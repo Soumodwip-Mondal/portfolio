@@ -6,7 +6,25 @@ import { Button } from '../ui/button';
 import { lazy, Suspense } from 'react';
 import { projects } from '../../data/project';
 import { Project } from '../../types/project';
-import { ChevronRight, ChevronUp, Star, Sparkles, Filter, Globe, Brain, Palette, Cpu, Database, Code, BarChart3, Group } from 'lucide-react';
+import { 
+  ChevronRight, 
+  ChevronUp, 
+  Star, 
+  Sparkles, 
+  Filter, 
+  Globe, 
+  Brain, 
+  Cpu, 
+  Database, 
+  Code, 
+  Users,
+  TrendingUp,
+  MapPin,
+  Settings,
+  UserX,
+  Shield,
+  MessageSquare
+} from 'lucide-react';
 
 // Lazy load non-critical components
 const ProjectCard = lazy(() => import('../shared/project-card'));
@@ -16,28 +34,50 @@ const categoryColors: Record<string, string> = {
   all: 'from-blue-600 to-purple-600',
   web: 'from-green-600 to-cyan-500',
   ai: 'from-violet-600 to-purple-600',
-  data: 'from-amber-500 to-orange-500',
+  database: 'from-amber-500 to-orange-500',
   ml:'from-pink-500 to-rose-500',
   analytics:'from-emerald-600 to-teal-500',
   python: 'from-yellow-500 to-amber-500',
   group: 'from-amber-500 to-orange-500',
+  'customer segmentation': 'from-blue-500 to-indigo-500',
+  'sentiment analysis': 'from-green-500 to-emerald-500',
+  'supply chain optimization': 'from-purple-500 to-violet-500',
+  'fraud detection': 'from-red-500 to-pink-500',
+  'market trend analysis': 'from-cyan-500 to-blue-500',
+  'geospatial analysis': 'from-teal-500 to-green-500',
+  'predictive maintenance': 'from-orange-500 to-red-500',
+  'customer churn prediction': 'from-indigo-500 to-purple-500',
 };
 
-// Category-specific icons - Memoized component
+// Category-specific icons - Improved component with better icon mapping
 const CategoryIcon = ({ category }: { category: string }) => {
   const iconMap = {
+    // General categories
     all: <Filter className="h-4 w-4" />,
     web: <Globe className="h-4 w-4" />,
     ml: <Brain className="h-4 w-4" />,
-    design: <Palette className="h-4 w-4" />,
     ai: <Cpu className="h-4 w-4" />,
-    data: <Database className="h-4 w-4" />,
+    database: <Database className="h-4 w-4" />,
     python: <Code className="h-4 w-4" />,
-    analytics: <BarChart3 className="h-4 w-4" />,
-    group: <Group className="h-4 w-4" />,
+    group: <Users className="h-4 w-4" />,
+    
+    // Specific project categories with appropriate icons
+    'customer segmentation': <Users className="h-4 w-4" />,
+    'sentiment analysis': <MessageSquare className="h-4 w-4" />,
+    'supply chain optimization': <Settings className="h-4 w-4" />,
+    'fraud detection': <Shield className="h-4 w-4" />,
+    'trend analysis': <TrendingUp className="h-4 w-4" />,
+    'geospatial analysis': <MapPin className="h-4 w-4" />,
+    'predictive maintenance': <Settings className="h-4 w-4" />,
+    'churn prediction': <UserX className="h-4 w-4" />,
+    
+    // Legacy entries (keeping for backward compatibility)
   };
   
-  return iconMap[category as keyof typeof iconMap] || <Sparkles className="h-4 w-4" />;
+  // Normalize category name for consistent matching
+  const normalizedCategory = category.toLowerCase().trim();
+  
+  return iconMap[normalizedCategory as keyof typeof iconMap] || <Sparkles className="h-4 w-4" />;
 };
 
 // Pre-defined animation variants - moved outside component
@@ -190,7 +230,7 @@ export default function Projects() {
   const filteredProjects = useMemo(() => 
     activeFilter === 'all' 
       ? projects 
-      : projects.filter(project => project.category === activeFilter),
+      : projects.filter(project => project.category.toLowerCase() === activeFilter.toLowerCase()),
     [activeFilter]
   );
 
@@ -199,8 +239,6 @@ export default function Projects() {
     showAll ? filteredProjects : filteredProjects.slice(0, 3),
     [showAll, filteredProjects]
   );
-
-
 
   return (
     <motion.section 
@@ -291,7 +329,7 @@ export default function Projects() {
                 }}
                 className={`px-4 py-2 m-1 rounded-full text-sm font-medium transition-all duration-300 flex items-center gap-2 ${
                   activeFilter === category 
-                    ? `bg-gradient-to-r ${categoryColors[category]} text-white shadow-md` 
+                    ? `bg-gradient-to-r ${categoryColors[category.toLowerCase()] || categoryColors.all} text-white shadow-md` 
                     : 'hover:bg-muted'
                 }`}
                 variants={filterVariants}
