@@ -1,23 +1,11 @@
 'use client';
-import { useState } from 'react';
 import { Link } from 'react-router-dom';
 import { Github, Linkedin, Mail, Twitter } from 'lucide-react';
 import { Button } from '../../components/ui/button';
 import { useScrollToSection } from '../../hooks/useScrollToSection';
 
 export default function Footer() {
-  const currentYear = new Date().getFullYear();
   const { scrollToSection } = useScrollToSection();
-  const [clickCount, setClickCount] = useState(0);
-
-  const handleEasterEggClick = () => {
-    setClickCount(prev => prev + 1);
-    if (clickCount === 4) {
-      alert("🥚 You found an Easter egg! 'Always code as if the person who will maintain your code is a violent psychopath who knows where you live.' - John Woods");
-      setClickCount(0);
-      // In a real implementation, we would call the findEasterEgg function from the context
-    }
-  };
 
   return (
     <footer className="bg-slate-50 dark:bg-slate-900 border-t border-slate-200 dark:border-slate-800 py-8">
@@ -101,9 +89,6 @@ export default function Footer() {
           </div>
         </div>
 
-        <div className="mt-8 pt-6 border-t border-slate-200 dark:border-slate-800 text-center text-slate-600 dark:text-slate-400 text-sm">
-          <p onClick={handleEasterEggClick} className="cursor-default">© {currentYear} Soumodwip Mondal. All rights reserved.</p>
-        </div>
       </div>
     </footer>
   );
