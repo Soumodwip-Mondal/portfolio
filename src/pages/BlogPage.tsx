@@ -17,64 +17,44 @@ export default function BlogPage() {
   const blogPosts = [
     {
       id: 1,
-      title: 'Getting Started with React',
-      excerpt: 'Learn the basics of React and how to create your first component.',
-      date: 'June 15, 2023',
+      title: 'Data Analytics with Python',
+      excerpt: 'Learn the basics of Data Analytics using Python and its powerful libraries.',
+      date: 'June 15, 2025',
       imageUrl: 'https://via.placeholder.com/600x400',
-      categories: ['React', 'Web Development'],
+      categories: ['Data Analysis', 'Python'],
       readTime: '5 min read',
-      content: 'Lorem ipsum dolor sit amet, consectetur adipiscing elit. Sed do eiusmod tempor incididunt ut labore et dolore magna aliqua.'
+      content: 'Will be updated with more details soon.'
     },
     {
       id: 2,
-      title: 'Understanding TypeScript',
-      excerpt: 'A beginner-friendly guide to TypeScript and its benefits.',
-      date: 'July 22, 2023',
+      title: 'Understanding ML Algorithms',
+      excerpt: 'A beginner-friendly ML and its benefits.',
+      date: 'Aug, 2025',
       imageUrl: 'https://via.placeholder.com/600x400',
-      categories: ['TypeScript', 'Web Development'],
+      categories: ['ML', 'Python'],
       readTime: '7 min read',
-      content: 'Ut enim ad minim veniam, quis nostrud exercitation ullamco laboris nisi ut aliquip ex ea commodo consequat.'
+      content: 'Will be updated with more details soon.'
     },
     {
       id: 3,
-      title: 'Tailwind CSS Tips and Tricks',
-      excerpt: 'Improve your workflow with these Tailwind CSS techniques.',
-      date: 'August 10, 2023',
+      title: 'Data Warehousing Basics',
+      excerpt: 'An introduction to Data Warehousing concepts and practices.',
+      date: 'August 16, 2025',
       imageUrl: 'https://via.placeholder.com/600x400',
-      categories: ['CSS', 'Web Development'],
+      categories: ['Data Warehousing', 'SQL'],
       readTime: '4 min read',
-      content: 'Duis aute irure dolor in reprehenderit in voluptate velit esse cillum dolore eu fugiat nulla pariatur.'
+      content: 'Will be updated with more details soon.'
     },
     {
       id: 4,
-      title: 'Building Responsive Layouts',
-      excerpt: 'Learn how to create layouts that work on any device size.',
+      title: 'Data Visualization Techniques',
+      excerpt: 'Data Visualization is a crucial aspect of data analysis. In this post, we will explore various techniques and tools to effectively visualize data.',
       date: 'September 5, 2023',
       imageUrl: 'https://via.placeholder.com/600x400',
-      categories: ['CSS', 'Web Development'],
+      categories: ['Tableau', 'Data Visualization'],
       readTime: '6 min read',
-      content: 'Excepteur sint occaecat cupidatat non proident, sunt in culpa qui officia deserunt mollit anim id est laborum.'
-    },
-    {
-      id: 5,
-      title: 'React Hooks Deep Dive',
-      excerpt: 'An in-depth look at React hooks and how to use them effectively.',
-      date: 'October 18, 2023',
-      imageUrl: 'https://via.placeholder.com/600x400',
-      categories: ['React', 'Web Development'],
-      readTime: '8 min read',
-      content: 'Sed ut perspiciatis unde omnis iste natus error sit voluptatem accusantium doloremque laudantium.'
-    },
-    {
-      id: 6,
-      title: 'TypeScript Best Practices',
-      excerpt: 'Follow these best practices to write clean and maintainable TypeScript code.',
-      date: 'November 30, 2023',
-      imageUrl: 'https://via.placeholder.com/600x400',
-      categories: ['TypeScript', 'Web Development'],
-      readTime: '5 min read',
-      content: 'Nemo enim ipsam voluptatem quia voluptas sit aspernatur aut odit aut fugit, sed quia consequuntur magni dolores.'
-    },
+      content: 'will be updated with more details soon.'
+    }
   ];
 
   // Filter posts based on search term and category
