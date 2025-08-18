@@ -6,7 +6,7 @@ import { motion } from 'framer-motion';
 import { useTheme } from 'next-themes';
 import { Avatar, AvatarFallback, AvatarImage } from '../ui/avatar';
 import { Button } from '../../components/ui/button';
-import { Moon, Sun, Menu, Paintbrush, Mic, User, Code, Lightbulb, Newspaper, LayoutDashboard, Mail } from 'lucide-react';
+import { Moon, Sun, Menu, Paintbrush, User, Code, Lightbulb, Newspaper, LayoutDashboard, Mail } from 'lucide-react';
 import { useScrollToSection } from '../../hooks/useScrollToSection';
 // Lazy load non-critical components
 const MobileMenu = lazy(() => import('./mobile-menu'));
@@ -32,8 +32,7 @@ export default function Header() {
     { to: "/blog", icon: <Newspaper className="h-4 w-4 mr-1" />, label: "Blog" },
     { to: "/dashboard", icon: <LayoutDashboard className="h-4 w-4 mr-1" />, label: "Dashboard" },
     { to: "/collaborate", icon: <Paintbrush className="h-4 w-4 mr-1" />, label: "Draw" },
-    { to: "/voice-control", icon: <Mic className="h-4 w-4 mr-1" />, label: "Voice Control" },
-    { to: "#contact", icon: <Mail className="h-4 w-4 mr-1" />, label: "Contact", section: 'contact' },
+    { to: "#contact", icon: <Mail className="h-4 w-4 mr-1" />, label: "Contact", section: 'contact' }
   ];
 
   return (
