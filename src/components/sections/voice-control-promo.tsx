@@ -1,6 +1,5 @@
 import { motion } from 'framer-motion';
 import { Card } from '../ui/card';
-import { VoiceNavigation } from '../voice/VoiceNavigation';
 import { Mic, Volume2, Navigation, Layers, Sparkles, Brain } from 'lucide-react';
 
 export default function VoiceControlPage() {
@@ -136,9 +135,6 @@ export default function VoiceControlPage() {
           </div>
         </div>
       </motion.div>
-      
-      {/* The VoiceNavigation component is rendered here but also available throughout the site */}
-      <VoiceNavigation />
     </div>
   );
 } 
