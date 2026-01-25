@@ -9,7 +9,7 @@ interface HireMePopupProps {
   timeToShow?: number; // Time in milliseconds before showing the popup
 }
 
-export default function HireMePopup({ timeToShow = 15000 }: HireMePopupProps) {
+export default function HireMePopup({ timeToShow = 35000 }: HireMePopupProps) {
   const [isVisible, setIsVisible] = useState(false);
   const [isDismissed, setIsDismissed] = useState(false);
 
@@ -94,10 +94,10 @@ export default function HireMePopup({ timeToShow = 15000 }: HireMePopupProps) {
           initial={{ opacity: 0, scale: 0.8, y: 20 }}
           animate={{ opacity: 1, scale: 1, y: 0 }}
           exit={{ opacity: 0, scale: 0.8, y: 20 }}
-          transition={{ 
-            type: 'spring', 
-            stiffness: 300, 
-            damping: 20 
+          transition={{
+            type: 'spring',
+            stiffness: 300,
+            damping: 20
           }}
         >
           <div className="relative">
@@ -192,14 +192,14 @@ export default function HireMePopup({ timeToShow = 15000 }: HireMePopupProps) {
 
             {/* Popup content */}
             <div className="bg-card/90 backdrop-blur-md p-4 rounded-xl shadow-lg relative z-10 w-[280px] overflow-visible">
-              <button 
+              <button
                 onClick={handleDismiss}
                 className="absolute -top-3 -right-3 bg-card rounded-full p-1 text-muted-foreground hover:text-foreground transition-colors shadow-md hover:shadow-lg"
                 aria-label="Close popup"
               >
                 <X size={16} />
               </button>
-              
+
               {/* Floating petal animations around the popup */}
               {[...Array(12)].map((_, i) => (
                 <motion.div
@@ -211,7 +211,7 @@ export default function HireMePopup({ timeToShow = 15000 }: HireMePopupProps) {
                   className="absolute text-amber-700 opacity-70"
                   style={{
                     top: i < 3 ? '0%' : i < 6 ? '50%' : i < 9 ? '100%' : '50%',
-                    left: i < 3 ? `${25 + i * 20}%` : i < 6 ? '100%' : i < 9 ? `${75 - ((i-6) * 20)}%` : '0%',
+                    left: i < 3 ? `${25 + i * 20}%` : i < 6 ? '100%' : i < 9 ? `${75 - ((i - 6) * 20)}%` : '0%',
                   }}
                 >
                   {/* Flower Petal SVG - different for each petal */}
@@ -258,26 +258,26 @@ export default function HireMePopup({ timeToShow = 15000 }: HireMePopupProps) {
                     {/* Bear ears */}
                     <circle cx="7" cy="6" r="2" fill="currentColor" />
                     <circle cx="17" cy="6" r="2" fill="currentColor" />
-                    
+
                     {/* Bear face */}
                     <circle cx="12" cy="12" r="8" fill="#D4A676" />
-                    
+
                     {/* Inner ears */}
                     <circle cx="7" cy="6" r="0.8" fill="#F8E3C5" />
                     <circle cx="17" cy="6" r="0.8" fill="#F8E3C5" />
-                    
+
                     {/* Bear muzzle */}
                     <circle cx="12" cy="14" r="5" fill="#F8E3C5" />
-                    
+
                     {/* Bear eyes */}
                     <circle cx="9" cy="10" r="1" fill="#4B3621" />
                     <circle cx="15" cy="10" r="1" fill="#4B3621" />
                     <circle cx="9" cy="9.7" r="0.3" fill="white" />
                     <circle cx="15" cy="9.7" r="0.3" fill="white" />
-                    
+
                     {/* Bear nose */}
                     <circle cx="12" cy="12.5" r="1.2" fill="#4B3621" />
-                    
+
                     {/* Bear mouth */}
                     <path d="M10 14.5C11 15.5 13 15.5 14 14.5" stroke="#4B3621" strokeWidth="0.7" strokeLinecap="round" />
                   </svg>
@@ -285,8 +285,8 @@ export default function HireMePopup({ timeToShow = 15000 }: HireMePopupProps) {
               </div>
 
               <h3 className="text-lg font-bold mb-1 text-center bg-gradient-to-r from-purple-500 to-pink-500 text-transparent bg-clip-text">Enjoying My Portfolio?</h3>
-              
-              <motion.div 
+
+              <motion.div
                 className="mb-3 text-center"
                 initial={{ opacity: 0, y: 10 }}
                 animate={{ opacity: 1, y: 0 }}
@@ -303,7 +303,7 @@ export default function HireMePopup({ timeToShow = 15000 }: HireMePopupProps) {
                   whileHover={{ scale: 1.03 }}
                   whileTap={{ scale: 0.97 }}
                 >
-                  <Button 
+                  <Button
                     onClick={handleLikeClick}
                     className="w-full h-8 text-xs bg-gradient-to-r from-blue-600 to-indigo-600 hover:from-blue-700 hover:to-indigo-700 text-white flex items-center justify-center gap-1 group"
                     size="sm"
@@ -327,7 +327,7 @@ export default function HireMePopup({ timeToShow = 15000 }: HireMePopupProps) {
                   whileHover={{ scale: 1.03 }}
                   whileTap={{ scale: 0.97 }}
                 >
-                  <Button 
+                  <Button
                     onClick={handleHireClick}
                     className="w-full h-8 text-xs bg-gradient-to-r from-pink-500 to-rose-500 hover:from-pink-600 hover:to-rose-600 text-white flex items-center justify-center gap-1 group relative overflow-hidden"
                     variant="default"
@@ -350,7 +350,7 @@ export default function HireMePopup({ timeToShow = 15000 }: HireMePopupProps) {
                   whileHover={{ scale: 1.03 }}
                   whileTap={{ scale: 0.97 }}
                 >
-                  <Button 
+                  <Button
                     onClick={handleImproveClick}
                     className="w-full h-8 text-xs bg-gradient-to-r from-purple-500 to-blue-500 hover:from-purple-600 hover:to-blue-600 text-white flex items-center justify-center gap-1 group relative overflow-hidden"
                     variant="default"

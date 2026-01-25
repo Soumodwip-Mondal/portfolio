@@ -6,7 +6,7 @@ import { Code, Database, Globe, Palette, Server, Smartphone, Sparkles, Zap, Star
 
 // Memoized Icons with enhanced animations
 const SkillIcon = memo(({ icon, color }: { icon: React.ReactNode; color: string }) => (
-  <motion.div 
+  <motion.div
     className={`p-3 rounded-xl bg-gradient-to-br ${color} text-white shadow-lg`}
     whileHover={{ scale: 1.1 }}
     whileTap={{ scale: 0.95 }}
@@ -97,87 +97,87 @@ const Skills: React.FC = () => {
   // Enhanced Animation Variants
   const titleVariants = {
     hidden: { y: -50, opacity: 0 },
-    visible: { 
-      y: 0, 
-      opacity: 1, 
-      transition: { 
-        type: 'spring', 
-        stiffness: 120, 
-        damping: 10 
-      } 
+    visible: {
+      y: 0,
+      opacity: 1,
+      transition: {
+        type: 'spring',
+        stiffness: 120,
+        damping: 10
+      }
     },
   };
 
   const tabVariants = {
     inactive: { opacity: 0.7, scale: 0.95, y: 0 },
-    active: { 
-      opacity: 1, 
-      scale: 1.05, 
+    active: {
+      opacity: 1,
+      scale: 1.05,
       y: -8,
-      transition: { 
-        type: 'spring', 
+      transition: {
+        type: 'spring',
         stiffness: 300
-      } 
+      }
     },
   };
 
   const cardVariants = {
     hidden: { opacity: 0, scale: 0.85, y: 50 },
-    visible: (i: number) => ({ 
-      opacity: 1, 
-      scale: 1, 
-      y: 0, 
-      transition: { 
-        type: 'spring', 
-        stiffness: 150, 
-        damping: 15, 
-        delay: i * 0.1 
-      } 
+    visible: (i: number) => ({
+      opacity: 1,
+      scale: 1,
+      y: 0,
+      transition: {
+        type: 'spring',
+        stiffness: 150,
+        damping: 15,
+        delay: i * 0.1
+      }
     }),
-    hover: { 
+    hover: {
       y: -10,
       scale: 1.02,
       boxShadow: '0 15px 30px rgba(0, 0, 0, 0.15)',
-      transition: { duration: 0.3 } 
+      transition: { duration: 0.3 }
     },
-    tap: { 
+    tap: {
       scale: 0.98,
-      boxShadow: '0 10px 20px rgba(0, 0, 0, 0.15)', 
-      transition: { duration: 0.2 } 
+      boxShadow: '0 10px 20px rgba(0, 0, 0, 0.15)',
+      transition: { duration: 0.2 }
     },
-    exit: { 
-      opacity: 0, 
-      scale: 0.9, 
-      y: 20, 
-      transition: { 
-        duration: 0.2 
-      } 
+    exit: {
+      opacity: 0,
+      scale: 0.9,
+      y: 20,
+      transition: {
+        duration: 0.2
+      }
     }
   };
 
   const barVariants = {
     initial: { width: 0 },
-    animate: (level: number) => ({ 
-      width: `${level * 20}%`, 
-      transition: { 
-        duration: 1.5, 
+    animate: (level: number) => ({
+      width: `${level * 20}%`,
+      transition: {
+        duration: 1.5,
         ease: [0.34, 1.56, 0.64, 1],
         delay: 0.2
-      } 
+      }
     }),
   };
 
   const sparkleVariants = {
     hidden: { scale: 0, opacity: 0 },
-    visible: { 
-      scale: [0, 1.2, 1], 
-      opacity: [0, 1, 0.8], 
-      transition: { 
-        duration: 0.8, 
-        repeat: Infinity, 
+    visible: {
+      scale: [0, 1.2, 1],
+      opacity: [0, 1, 0.8],
+      transition: {
+        duration: 0.8,
+        repeat: Infinity,
         repeatType: 'reverse' as const,
         repeatDelay: 2
-      } 
+      }
     },
   };
 
@@ -187,13 +187,9 @@ const Skills: React.FC = () => {
     return (
       <div className="relative mt-4">
         <div className="h-3 bg-slate-200 dark:bg-slate-700 rounded-full overflow-hidden shadow-inner">
-          <motion.div
-            className={`h-full bg-gradient-to-r ${skill.color} rounded-full relative`}
-            custom={skill.level}
-            variants={barVariants}
-            initial="initial"
-            animate={isVisible ? "animate" : "initial"}
-            style={{ originX: 0 }}
+          <div
+            className={`h-full bg-gradient-to-r ${skill.color} rounded-full relative transition-all duration-500`}
+            style={{ width: `${skill.level * 20}%` }}
           >
             {isHovered && (
               <motion.div
@@ -203,7 +199,7 @@ const Skills: React.FC = () => {
                 transition={{ duration: 0.8, repeat: Infinity, ease: 'linear' }}
               />
             )}
-          </motion.div>
+          </div>
         </div>
         <AnimatePresence>
           {isHovered && (
@@ -223,26 +219,17 @@ const Skills: React.FC = () => {
     );
   });
 
-  // Enhanced Stars with animation
+  // Static Stars without any animation
   const Stars = memo(({ level }: { level: number }) => (
     <div className="flex space-x-1">
       {[...Array(5)].map((_, i) => (
-        <motion.div
-          key={i}
-          initial={{ scale: 0, rotate: -30 }}
-          animate={{ 
-            scale: i < level ? [1, 1.3, 1.1] : [0.8, 0.8, 0.8], 
-            opacity: i < level ? 1 : 0.4,
-            rotate: i < level ? [0, 10, 0] : 0
-          }}
-          transition={{ 
-            delay: i * 0.08, 
-            duration: 0.5,
-            times: [0, 0.6, 1]
-          }}
-        >
-          <Star size={16} fill={i < level ? '#FFD700' : 'none'} color={i < level ? '#FFD700' : '#94A3B8'} />
-        </motion.div>
+        <div key={i}>
+          <Star
+            size={16}
+            fill={i < level ? '#FFD700' : 'none'}
+            color={i < level ? '#FFD700' : '#94A3B8'}
+          />
+        </div>
       ))}
     </div>
   ));
@@ -258,33 +245,33 @@ const Skills: React.FC = () => {
           transition={{ duration: 1.5 }}
         >
           <div className="absolute inset-0 bg-gradient-to-br from-blue-400/20 via-purple-400/20 to-indigo-400/20 blur-3xl" />
-          
+
           {/* Fixed Particles - Now uses static positioning instead of dynamic calculations */}
           {[...Array(15)].map((_, i) => (
             <motion.div
               key={i}
               className="absolute rounded-full bg-gradient-to-r from-blue-500 to-purple-500 opacity-30 pointer-events-none"
-              initial={{ 
+              initial={{
                 x: (i % 5) * 200,
-                y: Math.floor(i / 5) * 200, 
-                scale: 0 
+                y: Math.floor(i / 5) * 200,
+                scale: 0
               }}
-              animate={{ 
+              animate={{
                 y: [0, -100, 0],
                 x: [(i % 5) * 200, (i % 5) * 200 + ((i % 2) ? 50 : -50), (i % 5) * 200],
-                scale: [0, 0.5 + (i % 3) * 0.1, 0], 
+                scale: [0, 0.5 + (i % 3) * 0.1, 0],
                 opacity: [0, 0.6, 0],
                 rotate: [0, 180, 360],
               }}
-              transition={{ 
-                duration: 6 + (i % 4) * 2, 
-                repeat: Infinity, 
+              transition={{
+                duration: 6 + (i % 4) * 2,
+                repeat: Infinity,
                 delay: i * 0.2,
                 ease: "easeInOut"
               }}
-              style={{ 
-                width: 8 + (i % 4) * 4, 
-                height: 8 + (i % 4) * 4, 
+              style={{
+                width: 8 + (i % 4) * 4,
+                height: 8 + (i % 4) * 4,
                 filter: 'blur(1px)'
               }}
             />
@@ -292,10 +279,10 @@ const Skills: React.FC = () => {
         </motion.div>
 
         {/* Enhanced Title with animations */}
-        <motion.div 
-          className="text-center mb-16 relative z-10" 
-          initial="hidden" 
-          animate={controls} 
+        <motion.div
+          className="text-center mb-16 relative z-10"
+          initial="hidden"
+          animate={controls}
           variants={titleVariants}
         >
           <motion.div className="inline-block relative">
@@ -305,8 +292,8 @@ const Skills: React.FC = () => {
               transition={{ type: 'spring', stiffness: 300 }}
             >
               My Expertise
-              <motion.span 
-                className="inline-block ml-3" 
+              <motion.span
+                className="inline-block ml-3"
                 variants={sparkleVariants}
                 initial="hidden"
                 animate="visible"
@@ -321,7 +308,7 @@ const Skills: React.FC = () => {
               transition={{ duration: 0.8, ease: 'easeOut', delay: 0.3 }}
             />
           </motion.div>
-          
+
           <motion.p
             className="text-slate-600 dark:text-slate-300 max-w-2xl mx-auto mt-6 text-lg md:text-xl"
             initial={{ opacity: 0, y: 20 }}
@@ -333,7 +320,7 @@ const Skills: React.FC = () => {
         </motion.div>
 
         {/* Enhanced animated tabs */}
-        <motion.div 
+        <motion.div
           className="flex flex-wrap justify-center gap-4 mb-16 relative z-10"
           initial={{ opacity: 0, y: 20 }}
           animate={{ opacity: 1, y: 0 }}
@@ -351,9 +338,9 @@ const Skills: React.FC = () => {
               whileTap={{ scale: 0.95 }}
               transition={{ type: 'spring', stiffness: 400 }}
             >
-              <motion.div 
-                animate={selectedCategory === idx ? 
-                  { rotate: [0, 15, 0], scale: [1, 1.2, 1] } : 
+              <motion.div
+                animate={selectedCategory === idx ?
+                  { rotate: [0, 15, 0], scale: [1, 1.2, 1] } :
                   { rotate: 0, scale: 1 }
                 }
                 transition={{ duration: 0.5 }}
@@ -362,9 +349,9 @@ const Skills: React.FC = () => {
               </motion.div>
               <span className="font-semibold">{category.title}</span>
               {selectedCategory === idx && (
-                <motion.span 
-                  initial={{ scale: 0, rotate: -45 }} 
-                  animate={{ scale: 1, rotate: 0 }} 
+                <motion.span
+                  initial={{ scale: 0, rotate: -45 }}
+                  animate={{ scale: 1, rotate: 0 }}
                   transition={{ type: 'spring', stiffness: 500 }}
                 >
                   <Zap size={16} className="text-yellow-300" />
@@ -374,123 +361,115 @@ const Skills: React.FC = () => {
           ))}
         </motion.div>
 
-        {/* Modified AnimatePresence to fix the blank screen issue */}
-        <AnimatePresence>
-          <motion.div
-            key={`skills-category-${selectedCategory}`}
-            className="grid grid-cols-1 md:grid-cols-2 lg:grid-cols-3 gap-8 relative z-10"
-            initial={{ opacity: 0, y: 30 }}
-            animate={{ opacity: 1, y: 0 }}
-            exit={{ opacity: 0, y: -30 }}
-            transition={{ duration: 0.3 }}
-          >
-            {skillsData[selectedCategory].skills.map((skill, idx) => (
+        {/* Skills Grid - Fixed to prevent blinking */}
+        <motion.div
+          className="grid grid-cols-1 md:grid-cols-2 lg:grid-cols-3 gap-8 relative z-10"
+        >
+          {skillsData[selectedCategory].skills.map((skill, idx) => (
+            <motion.div
+              key={`${selectedCategory}-${skill.name}`}
+              className="bg-white/80 dark:bg-slate-800/80 rounded-2xl p-6 shadow-xl border border-slate-100/50 dark:border-slate-700/50 backdrop-blur-lg relative overflow-hidden group"
+              custom={idx}
+              variants={cardVariants}
+              initial="hidden"
+              animate="visible"
+              whileHover="hover"
+              whileTap="tap"
+              onMouseEnter={() => setHoveredSkill(skill.name)}
+              onMouseLeave={() => setHoveredSkill(null)}
+            >
+              {/* Enhanced background gradient */}
               <motion.div
-                key={`${selectedCategory}-${skill.name}`}
-                className="bg-white/80 dark:bg-slate-800/80 rounded-2xl p-6 shadow-xl border border-slate-100/50 dark:border-slate-700/50 backdrop-blur-lg relative overflow-hidden group"
-                custom={idx}
-                variants={cardVariants}
-                initial="hidden"
-                animate="visible"
-                exit="exit"
-                whileHover="hover"
-                whileTap="tap"
-                onMouseEnter={() => setHoveredSkill(skill.name)}
-                onMouseLeave={() => setHoveredSkill(null)}
-              >
-                {/* Enhanced background gradient */}
-                <motion.div
-                  className={`absolute inset-0 bg-gradient-to-br ${skill.color} opacity-10`}
-                  animate={hoveredSkill === skill.name ? 
-                    { opacity: 0.25, scale: 1.2, rotate: 5 } : 
-                    { opacity: 0.1, scale: 1, rotate: 0 }
-                  }
-                  transition={{ duration: 0.5 }}
-                />
-                
-                {/* Enhanced card content with animations */}
-                <div className="flex items-start justify-between relative z-10">
-                  <div className="flex items-center gap-4">
-                    <SkillIcon icon={skill.icon} color={skill.color} />
-                    <div>
-                      <motion.h3 
-                        className="text-xl font-bold text-slate-800 dark:text-slate-100"
-                        animate={hoveredSkill === skill.name ? 
-                          { scale: 1.05, x: 3 } : 
-                          { scale: 1, x: 0 }
-                        }
-                        transition={{ duration: 0.3 }}
-                      >
-                        {skill.name}
-                      </motion.h3>
-                      <Stars level={skill.level} />
-                    </div>
-                  </div>
-                  {skill.level >= 4 && (
-                    <motion.div
-                      className="text-green-500 dark:text-green-400"
-                      initial={{ rotate: -20, opacity: 0 }}
-                      animate={{ rotate: 0, opacity: 1 }}
-                      transition={{ delay: 0.3 }}
-                      whileHover={{ 
-                        rotate: [0, -10, 10, 0], 
-                        scale: [1, 1.2, 1.2, 1],
-                        transition: { duration: 0.8 }
-                      }}
+                className={`absolute inset-0 bg-gradient-to-br ${skill.color} opacity-10`}
+                animate={hoveredSkill === skill.name ?
+                  { opacity: 0.25, scale: 1.2, rotate: 5 } :
+                  { opacity: 0.1, scale: 1, rotate: 0 }
+                }
+                transition={{ duration: 0.5 }}
+              />
+
+              {/* Enhanced card content with animations */}
+              <div className="flex items-start justify-between relative z-10">
+                <div className="flex items-center gap-4">
+                  <SkillIcon icon={skill.icon} color={skill.color} />
+                  <div>
+                    <motion.h3
+                      className="text-xl font-bold text-slate-800 dark:text-slate-100"
+                      animate={hoveredSkill === skill.name ?
+                        { scale: 1.05, x: 3 } :
+                        { scale: 1, x: 0 }
+                      }
+                      transition={{ duration: 0.3 }}
                     >
-                      <TrendingUp size={22} />
-                    </motion.div>
-                  )}
+                      {skill.name}
+                    </motion.h3>
+                    <Stars level={skill.level} />
+                  </div>
                 </div>
-                
-                {/* Enhanced rating bar */}
-                <RatingBar skill={skill} index={idx} />
-                
-                {/* Simplified sparkle effect on hover - fixed positioning issues */}
-                <AnimatePresence>
-                  {hoveredSkill === skill.name && (
-                    <>
-                      {[...Array(4)].map((_, i) => (
-                        <motion.div
-                          key={i}
-                          className="absolute w-2 h-2 rounded-full bg-white pointer-events-none"
-                          initial={{ 
-                            opacity: 0, 
-                            scale: 0,
-                            top: '50%',
-                            left: '50%',
-                            x: '-50%',
-                            y: '-50%'
-                          }}
-                          animate={{ 
-                            opacity: [0, 1, 0],
-                            scale: [0, 1, 0],
-                            top: ['50%', `${35 + (i * 15)}%`],
-                            left: ['50%', `${35 + ((i+2) % 4 * 15)}%`]
-                          }}
-                          exit={{ opacity: 0, scale: 0 }}
-                          transition={{ 
-                            duration: 0.8, 
-                            delay: i * 0.1
-                          }}
-                        />
-                      ))}
-                    </>
-                  )}
-                </AnimatePresence>
-              </motion.div>
-            ))}
-          </motion.div>
-        </AnimatePresence>
+                {skill.level >= 4 && (
+                  <motion.div
+                    className="text-green-500 dark:text-green-400"
+                    initial={{ rotate: -20, opacity: 0 }}
+                    animate={{ rotate: 0, opacity: 1 }}
+                    transition={{ delay: 0.3 }}
+                    whileHover={{
+                      rotate: [0, -10, 10, 0],
+                      scale: [1, 1.2, 1.2, 1],
+                      transition: { duration: 0.8 }
+                    }}
+                  >
+                    <TrendingUp size={22} />
+                  </motion.div>
+                )}
+              </div>
+
+              {/* Enhanced rating bar */}
+              <RatingBar skill={skill} index={idx} />
+
+              {/* Simplified sparkle effect on hover - fixed positioning issues */}
+              <AnimatePresence>
+                {hoveredSkill === skill.name && (
+                  <>
+                    {[...Array(4)].map((_, i) => (
+                      <motion.div
+                        key={i}
+                        className="absolute w-2 h-2 rounded-full bg-white pointer-events-none"
+                        initial={{
+                          opacity: 0,
+                          scale: 0,
+                          top: '50%',
+                          left: '50%',
+                          x: '-50%',
+                          y: '-50%'
+                        }}
+                        animate={{
+                          opacity: [0, 1, 0],
+                          scale: [0, 1, 0],
+                          top: ['50%', `${35 + (i * 15)}%`],
+                          left: ['50%', `${35 + ((i + 2) % 4 * 15)}%`]
+                        }}
+                        exit={{ opacity: 0, scale: 0 }}
+                        transition={{
+                          duration: 0.8,
+                          delay: i * 0.1
+                        }}
+                      />
+                    ))}
+                  </>
+                )}
+              </AnimatePresence>
+            </motion.div>
+          ))}
+        </motion.div>
 
         {/* New feature: Section summary with animation */}
-        <motion.div 
+        <motion.div
           className="mt-16 text-center relative z-10"
           initial={{ opacity: 0, y: 30 }}
           animate={{ opacity: 1, y: 0 }}
           transition={{ duration: 0.8, delay: 0.5 }}
         >
-          <motion.div 
+          <motion.div
             className="h-0.5 w-16 bg-indigo-500/50 mx-auto mb-6"
             whileInView={{ width: [0, 64] }}
             transition={{ duration: 1 }}

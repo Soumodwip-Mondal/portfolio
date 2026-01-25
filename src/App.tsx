@@ -7,12 +7,11 @@ import BlogPage from './pages/BlogPage';
 import Dashboard from './components/sections/dashboard';
 import CollaborativePage from './pages/CollaborativePage';
 import AIAssistantPage from './pages/AIAssistantPage';
+import AdminPanel from './components/admin/admin-panel';
 import { PersonalizationProvider } from './context/PersonalizationContext';
-import {ChatAssistant} from './components/Ai/ChatBot'
-;
-// import { PersonalizedGreeting } from './components/personalization/PersonalizedGreeting';
-import { ThemeCustomizer } from './components/personalization/ThemeCustomizer';
+import { ChatAssistant } from './components/Ai/ChatBot';
 import { LayoutManager } from './components/personalization/LayoutManager';
+import { ScrollProgress, ScrollToTop as ScrollToTopButton } from './components/ui/scroll-indicators';
 // Scroll to top component
 function ScrollToTop() {
   const { pathname, hash } = useLocation();
@@ -29,14 +28,14 @@ function ScrollToTop() {
 
 const defaultContextValue = {
   viewMode: 'grid',
-  setViewMode: (_value: string | ((val: string) => string)) => {},
+  setViewMode: (_value: string | ((val: string) => string)) => { },
   contactFormData: { name: '', email: '', message: '' },
-  setContactFormData: (_value: React.SetStateAction<{ name: string; email: string; message: string; }>) => {},
+  setContactFormData: (_value: React.SetStateAction<{ name: string; email: string; message: string; }>) => { },
   activeFilters: [] as string[],
-  toggleFilter: (_filter: string) => {},
-  clearFilters: () => {},
+  toggleFilter: (_filter: string) => { },
+  clearFilters: () => { },
   isLoading: false,
-  setIsLoading: (_value: React.SetStateAction<boolean>) => {},
+  setIsLoading: (_value: React.SetStateAction<boolean>) => { },
 };
 
 export const AppContext = createContext(defaultContextValue);
@@ -46,29 +45,29 @@ export const useAppContext = () => useContext(AppContext);
 function App() {
   // Persist view mode preference in localStorage
   const [viewMode, setViewMode] = useLocalStorage('viewMode', 'grid');
-  
+
   // Form data state
   const [contactFormData, setContactFormData] = useState({
     name: '',
     email: '',
     message: '',
   });
-  
+
   // Filter state for projects/skills
   const [activeFilters, setActiveFilters] = useState<string[]>([]);
-  
+
   // Global loading state
   const [isLoading, setIsLoading] = useState(false);
-  
+
   // Toggle a filter on or off
   const toggleFilter = (filter: string) => {
-    setActiveFilters(prev => 
+    setActiveFilters(prev =>
       prev.includes(filter)
         ? prev.filter(f => f !== filter)
         : [...prev, filter]
     );
   };
-  
+
   const clearFilters = () => {
     setActiveFilters([]);
   };
@@ -104,13 +103,14 @@ function App() {
                   <Route path="/dashboard" element={<Dashboard />} />
                   <Route path="/collaborate" element={<CollaborativePage />} />
                   <Route path="/ai-assistant" element={<AIAssistantPage />} />
+                  <Route path="/admin" element={<AdminPanel />} />
                   {/* Redirect any other routes to home */}
                   <Route path="*" element={<Navigate to="/" />} />
                 </Routes>
               </div>
+              <ScrollProgress />
+              <ScrollToTopButton />
               <ChatAssistant />
-              {/* <PersonalizedGreeting /> */}
-              <ThemeCustomizer />
             </div>
           </Router>
         </LayoutManager>

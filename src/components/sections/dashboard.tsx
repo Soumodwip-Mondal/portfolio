@@ -1,22 +1,21 @@
 'use client';
 import { useState, useEffect } from 'react';
 import { motion } from 'framer-motion';
-import { 
-  BarChart, Bar, LineChart, Line, AreaChart, Area, 
-  PieChart, Pie, RadarChart, Radar, PolarGrid, 
+import {
+  BarChart, Bar, LineChart, Line, AreaChart, Area,
+  PieChart, Pie, RadarChart, Radar, PolarGrid,
   PolarAngleAxis, PolarRadiusAxis, ResponsiveContainer,
   XAxis, YAxis, CartesianGrid, Tooltip, Legend, Cell
 } from 'recharts';
 import { Button } from '../ui/button';
 import { Card } from '../ui/card';
-import { 
-  githubContributions, 
-  visitorAnalytics, 
-  // skillsGrowth, 
-  projectMetrics, 
-  geoDistribution, 
-  techUsage, 
-  devActivities 
+import {
+  githubContributions,
+  visitorAnalytics,
+  // skillsGrowth,
+  projectMetrics,
+  techUsage,
+  devActivities
 } from '../../data/dashboard-data';
 import { RefreshCw, TrendingUp, Users, Star, Download } from 'lucide-react';
 
@@ -24,13 +23,13 @@ import { RefreshCw, TrendingUp, Users, Star, Download } from 'lucide-react';
 const COLORS = ['#0088FE', '#00C49F', '#FFBB28', '#FF8042', '#8884d8', '#82ca9d'];
 
 // Dashboard Card Component
-const DashboardCard = ({ 
-  title, 
-  children, 
-  className = '' 
-}: { 
-  title: string; 
-  children: React.ReactNode; 
+const DashboardCard = ({
+  title,
+  children,
+  className = ''
+}: {
+  title: string;
+  children: React.ReactNode;
   className?: string;
 }) => {
   return (
@@ -45,25 +44,27 @@ const DashboardCard = ({
 };
 
 // GitHub Contributions Chart
-const GitHubContributionsChart = () => {
+const GitHubContributionsChart = ({ data }: { data?: any[] }) => {
+  const contributionData = data || githubContributions;
+
   return (
-    <DashboardCard title="GitHub Contributions">
+    <DashboardCard title="GitHub Contributions (Last 30 Days)">
       <div className="h-64">
         <ResponsiveContainer width="100%" height="100%">
           <AreaChart
-            data={githubContributions}
+            data={contributionData}
             margin={{ top: 10, right: 30, left: 0, bottom: 0 }}
           >
             <CartesianGrid strokeDasharray="3 3" />
             <XAxis dataKey="date" />
             <YAxis />
             <Tooltip />
-            <Area 
-              type="monotone" 
-              dataKey="contributions" 
-              stroke="#8884d8" 
-              fill="#8884d8" 
-              fillOpacity={0.3} 
+            <Area
+              type="monotone"
+              dataKey="contributions"
+              stroke="#8884d8"
+              fill="#8884d8"
+              fillOpacity={0.3}
             />
           </AreaChart>
         </ResponsiveContainer>
@@ -87,11 +88,11 @@ const VisitorAnalyticsChart = () => {
             <YAxis />
             <Tooltip />
             <Legend />
-            <Line 
-              type="monotone" 
-              dataKey="visitors" 
-              stroke="#8884d8" 
-              activeDot={{ r: 8 }} 
+            <Line
+              type="monotone"
+              dataKey="visitors"
+              stroke="#8884d8"
+              activeDot={{ r: 8 }}
             />
             <Line type="monotone" dataKey="newVisitors" stroke="#82ca9d" />
             <Line type="monotone" dataKey="returningVisitors" stroke="#ffc658" />
@@ -105,7 +106,7 @@ const VisitorAnalyticsChart = () => {
 // Skills Growth Chart
 // const SkillsGrowthChart = () => {
 //   const [selectedSkills, setSelectedSkills] = useState<string[]>(['React', 'Python', 'TypeScript', 'Data Analysis']);
-  
+
 //   const toggleSkill = (skill: string) => {
 //     if (selectedSkills.includes(skill)) {
 //       setSelectedSkills(selectedSkills.filter(s => s !== skill));
@@ -113,7 +114,7 @@ const VisitorAnalyticsChart = () => {
 //       setSelectedSkills([...selectedSkills, skill]);
 //     }
 //   };
-  
+
 //   return (
 //     <DashboardCard title="Skills Growth Over Time">
 //       <div className="mb-4 flex flex-wrap gap-2">
@@ -185,14 +186,16 @@ const ProjectMetricsChart = () => {
 };
 
 // Technology Usage Chart
-const TechnologyUsageChart = () => {
+const TechnologyUsageChart = ({ data }: { data?: any[] }) => {
+  const languageData = data || techUsage;
+
   return (
-    <DashboardCard title="Technology Usage">
+    <DashboardCard title="Programming Languages">
       <div className="h-64">
         <ResponsiveContainer width="100%" height="100%">
           <PieChart>
             <Pie
-              data={techUsage}
+              data={languageData}
               cx="50%"
               cy="50%"
               labelLine={false}
@@ -201,7 +204,7 @@ const TechnologyUsageChart = () => {
               fill="#8884d8"
               dataKey="value"
             >
-              {techUsage.map((_, index) => (
+              {languageData.map((_, index) => (
                 <Cell key={`cell-${index}`} fill={COLORS[index % COLORS.length]} />
               ))}
             </Pie>
@@ -239,7 +242,7 @@ const DevelopmentActivitiesChart = () => {
 };
 
 // Stats Cards
-const StatsCards = () => {
+const StatsCards = ({ stats }: { stats: any }) => {
   return (
     <div className="grid grid-cols-1 md:grid-cols-2 lg:grid-cols-4 gap-4 mb-6">
       <Card className="p-4 flex items-center">
@@ -247,61 +250,63 @@ const StatsCards = () => {
           <TrendingUp className="w-6 h-6 text-blue-600 dark:text-blue-400" />
         </div>
         <div>
-          <p className="text-sm text-slate-500 dark:text-slate-400">Total Commits</p>
-          <h3 className="text-2xl font-bold">1,248</h3>
+          <p className="text-sm text-slate-500 dark:text-slate-400">Total Repositories</p>
+          <h3 className="text-2xl font-bold">{stats?.totalRepos || 0}</h3>
         </div>
       </Card>
-      
+
       <Card className="p-4 flex items-center">
         <div className="mr-4 bg-green-100 dark:bg-green-900/30 p-3 rounded-full">
           <Users className="w-6 h-6 text-green-600 dark:text-green-400" />
         </div>
         <div>
-          <p className="text-sm text-slate-500 dark:text-slate-400">Portfolio Visitors</p>
-          <h3 className="text-2xl font-bold">5,320</h3>
+          <p className="text-sm text-slate-500 dark:text-slate-400">Total Forks</p>
+          <h3 className="text-2xl font-bold">{stats?.totalForks || 0}</h3>
         </div>
       </Card>
-      
+
       <Card className="p-4 flex items-center">
         <div className="mr-4 bg-yellow-100 dark:bg-yellow-900/30 p-3 rounded-full">
           <Star className="w-6 h-6 text-yellow-600 dark:text-yellow-400" />
         </div>
         <div>
           <p className="text-sm text-slate-500 dark:text-slate-400">GitHub Stars</p>
-          <h3 className="text-2xl font-bold">110</h3>
+          <h3 className="text-2xl font-bold">{stats?.totalStars || 0}</h3>
         </div>
       </Card>
-      
+
       <Card className="p-4 flex items-center">
         <div className="mr-4 bg-purple-100 dark:bg-purple-900/30 p-3 rounded-full">
           <Download className="w-6 h-6 text-purple-600 dark:text-purple-400" />
         </div>
         <div>
-          <p className="text-sm text-slate-500 dark:text-slate-400">Total Downloads</p>
-          <h3 className="text-2xl font-bold">790</h3>
+          <p className="text-sm text-slate-500 dark:text-slate-400">Top Repositories</p>
+          <h3 className="text-2xl font-bold">{stats?.repositories?.length || 0}</h3>
         </div>
       </Card>
     </div>
   );
 };
 
-// Geographic Distribution
-const GeographicDistribution = () => {
+// Top Repositories Chart
+const TopRepositories = ({ repos }: { repos?: any[] }) => {
+  const repositoryData = repos || projectMetrics;
+
   return (
-    <DashboardCard title="Visitor Geographic Distribution">
+    <DashboardCard title="Top Repositories by Stars">
       <div className="h-64">
         <ResponsiveContainer width="100%" height="100%">
           <BarChart
             layout="vertical"
-            data={geoDistribution}
+            data={repositoryData}
             margin={{ top: 5, right: 30, left: 20, bottom: 5 }}
           >
             <CartesianGrid strokeDasharray="3 3" />
             <XAxis type="number" />
-            <YAxis dataKey="country" type="category" width={100} />
+            <YAxis dataKey="name" type="category" width={150} />
             <Tooltip />
-            <Bar dataKey="visitors" fill="#8884d8">
-              {geoDistribution.map((_, index) => (
+            <Bar dataKey="stars" fill="#8884d8" name="Stars">
+              {repositoryData.map((_, index) => (
                 <Cell key={`cell-${index}`} fill={COLORS[index % COLORS.length]} />
               ))}
             </Bar>
@@ -315,16 +320,39 @@ const GeographicDistribution = () => {
 // Main Dashboard Component
 export default function Dashboard() {
   const [isLoading, setIsLoading] = useState(true);
-  
+  const [githubStats, setGithubStats] = useState<any>(null);
+  const [error, setError] = useState<string | null>(null);
+
   useEffect(() => {
-    // Simulate data loading
-    const timer = setTimeout(() => {
-      setIsLoading(false);
-    }, 1000);
-    
-    return () => clearTimeout(timer);
+    loadGitHubData();
   }, []);
-  
+
+  const loadGitHubData = async () => {
+    setIsLoading(true);
+    setError(null);
+    try {
+      // Import the GitHub stats service
+      const { fetchGitHubStats } = await import('../../services/github-stats-service');
+      const stats = await fetchGitHubStats();
+      setGithubStats(stats);
+    } catch (err) {
+      console.error('Error loading GitHub data:', err);
+      setError('Failed to load GitHub data. Using fallback data.');
+      // Fallback to mock data on error
+      setGithubStats(null);
+    } finally {
+      setIsLoading(false);
+    }
+  };
+
+  // Use real data if available, otherwise fallback to mock
+  const displayData = githubStats || {
+    totalRepos: 0,
+    totalStars: 0,
+    contributions: githubContributions,
+    topLanguages: techUsage,
+  };
+
   return (
     <section id="dashboard" className="py-20">
       <motion.div
@@ -335,53 +363,57 @@ export default function Dashboard() {
       >
         <div className="text-center mb-12">
           <h2 className="text-4xl font-bold bg-gradient-to-r from-blue-600 to-purple-600 dark:from-blue-400 dark:to-purple-400 bg-clip-text text-transparent mb-4">
-            Data Visualization Dashboard
+            GitHub Analytics Dashboard
           </h2>
           <p className="text-lg text-slate-600 dark:text-slate-300 max-w-2xl mx-auto">
-            Real-time analytics and insights about my projects, skills, and portfolio performance.
+            Real-time analytics and insights from my GitHub profile
           </p>
-          <p className="text-sm text-slate-600 dark:text-slate-300 max-w-2xl mx-auto">
-             Data is not correct here , This is just for fun
-          </p>
+          {error && (
+            <p className="text-sm text-red-500 dark:text-red-400 mt-2">
+              {error}
+            </p>
+          )}
         </div>
-        
+
         {isLoading ? (
           <div className="flex justify-center items-center h-96">
             <div className="animate-spin rounded-full h-12 w-12 border-t-2 border-b-2 border-blue-500"></div>
           </div>
         ) : (
           <>
-            <StatsCards />
-            
+            <StatsCards stats={displayData} />
+
             <div className="grid grid-cols-1 md:grid-cols-2 gap-6 mb-6">
-              <GitHubContributionsChart />
+              <GitHubContributionsChart data={displayData.contributions} />
               <VisitorAnalyticsChart />
             </div>
-            
+
             <div className="grid grid-cols-1 md:grid-cols-2 gap-6 mb-6">
-              {/* <SkillsGrowthChart /> */}
               <ProjectMetricsChart />
+              <TechnologyUsageChart data={displayData.topLanguages} />
             </div>
-            
+
             <div className="grid grid-cols-1 md:grid-cols-2 gap-6 mb-6">
-              <TechnologyUsageChart />
               <DevelopmentActivitiesChart />
+              <TopRepositories repos={displayData.repositories} />
             </div>
-            
-            <div className="grid grid-cols-1 gap-6 mb-6">
-              <GeographicDistribution />
-            </div>
-            
+
             <div className="mt-12 text-center">
               <p className="text-slate-600 dark:text-slate-400 mb-6">
-                This dashboard uses mock data for demonstration purposes. In a real implementation, it would connect to GitHub API, Google Analytics, and other data sources.
+                {githubStats
+                  ? "Live data fetched from GitHub API"
+                  : "Some data uses mock values for demonstration. GitHub contributions and language stats are real!"}
               </p>
               <div className="flex justify-center space-x-4">
+                <Button onClick={loadGitHubData} variant="outline">
+                  <RefreshCw className="w-4 h-4 mr-2" />
+                  Refresh Data
+                </Button>
                 <Button asChild>
                   <a href="#projects">View Projects</a>
                 </Button>
                 <Button variant="outline" asChild>
-                  <a href="https://github.com/yourusername" target="_blank" rel="noopener noreferrer">
+                  <a href="https://github.com/Soumodwip-Mondal" target="_blank" rel="noopener noreferrer">
                     Visit GitHub
                   </a>
                 </Button>

@@ -1,0 +1,232 @@
+[
+    {
+        "id": 1,
+        "title": "My Portfolio",
+        "description": "This my best Project I put all my ideas and creativity in this project. This is a mixture of all the technologies I have learned so far. It has multiple features like AI Assistant, 3D Animation, Voice Controll Navigation, Collaborate Drawing, Blogs.",
+        "category": "web",
+        "tags": [
+            "TypeScript",
+            "React",
+            "Tailwind CSS",
+            "Freamer Motion",
+            "Three JS",
+            "lucide-react",
+            "Speech Recognition"
+        ],
+        "image": "/src/assets/myportfolio.png",
+        "imageUrl": "/src/assets/myportfolio.png",
+        "url": "https://soumodwipmondal.vercel.app/",
+        "date": "2025",
+        "featured": false
+    },
+    {
+        "id": 2,
+        "title": "ShopEasy Marketing Strategy and Customer Feedback Analysis",
+        "description": "This project analyzes key performance metrics, customer feedback, and marketing content to uncover issues and deliver actionable, data-driven recommendations for improving overall performance.",
+        "category": "data analysis",
+        "tags": [
+            "Python",
+            "SQL",
+            "Power BI",
+            "NLTK",
+            "Sentiment Analysis",
+            "marketting analysis"
+        ],
+        "image": "/src/assets/feed_back.png",
+        "imageUrl": "/src/assets/feed_back.png",
+        "url": "https://github.com/Soumodwip-Mondal/Marketing-Data-Analysis2",
+        "date": "11/05/2025",
+        "featured": false
+    },
+    {
+        "id": 3,
+        "title": "Credit Card Customer Segmentation and Behavior Analysis",
+        "description": " Segment credit card customers based on spending patterns and repayment behavior to help businesses design targeted offers, improve retention, and detect risky customers.",
+        "category": "customer segmentation",
+        "tags": [
+            "Python",
+            "Pandas",
+            "Matplotlib",
+            "Sicit Learn",
+            "Kmean",
+            "Seaborn",
+            "Clustering",
+            "PCA",
+            "Dimensionality Reduction",
+            "Data Visualization"
+        ],
+        "image": "/src/assets/final_clusters.png",
+        "imageUrl": "/src/assets/final_clusters.png",
+        "url": "https://github.com/Soumodwip-Mondal/Credit-Card-Customer-Segmentaion",
+        "date": "11/08/2025",
+        "featured": false
+    },
+    {
+        "id": 4,
+        "title": "Building an Enterprise-Lebel Data Warehouse",
+        "description": "This project involves designing and implementing a data warehouse for an enterprise, focusing on data integration, storage, and retrieval to support business intelligence and analytics.",
+        "category": "database",
+        "tags": [
+            "PostgreSQL",
+            "Data Integration",
+            "Data Warehousing",
+            "ETL",
+            "Data analysis"
+        ],
+        "image": "/src/assets/Data_Warehouse.png",
+        "imageUrl": "/src/assets/Data_Warehouse.png",
+        "url": "https://github.com/Soumodwip-Mondal/SQL-Data-Warehouse-and-Analysics-Project",
+        "featured": true,
+        "date": "August 2025"
+    },
+    {
+        "id": 5,
+        "title": "Mall Customer Segmentation and Behavior Analysis",
+        "description": " Segment credit card customers based on spending patterns and repayment behavior to help businesses design targeted offers, improve retention, and detect risky customers.",
+        "category": "customer segmentation",
+        "tags": [
+            "Python",
+            "Pandas",
+            "Matplotlib",
+            "Sicit Learn",
+            "Kmean",
+            "Seaborn"
+        ],
+        "image": "/src/assets/mall_customer.png",
+        "imageUrl": "/src/assets/mall_customer.png",
+        "url": "https://github.com/Soumodwip-Mondal/Credit-Card-Customer-Segmentaion",
+        "date": "11/08/2025",
+        "featured": false
+    },
+    {
+        "id": 7,
+        "title": "Blinkit Sales Data Analysis",
+        "description": "This interactive Power BI dashboard is built to analyze retail sales performance across multiple dimensions like item types, fat content, outlet characteristics, and geographic locations. It provides actionable insights for decision-makers to evaluate key metrics such as total sales, average sales, number of items sold, and average customer ratings..",
+        "category": "data analysis",
+        "tags": [
+            "PowerBI",
+            "Data Analysis",
+            "Data Visualization"
+        ],
+        "image": "/src/assets/Visualization.png",
+        "imageUrl": "/src/assets/Visualization.png",
+        "url": "https://github.com/Soumodwip-Mondal/Blinkit_data_visulization_and_analysis/",
+        "date": "June,2025",
+        "featured": false
+    },
+    {
+        "id": 8,
+        "title": "Spotify Streaming Data Analysis",
+        "description": ". It covers an end-to-end process of normalizing a denormalized dataset, performing SQL queries of varying complexity (easy, medium, and medium to hard), and optimizing query performance.",
+        "category": "database",
+        "tags": [
+            "PostgreSQL",
+            "Data Analysis",
+            "Query Optimization",
+            "Data Visualization"
+        ],
+        "image": "/src/assets/spotify_logo.png",
+        "imageUrl": "/src/assets/spotify_logo.png",
+        "url": "https://github.com/Soumodwip-Mondal/spotify_data_analysis_using_postgresSQL",
+        "date": "June,2025",
+        "featured": false
+    },
+    {
+        "id": 9,
+        "title": "Pizza Sales Data Analysis",
+        "description": "I have done a analysis of the marketing data using Python and Pandas. I have also used Matplotlib to visualize the data.",
+        "category": "data analysis",
+        "tags": [
+            "Python",
+            "Pandas",
+            "Matplotlib"
+        ],
+        "image": "/src/assets/Pizza_data.png",
+        "imageUrl": "/src/assets/Pizza_data.png",
+        "url": "https://github.com/Soumodwip-Mondal/PizzaSales_Data_analysis.git",
+        "date": "2025",
+        "featured": false
+    },
+    {
+        "id": 10,
+        "title": "Express Your Love",
+        "description": "Express your love to your loved ones with this simple web app. I have created this project using React and Basic CSS.",
+        "category": "web",
+        "tags": [
+            "React",
+            "CSS",
+            "JavaScript"
+        ],
+        "image": "/src/assets/love.png",
+        "imageUrl": "/src/assets/love.png",
+        "url": "https://web-gotlove.vercel.app/",
+        "date": "2025",
+        "featured": false
+    },
+    {
+        "id": 11,
+        "title": "Speech Recognition",
+        "description": "Can you believe that you can control your computer by just speaking? Yes, it's possible with the help of AI. I have created a simple speech recognition project using Python and Gemeni-api.",
+        "category": "python",
+        "tags": [
+            "Python",
+            "Gemeni-api",
+            "Speech Recognition"
+        ],
+        "image": "/src/assets/speech_reco.png",
+        "imageUrl": "/src/assets/speech_reco.png",
+        "url": "https://github.com/Soumodwip-Mondal/Speech-recognizer.git",
+        "featured": true,
+        "date": "March 2025"
+    },
+    {
+        "id": 12,
+        "title": "ML Project",
+        "description": "This is ongoing project",
+        "category": "ml",
+        "tags": [
+            "Figma",
+            "Adobe XD"
+        ],
+        "image": "/src/assets/ml1.png",
+        "imageUrl": "/src/assets/ml1.png",
+        "url": "https://github.com/Soumodwip-Mondal/Python-Projects.git",
+        "date": "2025",
+        "featured": false
+    },
+    {
+        "id": 13,
+        "title": "Making Predictions Using data",
+        "description": "I have done a statistical analysis of the marketing data using Python and Pandas. I have also used Matplotlib to visualize the data.",
+        "category": "trend analysis",
+        "tags": [
+            "Python",
+            "Pandas",
+            "Matplotlib"
+        ],
+        "image": "/src/assets/data-analisis.png",
+        "imageUrl": "/src/assets/data-analisis.png",
+        "url": "https://github.com/Soumodwip-Mondal/Marketing-Analytics-Exploratory-Statistical-Analysis-task.git",
+        "date": "2025",
+        "featured": false
+    },
+    {
+        "id": 14,
+        "title": "Jeevan Vase",
+        "description": "Website for a NGO and Individual.",
+        "category": "group",
+        "tags": [
+            "TypeScript",
+            "React.js",
+            "Shacn",
+            "Socket io",
+            "Tailwind CSS",
+            "Node.js"
+        ],
+        "image": "/src/assets/jeevan.png",
+        "imageUrl": "/src/assets/jeevan.png",
+        "url": "https://github.com/Soumodwip-Mondal/Jeevan-verse2.git",
+        "date": "2025",
+        "featured": false
+    }
+]

@@ -1,0 +1,54 @@
+[
+    {
+        "id": 1,
+        "title": "Data Analytics with Python",
+        "excerpt": "Learn the basics of Data Analytics using Python and its powerful libraries.",
+        "date": "June 15, 2025",
+        "imageUrl": "https://via.placeholder.com/600x400",
+        "categories": [
+            "Data Analysis",
+            "Python"
+        ],
+        "readTime": "5 min read",
+        "mediumUrl": "https://medium.com/@your-username/data-analytics-with-python"
+    },
+    {
+        "id": 2,
+        "title": "Understanding ML Algorithms",
+        "excerpt": "A beginner-friendly guide to Machine Learning and its benefits.",
+        "date": "Aug, 2025",
+        "imageUrl": "https://via.placeholder.com/600x400",
+        "categories": [
+            "ML",
+            "Python"
+        ],
+        "readTime": "7 min read",
+        "mediumUrl": "https://medium.com/@your-username/understanding-ml-algorithms"
+    },
+    {
+        "id": 3,
+        "title": "Data Warehousing Basics",
+        "excerpt": "An introduction to Data Warehousing concepts and practices.",
+        "date": "August 16, 2025",
+        "imageUrl": "https://via.placeholder.com/600x400",
+        "categories": [
+            "Data Warehousing",
+            "SQL"
+        ],
+        "readTime": "4 min read",
+        "mediumUrl": "https://medium.com/@your-username/data-warehousing-basics"
+    },
+    {
+        "id": 4,
+        "title": "Data Visualization Techniques",
+        "excerpt": "Data Visualization is a crucial aspect of data analysis. Explore various techniques and tools to effectively visualize data.",
+        "date": "September 5, 2023",
+        "imageUrl": "https://via.placeholder.com/600x400",
+        "categories": [
+            "Tableau",
+            "Data Visualization"
+        ],
+        "readTime": "6 min read",
+        "mediumUrl": "https://medium.com/@your-username/data-visualization-techniques"
+    }
+]
