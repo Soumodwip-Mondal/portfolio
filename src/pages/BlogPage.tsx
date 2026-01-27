@@ -1,22 +1,15 @@
 import { useState, useEffect } from 'react';
 import { motion, AnimatePresence, Variants } from 'framer-motion';
-<<<<<<< HEAD
 import Footer from '../components/layout/footer';
 import { Search, Calendar, ArrowRight, BookOpen } from 'lucide-react';
 import { Blog } from '../types/blog';
 import { getBlogs } from '../services/blog-service';
-=======
-import { Link } from 'react-router-dom';
-import Footer from '../components/layout/footer';
-import { Search, Calendar, ArrowRight, BookOpen } from 'lucide-react';
->>>>>>> b946aa5e932a1838633371eb2db3e8eb74c03618
 
 export default function BlogPage() {
   const [searchTerm, setSearchTerm] = useState('');
   const [selectedCategory, setSelectedCategory] = useState<string | null>(null);
   const [isLoaded, setIsLoaded] = useState(false);
   const [animateCards, setAnimateCards] = useState(false);
-<<<<<<< HEAD
   const [blogPosts, setBlogPosts] = useState<Blog[]>([]);
 
   // Fetch blogs from JSON
@@ -43,84 +36,20 @@ export default function BlogPage() {
     const matchesCategory = selectedCategory === null ||
       selectedCategory === 'All' ||
       post.categories.includes(selectedCategory);
-=======
-
-  // Categories for filtering
-  const categories = ['All', 'React', 'TypeScript', 'CSS', 'Web Development'];
-
-  // Sample blog posts - replace with your actual data
-  const blogPosts = [
-    {
-      id: 1,
-      title: 'Data Analytics with Python',
-      excerpt: 'Learn the basics of Data Analytics using Python and its powerful libraries.',
-      date: 'June 15, 2025',
-      imageUrl: 'https://via.placeholder.com/600x400',
-      categories: ['Data Analysis', 'Python'],
-      readTime: '5 min read',
-      content: 'Will be updated with more details soon.'
-    },
-    {
-      id: 2,
-      title: 'Understanding ML Algorithms',
-      excerpt: 'A beginner-friendly ML and its benefits.',
-      date: 'Aug, 2025',
-      imageUrl: 'https://via.placeholder.com/600x400',
-      categories: ['ML', 'Python'],
-      readTime: '7 min read',
-      content: 'Will be updated with more details soon.'
-    },
-    {
-      id: 3,
-      title: 'Data Warehousing Basics',
-      excerpt: 'An introduction to Data Warehousing concepts and practices.',
-      date: 'August 16, 2025',
-      imageUrl: 'https://via.placeholder.com/600x400',
-      categories: ['Data Warehousing', 'SQL'],
-      readTime: '4 min read',
-      content: 'Will be updated with more details soon.'
-    },
-    {
-      id: 4,
-      title: 'Data Visualization Techniques',
-      excerpt: 'Data Visualization is a crucial aspect of data analysis. In this post, we will explore various techniques and tools to effectively visualize data.',
-      date: 'September 5, 2023',
-      imageUrl: 'https://via.placeholder.com/600x400',
-      categories: ['Tableau', 'Data Visualization'],
-      readTime: '6 min read',
-      content: 'will be updated with more details soon.'
-    }
-  ];
-
-  // Filter posts based on search term and category
-  const filteredPosts = blogPosts.filter(post => {
-    const matchesSearch = post.title.toLowerCase().includes(searchTerm.toLowerCase()) || 
-                         post.excerpt.toLowerCase().includes(searchTerm.toLowerCase());
-    const matchesCategory = selectedCategory === null || 
-                           selectedCategory === 'All' || 
-                           post.categories.includes(selectedCategory);
->>>>>>> b946aa5e932a1838633371eb2db3e8eb74c03618
     return matchesSearch && matchesCategory;
   });
 
   // Animation variants
   const containerVariants: Variants = {
     hidden: { opacity: 0 },
-<<<<<<< HEAD
     visible: {
       opacity: 1,
       transition: {
-=======
-    visible: { 
-      opacity: 1,
-      transition: { 
->>>>>>> b946aa5e932a1838633371eb2db3e8eb74c03618
         staggerChildren: 0.1,
         delayChildren: 0.3,
       }
     }
   };
-<<<<<<< HEAD
 
   const itemVariants: Variants = {
     hidden: { y: 20, opacity: 0 },
@@ -129,16 +58,6 @@ export default function BlogPage() {
       opacity: 1,
       transition: {
         type: 'spring',
-=======
-  
-  const itemVariants: Variants = {
-    hidden: { y: 20, opacity: 0 },
-    visible: { 
-      y: 0, 
-      opacity: 1,
-      transition: { 
-        type: 'spring', 
->>>>>>> b946aa5e932a1838633371eb2db3e8eb74c03618
         stiffness: 50,
         damping: 10
       }
@@ -147,37 +66,21 @@ export default function BlogPage() {
 
   const cardVariants: Variants = {
     hidden: { y: 50, opacity: 0 },
-<<<<<<< HEAD
     visible: (i: number) => ({
       y: 0,
       opacity: 1,
       transition: {
         type: 'spring',
-=======
-    visible: (i: number) => ({ 
-      y: 0, 
-      opacity: 1,
-      transition: { 
-        type: 'spring', 
->>>>>>> b946aa5e932a1838633371eb2db3e8eb74c03618
         stiffness: 50,
         damping: 8,
         delay: 0.05 * i
       }
     }),
-<<<<<<< HEAD
     hover: {
       y: -10,
       boxShadow: "0 20px 25px -5px rgba(0, 0, 0, 0.1), 0 10px 10px -5px rgba(0, 0, 0, 0.04)",
       transition: {
         type: 'spring',
-=======
-    hover: { 
-      y: -10,
-      boxShadow: "0 20px 25px -5px rgba(0, 0, 0, 0.1), 0 10px 10px -5px rgba(0, 0, 0, 0.04)",
-      transition: { 
-        type: 'spring', 
->>>>>>> b946aa5e932a1838633371eb2db3e8eb74c03618
         stiffness: 200,
         damping: 15
       }
@@ -211,15 +114,9 @@ export default function BlogPage() {
         <div className="absolute inset-0 z-0">
           <div className="absolute top-40 right-1/4 w-72 h-72 bg-blue-500/10 rounded-full blur-3xl"></div>
           <div className="absolute bottom-40 left-1/3 w-96 h-96 bg-purple-500/10 rounded-full blur-3xl"></div>
-<<<<<<< HEAD
           <motion.div
             className="absolute top-1/3 left-1/5 w-4 h-4 bg-yellow-400 rounded-full"
             animate={{
-=======
-          <motion.div 
-            className="absolute top-1/3 left-1/5 w-4 h-4 bg-yellow-400 rounded-full"
-            animate={{ 
->>>>>>> b946aa5e932a1838633371eb2db3e8eb74c03618
               y: [0, 15, -15, 0],
               opacity: [1, 0.5, 1]
             }}
@@ -229,15 +126,9 @@ export default function BlogPage() {
               repeatType: "reverse"
             }}
           />
-<<<<<<< HEAD
           <motion.div
             className="absolute bottom-1/4 right-1/5 w-3 h-3 bg-green-400 rounded-full"
             animate={{
-=======
-          <motion.div 
-            className="absolute bottom-1/4 right-1/5 w-3 h-3 bg-green-400 rounded-full"
-            animate={{ 
->>>>>>> b946aa5e932a1838633371eb2db3e8eb74c03618
               y: [0, -20, 20, 0],
               opacity: [1, 0.6, 1]
             }}
@@ -264,11 +155,7 @@ export default function BlogPage() {
                   transition={{ delay: 0.2, duration: 0.8 }}
                   className="h-1 bg-gradient-to-r from-blue-600 to-purple-600 dark:from-blue-500 dark:to-purple-500 mb-4 mx-auto"
                 />
-<<<<<<< HEAD
                 <motion.h1
-=======
-                <motion.h1 
->>>>>>> b946aa5e932a1838633371eb2db3e8eb74c03618
                   variants={itemVariants}
                   className="text-4xl md:text-5xl font-bold text-center mb-6"
                 >
@@ -284,11 +171,7 @@ export default function BlogPage() {
                     />
                   </span>
                 </motion.h1>
-<<<<<<< HEAD
                 <motion.p
-=======
-                <motion.p 
->>>>>>> b946aa5e932a1838633371eb2db3e8eb74c03618
                   variants={itemVariants}
                   className="text-xl text-slate-600 dark:text-slate-300 text-center max-w-2xl mx-auto mb-8"
                 >
@@ -296,11 +179,7 @@ export default function BlogPage() {
                 </motion.p>
 
                 {/* Search and filter section */}
-<<<<<<< HEAD
                 <motion.div
-=======
-                <motion.div 
->>>>>>> b946aa5e932a1838633371eb2db3e8eb74c03618
                   variants={itemVariants}
                   className="max-w-3xl mx-auto mb-12 bg-white dark:bg-slate-800/50 backdrop-blur-sm rounded-xl p-6 shadow-lg border border-slate-200 dark:border-slate-700"
                 >
@@ -347,15 +226,9 @@ export default function BlogPage() {
                   className="bg-white dark:bg-slate-800 rounded-xl overflow-hidden shadow-md border border-slate-100 dark:border-slate-700 h-full flex flex-col"
                 >
                   <div className="relative overflow-hidden">
-<<<<<<< HEAD
                     <motion.img
                       src={post.imageUrl}
                       alt={post.title}
-=======
-                    <motion.img 
-                      src={post.imageUrl} 
-                      alt={post.title} 
->>>>>>> b946aa5e932a1838633371eb2db3e8eb74c03618
                       className="w-full h-56 object-cover transition-transform"
                       whileHover={{ scale: 1.05 }}
                       transition={{ duration: 0.3 }}
@@ -363,13 +236,8 @@ export default function BlogPage() {
                     <div className="absolute inset-0 bg-gradient-to-t from-black/30 to-transparent"></div>
                     <div className="absolute bottom-4 left-4 flex items-center space-x-2">
                       {post.categories.map(category => (
-<<<<<<< HEAD
                         <span
                           key={category}
-=======
-                        <span 
-                          key={category} 
->>>>>>> b946aa5e932a1838633371eb2db3e8eb74c03618
                           className="px-2 py-1 bg-blue-500/80 text-white text-xs font-medium rounded-full backdrop-blur-sm"
                         >
                           {category}
@@ -390,7 +258,6 @@ export default function BlogPage() {
                     </div>
                     <h3 className="text-xl font-semibold mb-3 flex-grow">{post.title}</h3>
                     <p className="text-slate-600 dark:text-slate-300 mb-4">{post.excerpt}</p>
-<<<<<<< HEAD
                     <a
                       href={post.mediumUrl}
                       target="_blank"
@@ -400,15 +267,6 @@ export default function BlogPage() {
                       Read on Medium
                       <ArrowRight className="ml-1 h-4 w-4 transition-transform group-hover:translate-x-1" />
                     </a>
-=======
-                    <Link 
-                      to={`/blog/${post.id}`} 
-                      className="text-blue-500 hover:text-blue-700 font-medium inline-flex items-center group mt-auto"
-                    >
-                      Read more
-                      <ArrowRight className="ml-1 h-4 w-4 transition-transform group-hover:translate-x-1" />
-                    </Link>
->>>>>>> b946aa5e932a1838633371eb2db3e8eb74c03618
                   </div>
                 </motion.article>
               ))}
@@ -417,11 +275,7 @@ export default function BlogPage() {
 
           {/* Empty state */}
           {filteredPosts.length === 0 && (
-<<<<<<< HEAD
             <motion.div
-=======
-            <motion.div 
->>>>>>> b946aa5e932a1838633371eb2db3e8eb74c03618
               initial={{ opacity: 0, y: 20 }}
               animate={{ opacity: 1, y: 0 }}
               transition={{ duration: 0.5 }}
@@ -431,11 +285,7 @@ export default function BlogPage() {
               <p className="text-slate-600 dark:text-slate-400 mb-4">
                 Try adjusting your search or filter to find what you're looking for.
               </p>
-<<<<<<< HEAD
               <button
-=======
-              <button 
->>>>>>> b946aa5e932a1838633371eb2db3e8eb74c03618
                 onClick={() => {
                   setSearchTerm('');
                   setSelectedCategory(null);
@@ -458,29 +308,17 @@ export default function BlogPage() {
               <div className="absolute -right-10 -top-10 w-40 h-40 bg-blue-500/20 rounded-full blur-2xl"></div>
               <div className="absolute -left-10 -bottom-10 w-40 h-40 bg-purple-500/20 rounded-full blur-2xl"></div>
             </div>
-<<<<<<< HEAD
 
-=======
-            
->>>>>>> b946aa5e932a1838633371eb2db3e8eb74c03618
             <div className="relative z-10">
               <h3 className="text-2xl md:text-3xl font-bold mb-4 text-center">Subscribe to my newsletter</h3>
               <p className="text-slate-600 dark:text-slate-300 text-center mb-6 max-w-2xl mx-auto">
                 Get the latest posts delivered right to your inbox. No spam, ever.
               </p>
-<<<<<<< HEAD
 
               <form className="max-w-md mx-auto flex flex-col sm:flex-row gap-3">
                 <input
                   type="email"
                   placeholder="Enter your email"
-=======
-              
-              <form className="max-w-md mx-auto flex flex-col sm:flex-row gap-3">
-                <input 
-                  type="email" 
-                  placeholder="Enter your email" 
->>>>>>> b946aa5e932a1838633371eb2db3e8eb74c03618
                   className="flex-grow px-4 py-3 rounded-lg border border-slate-200 dark:border-slate-700 bg-white dark:bg-slate-800 focus:ring-2 focus:ring-blue-500 focus:border-transparent outline-none"
                 />
                 <motion.button
