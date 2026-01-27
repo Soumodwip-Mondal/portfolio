@@ -6,18 +6,18 @@ import { Button } from '../ui/button';
 import { lazy, Suspense } from 'react';
 import { projects } from '../../data/project';
 import { Project } from '../../types/project';
-import { 
-  ChevronRight, 
-  ChevronUp, 
-  Star, 
-  Sparkles, 
-  Filter, 
-  Globe, 
-  Brain, 
+import {
+  ChevronRight,
+  ChevronUp,
+  Star,
+  Sparkles,
+  Filter,
+  Globe,
+  Brain,
   BarChart3,
-  Cpu, 
-  Database, 
-  Code, 
+  Cpu,
+  Database,
+  Code,
   Users,
   MessageSquare
 } from 'lucide-react';
@@ -66,20 +66,20 @@ const CategoryIcon = ({ category }: { category: string }) => {
     'customer segmentation': <Users className="h-4 w-4" />,
     'sentiment analysis': <MessageSquare className="h-4 w-4" />,
   };
-  
+
   // Normalize category to match keys in iconMap
   const normalizedCategory = normalizeCategory(category);
-  
+
   return iconMap[normalizedCategory] || <Sparkles className="h-4 w-4" />;
 };
 
 // Pre-defined animation variants - moved outside component
 const headingVariants = {
   hidden: { y: -50, opacity: 0 },
-  visible: { 
-    y: 0, 
+  visible: {
+    y: 0,
     opacity: 1,
-    transition: { 
+    transition: {
       type: "spring" as const,
       stiffness: 80,
       damping: 12,
@@ -90,18 +90,18 @@ const headingVariants = {
 
 const sparkleVariants = {
   hidden: { scale: 0, opacity: 0, rotate: -15 },
-  visible: { 
-    scale: [0, 1.4, 0.9, 1.2, 0], 
-    opacity: [0, 0.8, 1, 0.6, 0], 
+  visible: {
+    scale: [0, 1.4, 0.9, 1.2, 0],
+    opacity: [0, 0.8, 1, 0.6, 0],
     rotate: [-15, 5, -5, 10, 0],
-    transition: { duration: 1.8, ease: "easeInOut" } 
+    transition: { duration: 1.8, ease: "easeInOut" as const }
   }
 };
 
 const filterVariants = {
   inactive: { scale: 1, y: 0 },
-  active: { 
-    scale: 1.08, 
+  active: {
+    scale: 1.08,
     y: -2,
     transition: { type: "spring" as const, stiffness: 300, damping: 10 }
   }
@@ -109,23 +109,23 @@ const filterVariants = {
 
 const buttonVariants = {
   hidden: { opacity: 0, scale: 0.8, y: 20 },
-  visible: { 
-    opacity: 1, 
+  visible: {
+    opacity: 1,
     scale: 1,
     y: 0,
-    transition: { 
+    transition: {
       delay: 1.0,
       type: "spring" as const,
       stiffness: 100,
       damping: 12
     }
   },
-  hover: { 
+  hover: {
     scale: 1.05,
     y: -3,
     transition: { type: "spring" as const, stiffness: 400, damping: 10 }
   },
-  tap: { 
+  tap: {
     scale: 0.97,
     y: -1,
   }
@@ -145,13 +145,13 @@ export default function Projects() {
   const [showSparkle, setShowSparkle] = useState(false);
   const sectionRef = useRef<HTMLElement>(null);
   const isInView = useInView(sectionRef, { once: false, amount: 0.2 });
-  
+
   // Normalize project categories and create unique set
-  const normalizedProjects = useMemo(() => 
+  const normalizedProjects = useMemo(() =>
     projects.map(project => ({
       ...project,
       category: normalizeCategory(project.category)
-    })), 
+    })),
     []
   );
 
@@ -160,25 +160,25 @@ export default function Projects() {
     const uniqueCategories = Array.from(
       new Set(normalizedProjects.map(project => project.category))
     ).sort(); // Sort for consistent ordering
-    
+
     return ['all', ...uniqueCategories];
   }, [normalizedProjects]);
-  
+
   // Optimize mouse tracking with throttling/debouncing
   useEffect(() => {
     let timeoutId: NodeJS.Timeout;
-    
+
     const handleMouseMove = (e: MouseEvent) => {
       clearTimeout(timeoutId);
       timeoutId = setTimeout(() => {
         setMousePosition({ x: e.clientX, y: e.clientY });
       }, 50);
     };
-    
+
     if (typeof window !== 'undefined') {
       window.addEventListener('mousemove', handleMouseMove);
     }
-    
+
     return () => {
       if (typeof window !== 'undefined') {
         window.removeEventListener('mousemove', handleMouseMove);
@@ -186,35 +186,35 @@ export default function Projects() {
       clearTimeout(timeoutId);
     };
   }, []);
-  
+
   // Replace interval with requestAnimationFrame for better performance
   useEffect(() => {
     if (!isInView) return;
-    
+
     let sparkleTimeout: NodeJS.Timeout;
     let animationFrameId: number;
     let lastTime = 0;
     const minInterval = 2000;
-    
+
     const animateSparkle = (timestamp: number) => {
       if (timestamp - lastTime > minInterval) {
         setShowSparkle(true);
         lastTime = timestamp;
-        
+
         sparkleTimeout = setTimeout(() => {
           setShowSparkle(false);
         }, 1200);
       }
-      
+
       if (typeof window !== 'undefined') {
         animationFrameId = requestAnimationFrame(animateSparkle);
       }
     };
-    
+
     if (typeof window !== 'undefined') {
       animationFrameId = requestAnimationFrame(animateSparkle);
     }
-    
+
     return () => {
       if (typeof window !== 'undefined') {
         cancelAnimationFrame(animationFrameId);
@@ -232,7 +232,7 @@ export default function Projects() {
   // Memoize parallax calculation with proper SSR handling
   const getParallaxStyle = useCallback((depth = 0.05) => {
     if (typeof window === 'undefined') return {};
-    
+
     const x = (window.innerWidth / 2 - mousePosition.x) * depth;
     const y = (window.innerHeight / 2 - mousePosition.y) * depth;
     return {
@@ -245,15 +245,15 @@ export default function Projects() {
     if (activeFilter === 'all') {
       return normalizedProjects;
     }
-    
+
     const normalizedFilter = normalizeCategory(activeFilter);
-    return normalizedProjects.filter(project => 
+    return normalizedProjects.filter(project =>
       project.category === normalizedFilter
     );
   }, [activeFilter, normalizedProjects]);
 
   // Memoize visible projects
-  const visibleProjects = useMemo(() => 
+  const visibleProjects = useMemo(() =>
     showAll ? filteredProjects : filteredProjects.slice(0, 3),
     [showAll, filteredProjects]
   );
@@ -272,7 +272,7 @@ export default function Projects() {
   }, []);
 
   return (
-    <motion.section 
+    <motion.section
       id="projects"
       ref={sectionRef}
       initial="hidden"
@@ -282,13 +282,13 @@ export default function Projects() {
     >
       {/* Animated background with SSR check */}
       {typeof window !== 'undefined' && (
-        <motion.div 
-          className="absolute -top-10 left-1/4 w-[28rem] h-[28rem] bg-gradient-to-br from-blue-400/20 to-sky-300/15 rounded-full filter blur-[100px] opacity-80 z-0" 
-          animate={{ 
+        <motion.div
+          className="absolute -top-10 left-1/4 w-[28rem] h-[28rem] bg-gradient-to-br from-blue-400/20 to-sky-300/15 rounded-full filter blur-[100px] opacity-80 z-0"
+          animate={{
             x: [0, 30, 0],
             y: [0, -30, 0],
           }}
-          transition={{ 
+          transition={{
             duration: 20,
             repeat: Infinity,
             repeatType: "mirror"
@@ -300,23 +300,23 @@ export default function Projects() {
       <div className="container mx-auto px-4 relative z-10">
         {/* Heading with enhanced animation */}
         <div className="text-center mb-16">
-          <motion.div 
+          <motion.div
             className="inline-flex items-center justify-center mb-3 relative"
             initial={{ opacity: 0, scale: 0.8 }}
             animate={{ opacity: 1, scale: 1 }}
-            transition={{ 
-              duration: 0.5, 
+            transition={{
+              duration: 0.5,
               delay: 0.2,
               type: "spring",
               stiffness: 100
             }}
           >
-            <motion.div 
-              className="absolute inset-0 rounded-full bg-gradient-to-r from-blue-500/20 to-purple-500/20 blur-xl" 
-              animate={{ 
-                rotate: [0, 360], 
+            <motion.div
+              className="absolute inset-0 rounded-full bg-gradient-to-r from-blue-500/20 to-purple-500/20 blur-xl"
+              animate={{
+                rotate: [0, 360],
               }}
-              transition={{ 
+              transition={{
                 duration: 12,
                 repeat: Infinity,
                 ease: "linear"
@@ -327,15 +327,15 @@ export default function Projects() {
               <span className="text-sm font-medium">My Work</span>
             </div>
           </motion.div>
-          
-          <motion.h2 
+
+          <motion.h2
             className="text-4xl md:text-5xl font-bold mb-4 bg-clip-text text-transparent bg-gradient-to-r from-primary to-purple-500"
             variants={headingVariants}
           >
             Featured Projects
           </motion.h2>
-          
-          <motion.p 
+
+          <motion.p
             className="text-lg text-muted-foreground max-w-2xl mx-auto"
             initial={{ opacity: 0, y: 20 }}
             animate={{ opacity: 1, y: 0 }}
@@ -344,9 +344,9 @@ export default function Projects() {
             Explore my latest work showcasing creative solutions and technical expertise. My Portfolio is my best project. Currently I am working on it. Many project is going to be added soon.
           </motion.p>
         </div>
-        
+
         {/* Filter buttons with improved performance */}
-        <motion.div 
+        <motion.div
           className="flex justify-center mb-12"
           initial={{ opacity: 0, y: 20 }}
           animate={{ opacity: 1, y: 0 }}
@@ -356,16 +356,15 @@ export default function Projects() {
             {categories.map((category) => {
               const normalizedCategory = normalizeCategory(category);
               const displayCategory = formatCategoryDisplay(category);
-              
+
               return (
                 <motion.button
                   key={normalizedCategory}
                   onClick={() => handleFilterChange(category)}
-                  className={`px-4 py-2 m-1 rounded-full text-sm font-medium transition-all duration-300 flex items-center gap-2 ${
-                    activeFilter === category 
-                      ? `bg-gradient-to-r ${categoryColors[normalizedCategory] || categoryColors.all} text-white shadow-md` 
+                  className={`px-4 py-2 m-1 rounded-full text-sm font-medium transition-all duration-300 flex items-center gap-2 ${activeFilter === category
+                      ? `bg-gradient-to-r ${categoryColors[normalizedCategory] || categoryColors.all} text-white shadow-md`
                       : 'hover:bg-muted'
-                  }`}
+                    }`}
                   variants={filterVariants}
                   animate={activeFilter === category ? 'active' : 'inactive'}
                   whileHover={{ scale: activeFilter === category ? 1.08 : 1.05 }}
@@ -380,7 +379,7 @@ export default function Projects() {
         </motion.div>
 
         {/* Project count indicator */}
-        <motion.div 
+        <motion.div
           className="text-center text-sm text-muted-foreground mb-8"
           initial={{ opacity: 0 }}
           animate={{ opacity: 1 }}
@@ -398,16 +397,16 @@ export default function Projects() {
             </motion.div>
           </AnimatePresence>
         </motion.div>
-        
+
         {/* Projects grid with lazy loading and reduced animations */}
-        <div className="grid grid-cols-1 md:grid-cols-2 lg:grid-cols-3 gap-6 mb-12"> 
+        <div className="grid grid-cols-1 md:grid-cols-2 lg:grid-cols-3 gap-6 mb-12">
           {visibleProjects.map((project: Project, index: number) => (
             <motion.div
               key={project.id}
               className="h-full"
               initial={{ opacity: 0, y: 20 }}
               animate={{ opacity: 1, y: 0 }}
-              transition={{ 
+              transition={{
                 delay: Math.min(index * 0.1, 0.3),
                 duration: 0.5
               }}
@@ -426,24 +425,24 @@ export default function Projects() {
                     <Star className="h-6 w-6 filter drop-shadow-lg" />
                   </motion.div>
                 )}
-                
+
                 {/* Lazy loaded project card */}
                 <Suspense fallback={<CardSkeleton />}>
-                  <ProjectCard 
+                  <ProjectCard
                     project={project}
                     isFocused={hoveredIndex === index}
-                    anyCardFocused={hoveredIndex !== null} 
+                    anyCardFocused={hoveredIndex !== null}
                   />
                 </Suspense>
               </div>
             </motion.div>
           ))}
         </div>
-        
+
         {/* CTA buttons - Show either "Explore All" or "Show Less" button */}
         <AnimatePresence mode="wait">
           {!showAll && filteredProjects.length > 3 ? (
-            <motion.div 
+            <motion.div
               key="explore-button"
               className="text-center"
               variants={buttonVariants}
@@ -453,7 +452,7 @@ export default function Projects() {
               whileHover="hover"
               whileTap="tap"
             >
-              <Button 
+              <Button
                 size="lg"
                 className="bg-gradient-to-r from-primary to-purple-600 hover:from-primary/90 hover:to-purple-600/90 text-primary-foreground group relative overflow-hidden"
                 onClick={handleShowAll}
@@ -461,13 +460,13 @@ export default function Projects() {
                 <span className="relative z-10 flex items-center">
                   Explore All Projects <ChevronRight className="ml-2 h-5 w-5 transition-transform duration-300 group-hover:translate-x-1" />
                 </span>
-                
-                <motion.span 
+
+                <motion.span
                   className="absolute inset-0 bg-gradient-to-r from-blue-600 to-purple-700"
                   animate={{
                     backgroundPosition: ['0% 50%', '100% 50%', '0% 50%'],
                   }}
-                  transition={{ 
+                  transition={{
                     duration: 8,
                     repeat: Infinity,
                     ease: "linear"
@@ -478,7 +477,7 @@ export default function Projects() {
             </motion.div>
           ) : (
             showAll && filteredProjects.length > 3 && (
-              <motion.div 
+              <motion.div
                 key="show-less-button"
                 className="text-center"
                 variants={buttonVariants}
@@ -488,7 +487,7 @@ export default function Projects() {
                 whileHover="hover"
                 whileTap="tap"
               >
-                <Button 
+                <Button
                   size="lg"
                   className="bg-gradient-to-r from-purple-600 to-primary hover:from-purple-600/90 hover:to-primary/90 text-primary-foreground group relative overflow-hidden"
                   onClick={handleShowLess}
@@ -496,13 +495,13 @@ export default function Projects() {
                   <span className="relative z-10 flex items-center">
                     Show Less <ChevronUp className="ml-2 h-5 w-5 transition-transform duration-300 group-hover:-translate-y-1" />
                   </span>
-                  
-                  <motion.span 
+
+                  <motion.span
                     className="absolute inset-0 bg-gradient-to-r from-purple-700 to-blue-600"
                     animate={{
                       backgroundPosition: ['0% 50%', '100% 50%', '0% 50%'],
                     }}
-                    transition={{ 
+                    transition={{
                       duration: 8,
                       repeat: Infinity,
                       ease: "linear"
