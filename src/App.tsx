@@ -7,11 +7,20 @@ import BlogPage from './pages/BlogPage';
 import Dashboard from './components/sections/dashboard';
 import CollaborativePage from './pages/CollaborativePage';
 import AIAssistantPage from './pages/AIAssistantPage';
+<<<<<<< HEAD
 import AdminPanel from './components/admin/admin-panel';
 import { PersonalizationProvider } from './context/PersonalizationContext';
 import { ChatAssistant } from './components/Ai/ChatBot';
 import { LayoutManager } from './components/personalization/LayoutManager';
 import { ScrollProgress, ScrollToTop as ScrollToTopButton } from './components/ui/scroll-indicators';
+=======
+import { PersonalizationProvider } from './context/PersonalizationContext';
+import {ChatAssistant} from './components/Ai/ChatBot'
+;
+// import { PersonalizedGreeting } from './components/personalization/PersonalizedGreeting';
+import { ThemeCustomizer } from './components/personalization/ThemeCustomizer';
+import { LayoutManager } from './components/personalization/LayoutManager';
+>>>>>>> b946aa5e932a1838633371eb2db3e8eb74c03618
 // Scroll to top component
 function ScrollToTop() {
   const { pathname, hash } = useLocation();
@@ -103,14 +112,23 @@ function App() {
                   <Route path="/dashboard" element={<Dashboard />} />
                   <Route path="/collaborate" element={<CollaborativePage />} />
                   <Route path="/ai-assistant" element={<AIAssistantPage />} />
+<<<<<<< HEAD
                   <Route path="/admin" element={<AdminPanel />} />
+=======
+>>>>>>> b946aa5e932a1838633371eb2db3e8eb74c03618
                   {/* Redirect any other routes to home */}
                   <Route path="*" element={<Navigate to="/" />} />
                 </Routes>
               </div>
+<<<<<<< HEAD
               <ScrollProgress />
               <ScrollToTopButton />
               <ChatAssistant />
+=======
+              <ChatAssistant />
+              {/* <PersonalizedGreeting /> */}
+              <ThemeCustomizer />
+>>>>>>> b946aa5e932a1838633371eb2db3e8eb74c03618
             </div>
           </Router>
         </LayoutManager>
