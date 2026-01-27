@@ -291,7 +291,7 @@ export default function Projects() {
           transition={{
             duration: 20,
             repeat: Infinity,
-            repeatType: "mirror"
+            repeatType: 'mirror' as const
           }}
           style={getParallaxStyle(0.02)}
         />
@@ -307,7 +307,7 @@ export default function Projects() {
             transition={{
               duration: 0.5,
               delay: 0.2,
-              type: "spring",
+              type: 'spring' as const,
               stiffness: 100
             }}
           >
@@ -319,7 +319,7 @@ export default function Projects() {
               transition={{
                 duration: 12,
                 repeat: Infinity,
-                ease: "linear"
+                ease: 'linear' as const
               }}
             />
             <div className="bg-card/80 backdrop-blur-sm border border-border/50 rounded-full px-4 py-2 flex items-center gap-2 relative z-10">
@@ -469,7 +469,7 @@ export default function Projects() {
                   transition={{
                     duration: 8,
                     repeat: Infinity,
-                    ease: "linear"
+                    ease: 'linear' as const
                   }}
                   style={{ backgroundSize: '200% 100%' }}
                 />
@@ -504,7 +504,7 @@ export default function Projects() {
                     transition={{
                       duration: 8,
                       repeat: Infinity,
-                      ease: "linear"
+                      ease: 'linear' as const
                     }}
                     style={{ backgroundSize: '200% 100%' }}
                   />

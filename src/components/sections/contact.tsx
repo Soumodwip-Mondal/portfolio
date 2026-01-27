@@ -118,7 +118,7 @@ export default function Contact() {
       y: 0,
       opacity: 1,
       transition: {
-        type: 'spring',
+        type: 'spring' as const,
         stiffness: 100,
         damping: 10
       }
@@ -127,7 +127,7 @@ export default function Contact() {
       scale: 1.05,
       boxShadow: "0 15px 30px -5px rgba(0, 0, 0, 0.1), 0 10px 10px -5px rgba(0, 0, 0, 0.04)",
       transition: {
-        type: 'spring',
+        type: 'spring' as const,
         stiffness: 400,
         damping: 10
       }
@@ -141,8 +141,8 @@ export default function Contact() {
       y: {
         duration: 6,
         repeat: Infinity,
-        repeatType: "mirror",
-        ease: "easeInOut"
+        repeatType: 'mirror' as const,
+        ease: 'easeInOut' as const
       }
     }
   };
@@ -154,8 +154,8 @@ export default function Contact() {
       scale: {
         duration: 2,
         repeat: Infinity,
-        repeatType: "mirror",
-        ease: "easeInOut"
+        repeatType: 'mirror' as const,
+        ease: 'easeInOut' as const
       }
     }
   };
@@ -170,7 +170,7 @@ export default function Contact() {
           rotate: [0, 90, 180, 270, 360],
           borderRadius: ["50%", "40%", "50%"]
         }}
-        transition={{ duration: 20, repeat: Infinity, ease: "linear" }}
+        transition={{ duration: 20, repeat: Infinity, ease: 'linear' as const }}
       />
       
       <motion.div 
@@ -180,7 +180,7 @@ export default function Contact() {
           rotate: [360, 270, 180, 90, 0],
           borderRadius: ["50%", "40%", "30%", "40%", "50%"]
         }}
-        transition={{ duration: 25, repeat: Infinity, ease: "linear" }}
+        transition={{ duration: 25, repeat: Infinity, ease: 'linear' as const }}
       />
 
       <div className="container mx-auto px-4">
@@ -245,12 +245,12 @@ export default function Contact() {
             initial={{ opacity: 0, x: -40 }}
             whileInView={{ opacity: 1, x: 0 }}
             viewport={{ once: true }}
-            transition={{ duration: 0.7, type: 'spring' }}
+            transition={{ duration: 0.7, type: 'spring' as const }}
           >
             <motion.div 
               className="relative"
               whileHover={{ scale: 1.01 }}
-              transition={{ type: 'spring', stiffness: 300, damping: 15 }}
+              transition={{ type: 'spring' as const, stiffness: 300, damping: 15 }}
             >
               <Card className="overflow-hidden shadow-lg border-0 dark:bg-slate-800/50 backdrop-blur-sm">
                 <CardContent className="p-8">
@@ -451,7 +451,7 @@ export default function Contact() {
                   scale: [1, 1.2, 1],
                   opacity: [0.2, 0.3, 0.2]
                 }}
-                transition={{ duration: 8, repeat: Infinity, repeatType: "reverse" }}
+                transition={{ duration: 8, repeat: Infinity, repeatType: 'reverse' as const }}
               />
               <motion.div 
                 className="absolute -top-8 -left-8 w-40 h-40 bg-purple-500/20 rounded-full blur-3xl -z-10"
@@ -459,7 +459,7 @@ export default function Contact() {
                   scale: [1.2, 1, 1.2],
                   opacity: [0.2, 0.3, 0.2]
                 }}
-                transition={{ duration: 8, repeat: Infinity, repeatType: "reverse", delay: 2 }}
+                transition={{ duration: 8, repeat: Infinity, repeatType: 'reverse' as const, delay: 2 }}
               />
             </motion.div>
           </motion.div>
@@ -470,7 +470,7 @@ export default function Contact() {
             initial={{ opacity: 0, x: 40 }}
             whileInView={{ opacity: 1, x: 0 }}
             viewport={{ once: true }}
-            transition={{ duration: 0.7, type: 'spring' }}
+            transition={{ duration: 0.7, type: 'spring' as const }}
           >
             <motion.h3 
               className="text-2xl font-semibold mb-6"

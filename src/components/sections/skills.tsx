@@ -10,7 +10,7 @@ const SkillIcon = memo(({ icon, color }: { icon: React.ReactNode; color: string 
     className={`p-3 rounded-xl bg-gradient-to-br ${color} text-white shadow-lg`}
     whileHover={{ scale: 1.1 }}
     whileTap={{ scale: 0.95 }}
-    transition={{ type: 'spring', stiffness: 300, damping: 20 }}
+    transition={{ type: 'spring' as const, stiffness: 300, damping: 20 }}
   >
     {icon}
   </motion.div>
@@ -184,7 +184,7 @@ const Skills: React.FC = () => {
                 className="absolute inset-0 bg-white/30"
                 initial={{ x: '-100%' }}
                 animate={{ x: '100%' }}
-                transition={{ duration: 0.8, repeat: Infinity, ease: 'linear' }}
+                transition={{ duration: 0.8, repeat: Infinity, ease: 'linear' as const }}
               />
             )}
           </div>
@@ -255,7 +255,7 @@ const Skills: React.FC = () => {
                 duration: 6 + (i % 4) * 2,
                 repeat: Infinity,
                 delay: i * 0.2,
-                ease: "easeInOut"
+                ease: 'easeInOut' as const
               }}
               style={{
                 width: 8 + (i % 4) * 4,
@@ -277,7 +277,7 @@ const Skills: React.FC = () => {
             <motion.h2
               className="text-5xl md:text-6xl font-extrabold bg-clip-text text-transparent bg-gradient-to-r from-blue-600 via-indigo-500 to-purple-600 dark:from-blue-400 dark:via-indigo-400 dark:to-purple-400 leading-tight"
               whileHover={{ scale: 1.05 }}
-              transition={{ type: 'spring', stiffness: 300 }}
+              transition={{ type: 'spring' as const, stiffness: 300 }}
             >
               My Expertise
               <motion.span
@@ -293,7 +293,7 @@ const Skills: React.FC = () => {
               className="h-1.5 w-32 mx-auto mt-5 rounded-full bg-gradient-to-r from-blue-500 via-indigo-500 to-purple-500"
               initial={{ scaleX: 0, opacity: 0.5 }}
               animate={{ scaleX: 1, opacity: 1 }}
-              transition={{ duration: 0.8, ease: 'easeOut', delay: 0.3 }}
+              transition={{ duration: 0.8, ease: 'easeOut' as const, delay: 0.3 }}
             />
           </motion.div>
 
@@ -324,7 +324,7 @@ const Skills: React.FC = () => {
               animate={selectedCategory === idx ? 'active' : 'inactive'}
               whileHover={{ scale: 1.1, boxShadow: '0 10px 25px rgba(0, 0, 0, 0.2)' }}
               whileTap={{ scale: 0.95 }}
-              transition={{ type: 'spring', stiffness: 400 }}
+              transition={{ type: 'spring' as const, stiffness: 400 }}
             >
               <motion.div
                 animate={selectedCategory === idx ?
@@ -340,7 +340,7 @@ const Skills: React.FC = () => {
                 <motion.span
                   initial={{ scale: 0, rotate: -45 }}
                   animate={{ scale: 1, rotate: 0 }}
-                  transition={{ type: 'spring', stiffness: 500 }}
+                  transition={{ type: 'spring' as const, stiffness: 500 }}
                 >
                   <Zap size={16} className="text-yellow-300" />
                 </motion.span>

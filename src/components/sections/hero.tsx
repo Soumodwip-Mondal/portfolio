@@ -57,7 +57,7 @@ export default function Hero() {
       y: 0, 
       opacity: 1,
       transition: { 
-        type: 'spring', 
+        type: 'spring' as const, 
         stiffness: 60,
         damping: 8
       }
@@ -84,7 +84,7 @@ export default function Hero() {
       scale: 1, 
       opacity: 1,
       transition: { 
-        type: 'spring', 
+        type: 'spring' as const, 
         stiffness: 70,
         delay: 0.6 + (i * 0.1)
       }
@@ -97,7 +97,7 @@ export default function Hero() {
       scale: 1, 
       opacity: 1,
       transition: { 
-        type: 'spring',
+        type: 'spring' as const,
         stiffness: 80,
         delay: 1.2
       }
@@ -105,7 +105,7 @@ export default function Hero() {
     hover: {
       scale: 1.05,
       transition: {
-        type: 'spring',
+        type: 'spring' as const,
         stiffness: 400,
         damping: 10
       }
@@ -159,7 +159,7 @@ const colorMap = {
           transition={{
             duration: 4,
             repeat: Infinity,
-            repeatType: "reverse"
+            repeatType: 'reverse' as const
           }}
         />
         <motion.div 
@@ -171,7 +171,7 @@ const colorMap = {
           transition={{
             duration: 5,
             repeat: Infinity,
-            repeatType: "reverse"
+            repeatType: 'reverse' as const
           }}
         />
       </div>
@@ -230,7 +230,7 @@ const colorMap = {
                       variants={badgeVariants}
                       whileHover={{ 
                         scale: 1.1, 
-                        transition: { type: 'spring', stiffness: 300 } 
+                        transition: { type: 'spring' as const, stiffness: 300 } 
                       }}
                     >
                       <Badge 
@@ -298,11 +298,11 @@ const colorMap = {
                 className="aspect-square rounded-2xl overflow-hidden border-4 border-white dark:border-slate-800 shadow-xl relative"
                 initial={{ y: 20, opacity: 0 }}
                 animate={{ y: 0, opacity: 1 }}
-                transition={{ type: 'spring', delay: 0.4, stiffness: 50 }}
+                transition={{ type: 'spring' as const, delay: 0.4, stiffness: 50 }}
                 whileHover={{ 
                   scale: 1.05,
                   boxShadow: "0 25px 30px -5px rgba(0, 0, 0, 0.1), 0 15px 15px -5px rgba(0, 0, 0, 0.04)",
-                  transition: { type: 'spring', stiffness: 300 }
+                  transition: { type: 'spring' as const, stiffness: 300 }
                 }}
               >
                 <div className="w-full h-full bg-gradient-to-tr from-blue-100 to-purple-100 dark:from-blue-900/20 dark:to-purple-900/20 absolute"></div>
@@ -312,7 +312,7 @@ const colorMap = {
                   className="w-full h-full object-cover mix-blend-multiply dark:mix-blend-normal dark:opacity-90"
                   initial={{ scale: 1.1 }}
                   animate={{ scale: 1 }}
-                  transition={{ duration: 0.8, ease: "easeOut" }}
+                  transition={{ duration: 0.8, ease: 'easeOut' as const }}
                 />
                 
                 {/* Photo overlay effect */}
@@ -330,10 +330,10 @@ const colorMap = {
               className="absolute -bottom-6 -right-6 z-30"
               initial={{ scale: 0, opacity: 0, y: 20 }}
               animate={{ scale: 1, opacity: 1, y: 0 }}
-              transition={{ type: 'spring', delay: 0.6, stiffness: 100 }}
+              transition={{ type: 'spring' as const, delay: 0.6, stiffness: 100 }}
               whileHover={{ 
                 y: -5,
-                transition: { type: 'spring', stiffness: 400 }
+                transition: { type: 'spring' as const, stiffness: 400 }
               }}
             >
               <div className="bg-white dark:bg-slate-800 rounded-lg p-4 shadow-xl border border-slate-100 dark:border-slate-700">
