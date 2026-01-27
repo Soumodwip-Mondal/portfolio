@@ -99,7 +99,7 @@ const Skills: React.FC = () => {
       y: 0,
       opacity: 1,
       transition: {
-        type: 'spring',
+        type: 'spring' as const,
         stiffness: 120,
         damping: 10
       }
@@ -113,7 +113,7 @@ const Skills: React.FC = () => {
       scale: 1.05,
       y: -8,
       transition: {
-        type: 'spring',
+        type: 'spring' as const,
         stiffness: 300
       }
     },
@@ -126,7 +126,7 @@ const Skills: React.FC = () => {
       scale: 1,
       y: 0,
       transition: {
-        type: 'spring',
+        type: 'spring' as const,
         stiffness: 150,
         damping: 15,
         delay: i * 0.1
