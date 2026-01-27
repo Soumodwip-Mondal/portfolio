@@ -11,7 +11,6 @@ export default function BlogPage() {
   const [isLoaded, setIsLoaded] = useState(false);
   const [animateCards, setAnimateCards] = useState(false);
   const [blogPosts, setBlogPosts] = useState<Blog[]>([]);
-  const [isLoading, setIsLoading] = useState(true);
 
   // Fetch blogs from JSON
   useEffect(() => {
@@ -21,8 +20,6 @@ export default function BlogPage() {
         setBlogPosts(data);
       } catch (error) {
         console.error('Error fetching blogs:', error);
-      } finally {
-        setIsLoading(false);
       }
     };
 

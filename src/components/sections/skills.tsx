@@ -34,7 +34,6 @@ interface SkillCategory {
 const Skills: React.FC = () => {
   const [selectedCategory, setSelectedCategory] = useState<number>(0);
   const [hoveredSkill, setHoveredSkill] = useState<string | null>(null);
-  const [isVisible, setIsVisible] = useState(false);
   const controls = useAnimation();
 
   const skillsData: SkillCategory[] = [
@@ -83,7 +82,6 @@ const Skills: React.FC = () => {
       const { top } = section.getBoundingClientRect();
       if (top < window.innerHeight * 0.75) {
         controls.start('visible');
-        setIsVisible(true);
       }
     }
   }, [controls]);
@@ -155,17 +153,7 @@ const Skills: React.FC = () => {
     }
   };
 
-  const barVariants = {
-    initial: { width: 0 },
-    animate: (level: number) => ({
-      width: `${level * 20}%`,
-      transition: {
-        duration: 1.5,
-        ease: [0.34, 1.56, 0.64, 1],
-        delay: 0.2
-      }
-    }),
-  };
+
 
   const sparkleVariants = {
     hidden: { scale: 0, opacity: 0 },
