@@ -174,7 +174,7 @@ const Skills: React.FC = () => {
     const isHovered = hoveredSkill === skill.name;
     return (
       <div className="relative mt-4">
-        <div className="h-3 bg-slate-200 dark:bg-slate-700 rounded-full overflow-hidden shadow-inner">
+        <div className="h-2.5 bg-[#3f484a]/60 rounded-full overflow-hidden shadow-inner">
           <div
             className={`h-full bg-gradient-to-r ${skill.color} rounded-full relative transition-all duration-500`}
             style={{ width: `${skill.level * 20}%` }}
@@ -192,7 +192,7 @@ const Skills: React.FC = () => {
         <AnimatePresence>
           {isHovered && (
             <motion.div
-              className="absolute -top-6 right-0 bg-gradient-to-r from-indigo-500 to-purple-500 text-white px-2 py-1 rounded-full text-xs font-semibold flex items-center gap-1"
+              className="absolute -top-6 right-0 bg-gradient-to-r from-[#5dd7e6] to-[#005f68] text-[#00363c] px-2 py-1 rounded-full text-xs font-semibold flex items-center gap-1"
               initial={{ opacity: 0, y: 10, scale: 0.8 }}
               animate={{ opacity: 1, y: 0, scale: 1 }}
               exit={{ opacity: 0, y: 5, scale: 0.9 }}
@@ -223,7 +223,7 @@ const Skills: React.FC = () => {
   ));
 
   return (
-    <section id="skills" className="py-24 bg-gradient-to-b from-slate-50 to-indigo-50 dark:from-slate-900 dark:to-indigo-950 overflow-hidden">
+    <section id="skills" className="py-24 bg-background overflow-hidden relative">
       <div className="container mx-auto px-6 relative">
         {/* Enhanced Background Effects */}
         <motion.div
@@ -232,13 +232,13 @@ const Skills: React.FC = () => {
           animate={{ opacity: 0.5 }}
           transition={{ duration: 1.5 }}
         >
-          <div className="absolute inset-0 bg-gradient-to-br from-blue-400/20 via-purple-400/20 to-indigo-400/20 blur-3xl" />
+          <div className="absolute inset-0 bg-gradient-to-br from-[#5dd7e6]/5 via-[#005f68]/5 to-[#5dd7e6]/3 blur-3xl" />
 
           {/* Fixed Particles - Now uses static positioning instead of dynamic calculations */}
           {[...Array(15)].map((_, i) => (
             <motion.div
               key={i}
-              className="absolute rounded-full bg-gradient-to-r from-blue-500 to-purple-500 opacity-30 pointer-events-none"
+              className="absolute rounded-full bg-gradient-to-r from-[#5dd7e6] to-[#005f68] opacity-20 pointer-events-none"
               initial={{
                 x: (i % 5) * 200,
                 y: Math.floor(i / 5) * 200,
@@ -275,7 +275,7 @@ const Skills: React.FC = () => {
         >
           <motion.div className="inline-block relative">
             <motion.h2
-              className="text-5xl md:text-6xl font-extrabold bg-clip-text text-transparent bg-gradient-to-r from-blue-600 via-indigo-500 to-purple-600 dark:from-blue-400 dark:via-indigo-400 dark:to-purple-400 leading-tight"
+              className="text-5xl md:text-6xl font-extrabold bg-clip-text text-transparent bg-gradient-to-r from-[#5dd7e6] via-[#8df2ff] to-[#5dd7e6] leading-tight"
               whileHover={{ scale: 1.05 }}
               transition={{ type: 'spring' as const, stiffness: 300 }}
             >
@@ -290,7 +290,7 @@ const Skills: React.FC = () => {
               </motion.span>
             </motion.h2>
             <motion.div
-              className="h-1.5 w-32 mx-auto mt-5 rounded-full bg-gradient-to-r from-blue-500 via-indigo-500 to-purple-500"
+              className="h-1.5 w-32 mx-auto mt-5 rounded-full bg-gradient-to-r from-[#5dd7e6] to-[#005f68]"
               initial={{ scaleX: 0, opacity: 0.5 }}
               animate={{ scaleX: 1, opacity: 1 }}
               transition={{ duration: 0.8, ease: 'easeOut' as const, delay: 0.3 }}
@@ -298,7 +298,7 @@ const Skills: React.FC = () => {
           </motion.div>
 
           <motion.p
-            className="text-slate-600 dark:text-slate-300 max-w-2xl mx-auto mt-6 text-lg md:text-xl"
+            className="text-[#bec8ca] max-w-2xl mx-auto mt-6 text-lg md:text-xl"
             initial={{ opacity: 0, y: 20 }}
             animate={{ opacity: 1, y: 0 }}
             transition={{ delay: 0.5, duration: 0.8 }}
@@ -356,7 +356,7 @@ const Skills: React.FC = () => {
           {skillsData[selectedCategory].skills.map((skill, idx) => (
             <motion.div
               key={`${selectedCategory}-${skill.name}`}
-              className="bg-white/80 dark:bg-slate-800/80 rounded-2xl p-6 shadow-xl border border-slate-100/50 dark:border-slate-700/50 backdrop-blur-lg relative overflow-hidden group"
+              className="bg-[#1c1b1b]/90 rounded-2xl p-6 shadow-xl border border-[#3f484a]/30 backdrop-blur-md relative overflow-hidden group hover:border-[#5dd7e6]/20 transition-colors duration-300"
               custom={idx}
               variants={cardVariants}
               initial="hidden"
@@ -382,7 +382,7 @@ const Skills: React.FC = () => {
                   <SkillIcon icon={skill.icon} color={skill.color} />
                   <div>
                     <motion.h3
-                      className="text-xl font-bold text-slate-800 dark:text-slate-100"
+                      className="text-xl font-bold text-[#e5e2e1]"
                       animate={hoveredSkill === skill.name ?
                         { scale: 1.05, x: 3 } :
                         { scale: 1, x: 0 }
@@ -421,7 +421,7 @@ const Skills: React.FC = () => {
                     {[...Array(4)].map((_, i) => (
                       <motion.div
                         key={i}
-                        className="absolute w-2 h-2 rounded-full bg-white pointer-events-none"
+                        className="absolute w-2 h-2 rounded-full bg-[#5dd7e6]/60 pointer-events-none"
                         initial={{
                           opacity: 0,
                           scale: 0,

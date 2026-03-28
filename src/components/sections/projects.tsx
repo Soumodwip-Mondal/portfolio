@@ -1,6 +1,4 @@
-'use client';
 import { useState, useEffect, useRef, useMemo, useCallback } from 'react';
-import React from 'react';
 import { motion, useAnimation, AnimatePresence, useInView } from 'framer-motion';
 import { Button } from '../ui/button';
 import { lazy, Suspense } from 'react';
@@ -9,17 +7,13 @@ import { Project } from '../../types/project';
 import {
   ChevronRight,
   ChevronUp,
-  Star,
-  Sparkles,
   Filter,
   Globe,
   Brain,
   BarChart3,
-  Cpu,
   Database,
   Code,
-  Users,
-  MessageSquare
+  Users
 } from 'lucide-react';
 
 // Lazy load non-critical components
@@ -32,45 +26,33 @@ const normalizeCategory = (category: string): string => {
 
 // Utility function to format category for display
 const formatCategoryDisplay = (category: string): string => {
+  const normalized = normalizeCategory(category);
+  if (normalized === 'ml&genai') return 'ML&GenAI';
+  
   return category
     .split(' ')
     .map(word => word.charAt(0).toUpperCase() + word.slice(1))
     .join(' ');
 };
 
-// Category-specific colors - moved outside component to avoid re-creation
-const categoryColors: Record<string, string> = {
-  all: 'from-blue-600 to-purple-600',
-  web: 'from-green-600 to-cyan-500',
-  ai: 'from-violet-600 to-purple-600',
-  database: 'from-amber-500 to-orange-500',
-  ml: 'from-pink-500 to-rose-500',
-  'data analysis': 'from-emerald-600 to-teal-500',
-  python: 'from-yellow-500 to-amber-500',
-  group: 'from-amber-500 to-orange-500',
-  'customer segmentation': 'from-blue-500 to-cyan-500',
-  'sentiment analysis': 'from-purple-500 to-pink-500'
-};
+// Category-specific colors removed (unused)
 
 const CategoryIcon = ({ category }: { category: string }) => {
   const iconMap: Record<string, React.ReactElement> = {
     // General categories
     all: <Filter className="h-4 w-4" />,
     web: <Globe className="h-4 w-4" />,
-    ml: <Brain className="h-4 w-4" />,
-    ai: <Cpu className="h-4 w-4" />,
+    'ml&genai': <Brain className="h-4 w-4" />,
     database: <Database className="h-4 w-4" />,
     'data analysis': <BarChart3 className="h-4 w-4" />,
     python: <Code className="h-4 w-4" />,
     group: <Users className="h-4 w-4" />,
-    'customer segmentation': <Users className="h-4 w-4" />,
-    'sentiment analysis': <MessageSquare className="h-4 w-4" />,
   };
 
   // Normalize category to match keys in iconMap
   const normalizedCategory = normalizeCategory(category);
 
-  return iconMap[normalizedCategory] || <Sparkles className="h-4 w-4" />;
+  return iconMap[normalizedCategory] || <Filter className="h-4 w-4" />;
 };
 
 // Pre-defined animation variants - moved outside component
@@ -85,16 +67,6 @@ const headingVariants = {
       damping: 12,
       duration: 0.8
     }
-  }
-};
-
-const sparkleVariants = {
-  hidden: { scale: 0, opacity: 0, rotate: -15 },
-  visible: {
-    scale: [0, 1.4, 0.9, 1.2, 0],
-    opacity: [0, 0.8, 1, 0.6, 0],
-    rotate: [-15, 5, -5, 10, 0],
-    transition: { duration: 1.8, ease: "easeInOut" as const }
   }
 };
 
@@ -133,7 +105,7 @@ const buttonVariants = {
 
 // Simple loading fallback component
 const CardSkeleton = () => (
-  <div className="h-[320px] rounded-lg bg-gray-200 dark:bg-gray-800 animate-pulse"></div>
+  <div className="h-[300px] rounded-lg glass-card animate-pulse"></div>
 );
 
 export default function Projects() {
@@ -142,7 +114,6 @@ export default function Projects() {
   const [showAll, setShowAll] = useState(false);
   const controls = useAnimation();
   const [mousePosition, setMousePosition] = useState({ x: 0, y: 0 });
-  const [showSparkle, setShowSparkle] = useState(false);
   const sectionRef = useRef<HTMLElement>(null);
   const isInView = useInView(sectionRef, { once: false, amount: 0.2 });
 
@@ -155,13 +126,15 @@ export default function Projects() {
     []
   );
 
-  // Memoize categories to prevent recalculation - ensure all categories are normalized
+  // Memoize categories to prevent recalculation with specific custom ordering
   const categories = useMemo(() => {
+    const order = ['all', 'data analysis', 'ml&genai', 'web', 'database', 'group', 'python'];
     const uniqueCategories = Array.from(
       new Set(normalizedProjects.map(project => project.category))
-    ).sort(); // Sort for consistent ordering
+    );
 
-    return ['all', ...uniqueCategories];
+    // Return the list based on the predefined order
+    return order.filter(cat => cat === 'all' || uniqueCategories.includes(cat));
   }, [normalizedProjects]);
 
   // Optimize mouse tracking with throttling/debouncing
@@ -191,36 +164,7 @@ export default function Projects() {
   useEffect(() => {
     if (!isInView) return;
 
-    let sparkleTimeout: NodeJS.Timeout;
-    let animationFrameId: number;
-    let lastTime = 0;
-    const minInterval = 2000;
-
-    const animateSparkle = (timestamp: number) => {
-      if (timestamp - lastTime > minInterval) {
-        setShowSparkle(true);
-        lastTime = timestamp;
-
-        sparkleTimeout = setTimeout(() => {
-          setShowSparkle(false);
-        }, 1200);
-      }
-
-      if (typeof window !== 'undefined') {
-        animationFrameId = requestAnimationFrame(animateSparkle);
-      }
-    };
-
-    if (typeof window !== 'undefined') {
-      animationFrameId = requestAnimationFrame(animateSparkle);
-    }
-
-    return () => {
-      if (typeof window !== 'undefined') {
-        cancelAnimationFrame(animationFrameId);
-      }
-      clearTimeout(sparkleTimeout);
-    };
+    return () => {};
   }, [isInView]);
 
   useEffect(() => {
@@ -254,7 +198,7 @@ export default function Projects() {
 
   // Memoize visible projects
   const visibleProjects = useMemo(() =>
-    showAll ? filteredProjects : filteredProjects.slice(0, 3),
+    showAll ? filteredProjects : filteredProjects.slice(0, 4),
     [showAll, filteredProjects]
   );
 
@@ -322,9 +266,8 @@ export default function Projects() {
                 ease: 'linear' as const
               }}
             />
-            <div className="bg-card/80 backdrop-blur-sm border border-border/50 rounded-full px-4 py-2 flex items-center gap-2 relative z-10">
-              <Sparkles className="h-5 w-5 text-primary" />
-              <span className="text-sm font-medium">My Work</span>
+            <div className="glass-card !rounded-full px-4 py-2 flex items-center gap-2 relative z-10 border border-white/10 inner-glow">
+              <span className="text-sm font-medium text-white/90">My Work</span>
             </div>
           </motion.div>
 
@@ -347,12 +290,12 @@ export default function Projects() {
 
         {/* Filter buttons with improved performance */}
         <motion.div
-          className="flex justify-center mb-12"
+          className="flex justify-center mb-10 overflow-hidden"
           initial={{ opacity: 0, y: 20 }}
           animate={{ opacity: 1, y: 0 }}
           transition={{ delay: 0.6, duration: 0.5 }}
         >
-          <div className="p-1 bg-card/50 backdrop-blur-sm border border-border/50 rounded-full inline-flex flex-wrap justify-center shadow-lg max-w-full gap-1">
+          <div className="p-2 glass-card rounded-2xl md:rounded-full inline-flex flex-wrap justify-center shadow-2xl max-w-full gap-2 border border-white/10 inner-glow">
             {categories.map((category) => {
               const normalizedCategory = normalizeCategory(category);
               const displayCategory = formatCategoryDisplay(category);
@@ -361,17 +304,17 @@ export default function Projects() {
                 <motion.button
                   key={normalizedCategory}
                   onClick={() => handleFilterChange(category)}
-                  className={`px-4 py-2 m-1 rounded-full text-sm font-medium transition-all duration-300 flex items-center gap-2 ${activeFilter === category
-                      ? `bg-gradient-to-r ${categoryColors[normalizedCategory] || categoryColors.all} text-white shadow-md`
-                      : 'hover:bg-muted'
+                  className={`px-4 py-1.5 rounded-full text-sm font-medium transition-all duration-300 flex items-center gap-2 ${activeFilter === category
+                      ? `bg-white/20 text-white shadow-[0_0_15px_rgba(255,255,255,0.1)] border border-white/20`
+                      : 'text-white/60 hover:text-white hover:bg-white/5 border border-transparent'
                     }`}
                   variants={filterVariants}
                   animate={activeFilter === category ? 'active' : 'inactive'}
-                  whileHover={{ scale: activeFilter === category ? 1.08 : 1.05 }}
+                  whileHover={{ scale: 1.05 }}
                   whileTap={{ scale: 0.98 }}
                 >
                   <CategoryIcon category={category} />
-                  <span>{displayCategory}</span>
+                  <span className="whitespace-nowrap">{displayCategory}</span>
                 </motion.button>
               );
             })}
@@ -399,7 +342,7 @@ export default function Projects() {
         </motion.div>
 
         {/* Projects grid with lazy loading and reduced animations */}
-        <div className="grid grid-cols-1 md:grid-cols-2 lg:grid-cols-3 gap-6 mb-12">
+        <div className="grid grid-cols-1 md:grid-cols-2 lg:grid-cols-3 xl:grid-cols-4 gap-4 mb-12">
           {visibleProjects.map((project: Project, index: number) => (
             <motion.div
               key={project.id}
@@ -414,18 +357,6 @@ export default function Projects() {
               onMouseLeave={() => setHoveredIndex(null)}
             >
               <div className="relative h-full group">
-                {/* Only show sparkle for featured projects when needed */}
-                {project.featured && showSparkle && hoveredIndex === index && (
-                  <motion.div
-                    className="absolute -top-4 -right-4 z-20 text-yellow-400"
-                    variants={sparkleVariants}
-                    initial="hidden"
-                    animate="visible"
-                  >
-                    <Star className="h-6 w-6 filter drop-shadow-lg" />
-                  </motion.div>
-                )}
-
                 {/* Lazy loaded project card */}
                 <Suspense fallback={<CardSkeleton />}>
                   <ProjectCard
@@ -441,7 +372,7 @@ export default function Projects() {
 
         {/* CTA buttons - Show either "Explore All" or "Show Less" button */}
         <AnimatePresence mode="wait">
-          {!showAll && filteredProjects.length > 3 ? (
+          {!showAll && filteredProjects.length > 4 ? (
             <motion.div
               key="explore-button"
               className="text-center"
@@ -476,7 +407,7 @@ export default function Projects() {
               </Button>
             </motion.div>
           ) : (
-            showAll && filteredProjects.length > 3 && (
+            showAll && filteredProjects.length > 4 && (
               <motion.div
                 key="show-less-button"
                 className="text-center"

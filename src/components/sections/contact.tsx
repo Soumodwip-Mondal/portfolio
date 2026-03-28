@@ -161,10 +161,10 @@ export default function Contact() {
   };
 
   return (
-    <section id="contact" className="py-20 bg-gradient-to-b from-slate-50 to-white dark:from-slate-900 dark:to-slate-800 overflow-hidden relative">
+    <section id="contact" className="py-20 bg-background overflow-hidden relative">
       {/* Animated background shapes */}
       <motion.div 
-        className="absolute top-20 left-20 w-64 h-64 bg-blue-300 dark:bg-blue-800 rounded-full opacity-10 -z-10"
+        className="absolute top-20 left-20 w-64 h-64 bg-[#5dd7e6]/8 rounded-full opacity-60 -z-10"
         animate={{ 
           scale: [1, 1.2, 1],
           rotate: [0, 90, 180, 270, 360],
@@ -174,7 +174,7 @@ export default function Contact() {
       />
       
       <motion.div 
-        className="absolute bottom-20 right-20 w-96 h-96 bg-purple-300 dark:bg-purple-800 rounded-full opacity-10 -z-10"
+        className="absolute bottom-20 right-20 w-96 h-96 bg-[#005f68]/10 rounded-full opacity-60 -z-10"
         animate={{ 
           scale: [1.2, 1, 1.2],
           rotate: [360, 270, 180, 90, 0],
@@ -193,14 +193,14 @@ export default function Contact() {
         >
           <div className="inline-block mb-3 relative">
             <motion.div 
-              className="w-16 h-1 bg-gradient-to-r from-blue-500 to-purple-600 mx-auto mb-2"
+              className="w-16 h-1 bg-gradient-to-r from-[#5dd7e6] to-[#005f68] mx-auto mb-2"
               initial={{ width: 0 }}
               whileInView={{ width: 64 }}
               viewport={{ once: true }}
               transition={{ duration: 0.8, delay: 0.2 }}
             />
             <motion.h2 
-              className="text-4xl font-bold bg-gradient-to-r from-blue-600 to-purple-600 dark:from-blue-400 dark:to-purple-400 bg-clip-text text-transparent"
+              className="text-4xl font-bold bg-gradient-to-r from-[#5dd7e6] to-[#8df2ff] bg-clip-text text-transparent"
               initial={{ opacity: 0, scale: 0.8 }}
               whileInView={{ opacity: 1, scale: 1 }}
               viewport={{ once: true }}
@@ -228,7 +228,7 @@ export default function Contact() {
           </div>
           
           <motion.p 
-            className="text-slate-600 dark:text-slate-400 max-w-2xl mx-auto text-lg"
+            className="text-[#bec8ca] max-w-2xl mx-auto text-lg"
             initial={{ opacity: 0 }}
             whileInView={{ opacity: 1 }}
             viewport={{ once: true }}
@@ -252,7 +252,7 @@ export default function Contact() {
               whileHover={{ scale: 1.01 }}
               transition={{ type: 'spring' as const, stiffness: 300, damping: 15 }}
             >
-              <Card className="overflow-hidden shadow-lg border-0 dark:bg-slate-800/50 backdrop-blur-sm">
+              <Card className="overflow-hidden shadow-lg border-0 bg-[#1c1b1b] backdrop-blur-sm">
                 <CardContent className="p-8">
                   <motion.div
                     initial={{ opacity: 0, y: -10 }}
@@ -309,12 +309,12 @@ export default function Contact() {
                                 onChange={handleChange}
                                 onFocus={() => handleFocus('name')}
                                 onBlur={handleBlur}
-                                className={`border-2 transition-all duration-300 ${formFocus === 'name' ? 'border-blue-500 shadow-md shadow-blue-100 dark:shadow-blue-900/20' : 'border-slate-200 dark:border-slate-700'}`}
+                                className={`border-2 transition-all duration-300 ${formFocus === 'name' ? 'border-[#5dd7e6]/60 shadow-md shadow-[#5dd7e6]/10' : 'border-[#3f484a]'}`}
                                 required
                               />
                               {formFocus === 'name' && (
                                 <motion.div
-                                  className="absolute bottom-0 left-0 h-0.5 bg-gradient-to-r from-blue-500 to-purple-500"
+                                  className="absolute bottom-0 left-0 h-0.5 bg-gradient-to-r from-[#5dd7e6] to-[#005f68]"
                                   initial={{ width: 0 }}
                                   animate={{ width: '100%' }}
                                   transition={{ duration: 0.4 }}
@@ -336,12 +336,12 @@ export default function Contact() {
                                 onChange={handleChange}
                                 onFocus={() => handleFocus('email')}
                                 onBlur={handleBlur}
-                                className={`border-2 transition-all duration-300 ${formFocus === 'email' ? 'border-blue-500 shadow-md shadow-blue-100 dark:shadow-blue-900/20' : 'border-slate-200 dark:border-slate-700'}`}
+                                className={`border-2 transition-all duration-300 ${formFocus === 'email' ? 'border-[#5dd7e6]/60 shadow-md shadow-[#5dd7e6]/10' : 'border-[#3f484a]'}`}
                                 required
                               />
                               {formFocus === 'email' && (
                                 <motion.div
-                                  className="absolute bottom-0 left-0 h-0.5 bg-gradient-to-r from-blue-500 to-purple-500"
+                                  className="absolute bottom-0 left-0 h-0.5 bg-gradient-to-r from-[#5dd7e6] to-[#005f68]"
                                   initial={{ width: 0 }}
                                   animate={{ width: '100%' }}
                                   transition={{ duration: 0.4 }}
@@ -364,12 +364,12 @@ export default function Contact() {
                               onChange={handleChange}
                               onFocus={() => handleFocus('subject')}
                               onBlur={handleBlur}
-                              className={`border-2 transition-all duration-300 ${formFocus === 'subject' ? 'border-blue-500 shadow-md shadow-blue-100 dark:shadow-blue-900/20' : 'border-slate-200 dark:border-slate-700'}`}
+                              className={`border-2 transition-all duration-300 ${formFocus === 'subject' ? 'border-[#5dd7e6]/60 shadow-md shadow-[#5dd7e6]/10' : 'border-[#3f484a]'}`}
                               required
                             />
                             {formFocus === 'subject' && (
                               <motion.div
-                                className="absolute bottom-0 left-0 h-0.5 bg-gradient-to-r from-blue-500 to-purple-500"
+                                className="absolute bottom-0 left-0 h-0.5 bg-gradient-to-r from-[#5dd7e6] to-[#005f68]"
                                 initial={{ width: 0 }}
                                 animate={{ width: '100%' }}
                                 transition={{ duration: 0.4 }}
@@ -392,12 +392,12 @@ export default function Contact() {
                               onChange={handleChange}
                               onFocus={() => handleFocus('message')}
                               onBlur={handleBlur}
-                              className={`border-2 transition-all duration-300 ${formFocus === 'message' ? 'border-blue-500 shadow-md shadow-blue-100 dark:shadow-blue-900/20' : 'border-slate-200 dark:border-slate-700'}`}
+                              className={`border-2 transition-all duration-300 ${formFocus === 'message' ? 'border-[#5dd7e6]/60 shadow-md shadow-[#5dd7e6]/10' : 'border-[#3f484a]'}`}
                               required
                             />
                             {formFocus === 'message' && (
                               <motion.div
-                                className="absolute bottom-0 left-0 h-0.5 bg-gradient-to-r from-blue-500 to-purple-500"
+                                className="absolute bottom-0 left-0 h-0.5 bg-gradient-to-r from-[#5dd7e6] to-[#005f68]"
                                 initial={{ width: 0 }}
                                 animate={{ width: '100%' }}
                                 transition={{ duration: 0.4 }}
@@ -413,7 +413,7 @@ export default function Contact() {
                           >
                             <Button 
                               type="submit" 
-                              className="w-full h-12 bg-gradient-to-r from-blue-600 to-purple-600 hover:from-blue-700 hover:to-purple-700 transition-all duration-300"
+                              className="w-full h-12 bg-gradient-to-r from-[#5dd7e6] to-[#005f68] text-[#00363c] font-bold hover:shadow-[0_0_20px_rgba(93,215,230,0.2)] transition-all duration-300 border-0"
                               disabled={isSubmitting}
                             >
                               {isSubmitting ? (
@@ -446,7 +446,7 @@ export default function Contact() {
               
               {/* Enhanced Decorative Elements */}
               <motion.div 
-                className="absolute -bottom-8 -right-8 w-32 h-32 bg-blue-500/20 rounded-full blur-3xl -z-10"
+                className="absolute -bottom-8 -right-8 w-32 h-32 bg-[#5dd7e6]/8 rounded-full blur-3xl -z-10"
                 animate={{ 
                   scale: [1, 1.2, 1],
                   opacity: [0.2, 0.3, 0.2]
@@ -454,7 +454,7 @@ export default function Contact() {
                 transition={{ duration: 8, repeat: Infinity, repeatType: 'reverse' as const }}
               />
               <motion.div 
-                className="absolute -top-8 -left-8 w-40 h-40 bg-purple-500/20 rounded-full blur-3xl -z-10"
+                className="absolute -top-8 -left-8 w-40 h-40 bg-[#005f68]/10 rounded-full blur-3xl -z-10"
                 animate={{ 
                   scale: [1.2, 1, 1.2],
                   opacity: [0.2, 0.3, 0.2]
@@ -496,10 +496,10 @@ export default function Contact() {
                   custom={index}
                   transition={{ delay: index * 0.1 }}
                 >
-                  <Card className="border border-slate-200 dark:border-slate-700 h-full transition-all duration-300 hover:border-blue-300 dark:hover:border-blue-700 relative overflow-hidden">
+                  <Card className="border border-[#3f484a]/30 h-full transition-all duration-300 hover:border-[#5dd7e6]/30 relative overflow-hidden bg-[#1c1b1b]">
                     {/* Subtle background pattern */}
                     <motion.div 
-                      className="absolute inset-0 bg-gradient-to-br opacity-0 from-blue-200/5 to-purple-200/5 dark:from-blue-500/5 dark:to-purple-500/5"
+                      className="absolute inset-0 bg-gradient-to-br opacity-0 from-[#5dd7e6]/5 to-[#005f68]/5"
                       whileHover={{ opacity: 1 }}
                     />
                     
@@ -519,12 +519,12 @@ export default function Contact() {
                         {item.link ? (
                           <a 
                             href={item.link} 
-                            className="text-slate-600 dark:text-slate-400 hover:text-blue-500 transition-colors"
+                            className="text-[#bec8ca] hover:text-[#5dd7e6] transition-colors text-sm"
                           >
                             {item.content}
                           </a>
                         ) : (
-                          <p className="text-slate-600 dark:text-slate-400">{item.content}</p>
+                          <p className="text-[#bec8ca] text-sm">{item.content}</p>
                         )}
                       </div>
                     </CardContent>
@@ -541,8 +541,8 @@ export default function Contact() {
               whileHover="hover"
               className="mt-8"
             >
-              <Card className="border border-slate-200 dark:border-slate-700 transition-all duration-300 hover:border-blue-300 dark:hover:border-blue-700 overflow-hidden">
-                <div className="absolute top-0 right-0 w-32 h-32 bg-gradient-to-bl from-blue-500/20 to-purple-500/0 rounded-bl-full"></div>
+              <Card className="border border-[#3f484a]/30 transition-all duration-300 hover:border-[#5dd7e6]/30 overflow-hidden bg-[#1c1b1b] relative">
+                <div className="absolute top-0 right-0 w-32 h-32 bg-gradient-to-bl from-[#5dd7e6]/10 to-transparent rounded-bl-full"></div>
                 <CardContent className="p-6 relative">
                   <motion.h4 
                     className="font-medium text-xl mb-3"
@@ -550,7 +550,7 @@ export default function Contact() {
                   >
                     Connect with me
                   </motion.h4>
-                  <p className="text-slate-600 dark:text-slate-400 mb-5">
+                  <p className="text-[#899295] mb-5 text-sm">
                     Find me on social media or check out my other profiles.
                   </p>
                   <div className="flex flex-wrap gap-3">
@@ -566,7 +566,7 @@ export default function Contact() {
                         <Button 
                           variant="outline" 
                           size="sm" 
-                          className={`rounded-full border-2 hover:border-blue-500 hover:bg-gradient-to-r ${social.color} hover:text-white flex items-center space-x-2 px-4 transition-all duration-300`}
+                          className={`rounded-full border border-[#3f484a] text-[#bec8ca] hover:border-[#5dd7e6]/60 hover:text-[#5dd7e6] hover:bg-[#5dd7e6]/5 flex items-center space-x-2 px-4 transition-all duration-300`}
                           asChild
                         >
                           <a href={social.url} target="_blank" rel="noopener noreferrer">
@@ -585,7 +585,7 @@ export default function Contact() {
                   
                   {/* Animated decorative elements */}
                   <motion.div 
-                    className="absolute -bottom-4 -right-4 w-12 h-12 bg-blue-500/10 rounded-full"
+                    className="absolute -bottom-4 -right-4 w-12 h-12 bg-[#5dd7e6]/8 rounded-full"
                     animate={floatingAnimation}
                   />
                 </CardContent>

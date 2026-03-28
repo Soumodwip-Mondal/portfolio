@@ -7,17 +7,21 @@ import * as THREE from 'three';
 // Define your skills with categories, proficiency levels, and colors
 const skillsData = [
   { name: 'React', category: 'Frontend', level: 0.9, color: '#61DAFB' },
-  { name: 'TypeScript', category: 'Languages', level: 0.85, color: '#3178C6' },
   { name: 'Python', category: 'Languages', level: 0.8, color: '#3776AB' },
-  { name: 'Data Analysis', category: 'Data', level: 0.75, color: '#FF6B6B' },
+  { name: 'Data Analysis', category: 'Analytics', level: 0.9, color: '#FF6B6B' },
+  { name: 'Pandas', category: 'Analytics', level: 0.85, color: '#150458' },
   { name: 'Tailwind', category: 'Frontend', level: 0.9, color: '#38B2AC' },
-  { name: 'SQL', category: 'Data', level: 0.7, color: '#336791' },
-  { name: 'Tableau', category: 'Data', level: 0.65, color: '#E97627' },
+  { name: 'Tableau', category: 'Analytics', level: 0.8, color: '#E97627' },
   { name: 'JavaScript', category: 'Languages', level: 0.85, color: '#F7DF1E' },
   { name: 'HTML/CSS', category: 'Frontend', level: 0.9, color: '#E34F26' },
-  { name: 'Node.js', category: 'Backend', level: 0.7, color: '#339933' },
+  { name: 'FastAPI', category: 'Backend', level: 0.8, color: '#05998B' },
   { name: 'Git', category: 'Tools', level: 0.8, color: '#F05032' },
-  { name: 'Figma', category: 'Design', level: 0.6, color: '#F24E1E' },
+  { name: 'ML', category: 'AI', level: 0.85, color: '#FFD700' },
+  { name: 'GenAI', category: 'AI', level: 0.9, color: '#FF69B4' },
+  { name: 'MySQL', category: 'Analytics', level: 0.8, color: '#00758F' },
+  { name: 'PostgreSQL', category: 'Analytics', level: 0.8, color: '#336791' },
+  { name: 'Business Analysis', category: 'Analytics', level: 0.8, color: '#40E0D0' },
+  { name: 'KPI', category: 'Analytics', level: 0.75, color: '#9932CC' },
 ];
 
 // Animated trail component for skill nodes
@@ -64,10 +68,10 @@ function SkillNode({ skill, index, totalSkills, hovered, setHovered }: {
   switch(skill.category) {
     case 'Frontend': y = 2; break;
     case 'Languages': y = 0; break;
-    case 'Data': y = -2; break;
+    case 'Analytics': y = -2; break;
     case 'Backend': y = 1; break;
     case 'Tools': y = -1; break;
-    case 'Design': y = -3; break;
+    case 'AI': y = -2.5; break;
     default: y = 0;
   }
   
@@ -475,11 +479,11 @@ function SkillInfoPanel({ skill }: { skill: { name: string; category: string; le
       animate={{ opacity: 1, y: 0 }}
       exit={{ opacity: 0, y: -20 }}
       transition={{ duration: 0.3 }}
-      className="absolute bottom-8 left-1/2 transform -translate-x-1/2 bg-white dark:bg-slate-800 p-4 rounded-lg shadow-lg border border-slate-200 dark:border-slate-700 max-w-xs w-full backdrop-blur-sm bg-opacity-80 dark:bg-opacity-80"
+      className="absolute bottom-8 left-1/2 transform -translate-x-1/2 bg-[#1c1b1b]/90 p-4 rounded-xl shadow-xl border border-[#3f484a]/50 max-w-xs w-full backdrop-blur-md"
     >
-      <h3 className="text-lg font-semibold mb-2">{skill.name}</h3>
-      <p className="text-sm text-slate-600 dark:text-slate-300 mb-2">Category: {skill.category}</p>
-      <div className="w-full h-2 bg-slate-200 dark:bg-slate-700 rounded-full overflow-hidden">
+      <h3 className="text-lg font-semibold mb-2 text-[#e5e2e1]">{skill.name}</h3>
+      <p className="text-sm text-[#bec8ca] mb-2">Category: {skill.category}</p>
+      <div className="w-full h-1.5 bg-[#3f484a] rounded-full overflow-hidden">
         <div 
           className="h-full rounded-full" 
           style={{ 
@@ -488,7 +492,7 @@ function SkillInfoPanel({ skill }: { skill: { name: string; category: string; le
           }}
         />
       </div>
-      <p className="text-xs text-right mt-1 text-slate-500 dark:text-slate-400">
+      <p className="text-xs text-right mt-1 text-[#899295]">
         {Math.round(skill.level * 100)}% proficiency
       </p>
     </motion.div>
@@ -502,7 +506,7 @@ export default function Skills3D() {
   const [isLoaded, setIsLoaded] = useState(false);
   
   // Categories for filtering
-  const categories = ['All', 'Frontend', 'Languages', 'Data', 'Backend', 'Tools', 'Design'];
+  const categories = ['All', 'Frontend', 'Languages', 'Analytics', 'Backend', 'Tools', 'AI'];
   
   // Filter skills based on active category
   const filteredSkills = activeCategory === 'All' 
@@ -522,47 +526,48 @@ export default function Skills3D() {
   }, []);
   
   return (
-    <section id="skills-3d" className="py-20 relative min-h-screen">
+    <section id="skills-3d" className="py-20 relative min-h-screen bg-background text-[#e5e2e1]">
       <motion.div
         initial={{ opacity: 0 }}
         whileInView={{ opacity: 1 }}
         transition={{ duration: 1 }}
         className="container mx-auto px-4 text-center mb-12"
       >
-        <h2 className="text-4xl font-bold bg-gradient-to-r from-blue-600 to-purple-600 dark:from-blue-400 dark:to-purple-400 bg-clip-text text-transparent mb-4">
+        <h2 className="text-4xl font-bold bg-gradient-to-r from-[#5dd7e6] to-[#8df2ff] bg-clip-text text-transparent mb-4">
           Skills Universe
         </h2>
-        <p className="text-lg text-slate-600 dark:text-slate-300 max-w-2xl mx-auto mb-8">
+        <p className="text-lg text-[#bec8ca] max-w-2xl mx-auto mb-8">
           Explore my skills in this interactive 3D visualization. Drag to rotate, scroll to zoom.
         </p>
         
         {/* Category filters */}
-        <div className="flex flex-wrap justify-center gap-2 mb-8">
-          {categories.map(category => (
-            <motion.button
-              key={category}
-              onClick={() => setActiveCategory(category)}
-              className={`px-4 py-2 rounded-full text-sm font-medium transition-all ${
-                activeCategory === category 
-                  ? 'bg-blue-500 text-white shadow-md' 
-                  : 'bg-slate-100 dark:bg-slate-800 text-slate-700 dark:text-slate-300 hover:bg-slate-200 dark:hover:bg-slate-700'
-              }`}
-              whileHover={{ scale: 1.05 }}
-              whileTap={{ scale: 0.95 }}
-            >
-              {category}
-            </motion.button>
-          ))}
+        <div className="flex justify-center mb-10 overflow-hidden">
+          <div className="p-2 glass-card rounded-2xl md:rounded-full inline-flex flex-wrap justify-center shadow-2xl max-w-full gap-2 border border-white/10 inner-glow">
+            {categories.map(category => (
+              <motion.button
+                key={category}
+                onClick={() => setActiveCategory(category)}
+                className={`px-4 py-1.5 rounded-full text-sm font-medium transition-all duration-300 flex items-center gap-2 ${activeCategory === category
+                    ? 'bg-white/20 text-white shadow-[0_0_15px_rgba(255,255,255,0.1)] border border-white/20'
+                    : 'text-white/60 hover:text-white hover:bg-white/5 border border-transparent'
+                  }`}
+                whileHover={{ scale: 1.05 }}
+                whileTap={{ scale: 0.98 }}
+              >
+                <span className="whitespace-nowrap">{category}</span>
+              </motion.button>
+            ))}
+          </div>
         </div>
       </motion.div>
       
       {/* 3D Canvas */}
-      <div className="h-[600px] w-full relative">
+      <div className="h-[600px] w-full relative bg-[#131313] rounded-2xl overflow-hidden border border-[#3f484a]/20">
         <AnimatedCanvas isLoaded={isLoaded} filteredSkills={filteredSkills} hovered={hovered} setHovered={setHovered} />
         <SkillInfoPanel skill={hoveredSkill} />
       </div>
       
-      {/* Skills list */}
+      {/* Skills list restored */}
       <div className="container mx-auto px-4 mt-12">
         <div className="grid grid-cols-1 md:grid-cols-3 gap-6">
           {categories.slice(1).map(category => (
@@ -571,21 +576,21 @@ export default function Skills3D() {
               initial={{ opacity: 0, y: 20 }}
               whileInView={{ opacity: 1, y: 0 }}
               transition={{ duration: 0.5 }}
-              className="bg-white dark:bg-slate-800 p-6 rounded-xl shadow-md"
+              className="bg-[#1c1b1b] p-6 rounded-xl border border-[#3f484a]/30 hover:border-[#5dd7e6]/20 transition-colors duration-200"
             >
-              <h3 className="text-xl font-semibold mb-4">{category}</h3>
+              <h3 className="text-xl font-semibold mb-4 text-[#e5e2e1]">{category}</h3>
               <ul className="space-y-3">
                 {skillsData
                   .filter(skill => skill.category === category)
                   .map(skill => (
                     <li key={skill.name} className="space-y-1">
                       <div className="flex items-center justify-between">
-                        <span className="font-medium">{skill.name}</span>
-                        <span className="text-xs text-slate-500 dark:text-slate-400">
+                        <span className="font-medium text-[#e5e2e1]">{skill.name}</span>
+                        <span className="text-xs text-[#899295]">
                           {Math.round(skill.level * 100)}%
                         </span>
                       </div>
-                      <div className="w-full h-2 bg-slate-200 dark:bg-slate-700 rounded-full overflow-hidden">
+                      <div className="w-full h-1.5 bg-[#3f484a]/60 rounded-full overflow-hidden">
                         <div 
                           className="h-full rounded-full" 
                           style={{ 
@@ -618,10 +623,10 @@ function AnimatedCanvas({ isLoaded, filteredSkills, hovered, setHovered }: {
       initial={{ opacity: 0 }}
       animate={{ opacity: isLoaded ? 1 : 0 }}
       transition={{ duration: 1 }}
-      className="w-full h-full"
+      className="w-full h-full bg-[#131313]"
     >
-      <Canvas camera={{ position: [0, 0, 15], fov: 60 }}>
-        <color attach="background" args={['#000']} />
+      <Canvas camera={{ position: [0, 0, 15], fov: 60 }} style={{ background: '#131313' }}>
+        <color attach="background" args={['#131313']} />
         <ambientLight intensity={0.3} />
         <pointLight position={[10, 10, 10]} intensity={0.8} />
         <spotLight position={[-10, -10, -10]} intensity={0.5} />

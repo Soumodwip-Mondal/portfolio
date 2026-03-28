@@ -42,7 +42,7 @@ export default function Blog() {
           {blogPosts.map((post) => (
             <motion.article
               key={post.id}
-              className="bg-white dark:bg-slate-800 rounded-lg overflow-hidden shadow-md hover:shadow-lg transition-shadow"
+              className="bg-[#1c1b1b] border border-[#3f484a]/30 rounded-xl overflow-hidden hover:border-[#5dd7e6]/25 hover:shadow-[0_0_20px_rgba(93,215,230,0.06)] transition-all duration-300"
               whileHover={{ y: -5 }}
             >
               <img 
@@ -51,12 +51,12 @@ export default function Blog() {
                 className="w-full h-48 object-cover"
               />
               <div className="p-6">
-                <span className="text-sm text-slate-500 dark:text-slate-400">{post.date}</span>
-                <h3 className="text-xl font-semibold mt-2 mb-3">{post.title}</h3>
-                <p className="text-slate-600 dark:text-slate-300 mb-4">{post.excerpt}</p>
+                <span className="text-xs text-[#899295]">{post.date}</span>
+                <h3 className="text-xl font-semibold mt-2 mb-3 text-[#e5e2e1]">{post.title}</h3>
+                <p className="text-[#bec8ca] mb-4 text-sm leading-relaxed">{post.excerpt}</p>
                 <a 
                   href={`/blog/${post.id}`} 
-                  className="text-blue-500 hover:text-blue-700 font-medium inline-flex items-center"
+                  className="text-[#5dd7e6] hover:text-[#8df2ff] font-medium inline-flex items-center text-sm transition-colors"
                 >
                   Read more
                   <svg xmlns="http://www.w3.org/2000/svg" className="h-4 w-4 ml-1" fill="none" viewBox="0 0 24 24" stroke="currentColor">

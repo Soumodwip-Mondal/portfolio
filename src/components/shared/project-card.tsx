@@ -5,7 +5,7 @@ import { motion, useMotionValue, useSpring, useTransform, useInView } from 'fram
 import { Card, CardHeader, CardTitle, CardDescription, CardContent, CardFooter } from '../ui/card';
 import { Badge } from '../ui/badge';
 import { Button } from '../ui/button';
-import { ExternalLink, Sparkles } from 'lucide-react';
+import { ExternalLink } from 'lucide-react';
 import { OptimizedImage } from '../ui/optimized-image';
 import { Project } from '../../types/project';
 
@@ -139,7 +139,8 @@ export default function ProjectCard({ project, isFocused, anyCardFocused }: Proj
             repeatType: "reverse" as const 
           }}
           style={{
-            filter: isFocused ? 'brightness(1.2)' : anyCardFocused ? 'brightness(0.7)' : 'brightness(1)'
+            filter: isFocused ? 'brightness(1.2)' : 'brightness(1)',
+            opacity: isFocused ? 0.6 : 0.2
           }}
         />
         
@@ -164,16 +165,17 @@ export default function ProjectCard({ project, isFocused, anyCardFocused }: Proj
             repeatType: "reverse" as const 
           }}
           style={{
-            filter: isFocused ? 'brightness(1.2)' : anyCardFocused ? 'brightness(0.7)' : 'brightness(1)'
+            filter: isFocused ? 'brightness(1.2)' : 'brightness(1)',
+            opacity: isFocused ? 0.6 : 0.2
           }}
         />
       </motion.div>
       
-      <Card className="h-full overflow-hidden backdrop-blur-sm bg-card/80 border-none z-10">
+      <Card className="h-full overflow-hidden glass-card z-10 flex flex-col group/card border-none">
         {project.imageUrl && (
-          <div className="w-full h-48 overflow-hidden relative group">
+          <div className="w-full h-32 overflow-hidden relative group">
             <OptimizedImage 
-              src={project.imageUrl} 
+              src={project.imageUrl}
               alt={project.title} 
               className="w-full h-full object-cover transition-transform duration-500 group-hover:scale-105"
             />
@@ -182,21 +184,20 @@ export default function ProjectCard({ project, isFocused, anyCardFocused }: Proj
           </div>
         )}
         
-        <CardHeader className="relative">
+        <CardHeader className="relative px-4 py-2">
           {project.featured && (
             <div className="absolute -top-3 -right-3 z-10">
-              <Badge variant="default" className="bg-primary text-primary-foreground flex items-center gap-1 shadow-lg">
-                <Sparkles className="h-3 w-3" />
+              <Badge variant="default" className="bg-primary text-primary-foreground shadow-lg text-[10px] h-5 px-2">
                 Featured
               </Badge>
             </div>
           )}
-          <CardTitle className="text-xl font-bold">{project.title}</CardTitle>
-          <CardDescription className="mt-2 line-clamp-2">{project.description}</CardDescription>
+          <CardTitle className="text-[14px] leading-snug font-bold line-clamp-2 mb-1">{project.title}</CardTitle>
+          <CardDescription className="line-clamp-2 text-xs leading-relaxed text-[#899295]">{project.description}</CardDescription>
         </CardHeader>
         
-        <CardContent className="flex-grow">
-          <div className="flex flex-wrap gap-2 mt-2">
+        <CardContent className="flex-grow px-4 py-0">
+          <div className="flex flex-wrap gap-1.5 mt-1">
             {project.tags.map((tag, index) => (
               <Badge 
                 key={index} 
@@ -209,9 +210,9 @@ export default function ProjectCard({ project, isFocused, anyCardFocused }: Proj
           </div>
         </CardContent>
         
-        <CardFooter className="pt-2 border-t">
-          <div className="w-full flex justify-between items-center">
-            <span className="text-sm text-muted-foreground">
+        <CardFooter className="px-4 py-2 border-t border-white/5 mt-auto bg-white/5">
+          <div className="w-full flex justify-between items-center gap-2">
+            <span className="text-[10px] text-muted-foreground whitespace-nowrap">
               {project.date}
             </span>
             <Button 

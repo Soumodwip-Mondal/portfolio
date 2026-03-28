@@ -1,9 +1,6 @@
 import { useState, useEffect } from 'react';
 import { Link } from 'react-router-dom';
 import { motion, AnimatePresence } from 'framer-motion';
-import { useTheme } from 'next-themes';
-import { Button } from '../ui/button';
-import { Moon, Sun, X} from 'lucide-react';
 import { useScrollToSection } from '../../hooks/useScrollToSection';
 
 interface MobileMenuProps {
@@ -13,114 +10,64 @@ interface MobileMenuProps {
 
 export default function MobileMenu({ isOpen, setIsOpen }: MobileMenuProps) {
   const [mounted, setMounted] = useState(false);
-  const { theme, setTheme } = useTheme();
   const { scrollToSection } = useScrollToSection();
 
-  // Prevent hydration mismatch
-  useEffect(() => setMounted(true), []); 
+  useEffect(() => setMounted(true), []);
   if (!mounted) return null;
 
-  const handleLinkClick = (sectionId: string) => {
-    setIsOpen(false);
-    scrollToSection(sectionId);
-  };
+  const sectionLinks = [
+    { label: 'About',   section: 'about'   },
+    { label: 'Projects',section: 'projects' },
+    { label: 'Skills',  section: 'skills-3d' },
+    { label: 'Contact', section: 'contact' },
+  ];
+
+  const pageLinks = [
+    { to: '/blog',        label: 'Blog'      },
+    { to: '/dashboard',   label: 'Dashboard' },
+    { to: '/collaborate', label: 'Draw'      },
+    { to: '/ai-assistant',label: 'AI Assistant'},
+  ];
 
   return (
     <AnimatePresence>
       {isOpen && (
-        <motion.div
-          initial={{ opacity: 0, height: 0 }}
-          animate={{ opacity: 1, height: 'auto' }}
-          exit={{ opacity: 0, height: 0 }}
-          className="md:hidden overflow-hidden"
-        >
-          <div className="bg-white dark:bg-slate-900 p-4 flex flex-col space-y-4">
-            <div className="flex justify-between items-center">
-              <h2 className="font-bold text-lg">Menu</h2>
-              <Button variant="ghost" size="icon" onClick={() => setIsOpen(false)}>
-                <X size={24} />
-              </Button>
+          <motion.div
+            initial={{ opacity: 0, y: -10, scale: 0.95 }}
+            animate={{ opacity: 1, y: 0, scale: 1 }}
+            exit={{ opacity: 0, y: -10, scale: 0.95 }}
+            transition={{ duration: 0.2, ease: 'easeOut' }}
+            className="
+              fixed top-[4.5rem] z-40
+              inset-x-4 max-w-lg md:mx-auto
+              glass-card rounded-2xl border border-white/10
+              shadow-[0_20px_50px_rgba(0,0,0,0.3)]
+              p-5 md:hidden inner-glow
+            "
+          >
+            <div className="grid grid-cols-2 gap-2">
+              {/* Force all links to show in a clean grid */}
+              {sectionLinks.map((link) => (
+                <button
+                  key={link.section}
+                  onClick={() => { setIsOpen(false); scrollToSection(link.section); }}
+                  className="flex items-center justify-center px-4 py-3 rounded-xl text-sm font-medium text-white/70 hover:text-white hover:bg-white/10 border border-transparent hover:border-white/10 transition-all duration-200"
+                >
+                  {link.label}
+                </button>
+              ))}
+              {pageLinks.map((link) => (
+                <Link
+                  key={link.to}
+                  to={link.to}
+                  onClick={() => setIsOpen(false)}
+                  className="flex items-center justify-center px-4 py-3 rounded-xl text-sm font-medium text-white/70 hover:text-white hover:bg-white/10 border border-transparent hover:border-white/10 transition-all duration-200"
+                >
+                  {link.label}
+                </Link>
+              ))}
             </div>
-            
-            <div className="flex flex-col space-y-3">
-              <Button 
-                variant="ghost" 
-                className="justify-start text-base"
-                onClick={() => handleLinkClick('about')}
-              >
-                About
-              </Button>
-              
-              <Button 
-                variant="ghost" 
-                className="justify-start text-base"
-                onClick={() => handleLinkClick('projects')}
-              >
-                Projects
-              </Button>
-              
-              <Button 
-                variant="ghost" 
-                className="justify-start text-base"
-                onClick={() => handleLinkClick('skills')}
-              >
-                Skills
-              </Button>
-              
-              <Link 
-                to="/blog" 
-                className="px-4 py-2 text-base rounded-md hover:bg-slate-100 dark:hover:bg-slate-800"
-                onClick={() => setIsOpen(false)}
-              >
-                Blog
-              </Link>
-              
-              <Link 
-                to="/dashboard" 
-                className="px-4 py-2 text-base rounded-md hover:bg-slate-100 dark:hover:bg-slate-800"
-                onClick={() => setIsOpen(false)}
-              >
-                Dashboard
-              </Link>
-              
-              <Link 
-                to="/collaborate" 
-                className="px-4 py-2 text-base rounded-md hover:bg-slate-100 dark:hover:bg-slate-800"
-                onClick={() => setIsOpen(false)}
-              >
-                Collaborative Drawing
-              </Link>
-              <Link 
-                to="/ai-assistant" 
-                className="px-4 py-2 text-base rounded-md hover:bg-slate-100 dark:hover:bg-slate-800"
-                onClick={() => setIsOpen(false)}
-              >
-                AI Assistant
-              </Link>
-              <Link 
-                to="/voice-control" 
-                className="px-4 py-2 text-base rounded-md hover:bg-slate-100 dark:hover:bg-slate-800"
-                onClick={() => setIsOpen(false)}
-              >
-                Voice Control
-              </Link>
-              <Button 
-                variant="ghost" 
-                className="justify-start text-base"
-                onClick={() => handleLinkClick('contact')}
-              >
-                Contact
-              </Button>
-              
-              <div className="flex justify-between items-center pt-2 border-t border-slate-200 dark:border-slate-700">
-                <span>Theme</span>
-                <Button variant="ghost" size="icon" onClick={() => setTheme(theme === 'dark' ? 'light' : 'dark')}>
-                  {theme === 'dark' ? <Sun size={20} /> : <Moon size={20} />}
-                </Button>
-              </div>
-            </div>
-          </div>
-        </motion.div>
+          </motion.div>
       )}
     </AnimatePresence>
   );

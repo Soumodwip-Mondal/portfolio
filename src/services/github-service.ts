@@ -52,7 +52,6 @@ export async function updateFileInGitHub(file: GitHubFile): Promise<void> {
             }
         } catch (error) {
             // File doesn't exist, which is fine for new files
-            console.log('File does not exist yet, creating new file');
         }
 
         // Update or create the file
@@ -65,7 +64,6 @@ export async function updateFileInGitHub(file: GitHubFile): Promise<void> {
             sha,
         });
 
-        console.log(`Successfully updated ${file.path} in GitHub`);
     } catch (error) {
         console.error(`Error updating ${file.path} in GitHub:`, error);
         throw error;

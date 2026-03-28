@@ -1,40 +1,45 @@
+@import url('https://fonts.googleapis.com/css2?family=Manrope:wght@200;300;400;500;600;700;800&family=Inter:wght@300;400;500;600;700&display=swap');
+
 @tailwind base;
 @tailwind components;
 @tailwind utilities;
 
+/* ─────────────────────────────────────────────
+   Light Mode tokens  (shadcn/ui defaults kept)
+───────────────────────────────────────────── */
 @layer base {
   :root {
-    --background: 0 0% 100%;
-    --foreground: 222.2 84% 4.9%;
+    --background:    0 0% 100%;
+    --foreground:    222.2 84% 4.9%;
 
-    --card: 0 0% 100%;
+    --card:          0 0% 100%;
     --card-foreground: 222.2 84% 4.9%;
 
-    --popover: 0 0% 100%;
+    --popover:       0 0% 100%;
     --popover-foreground: 222.2 84% 4.9%;
 
-    --primary: 222.2 47.4% 11.2%;
-    --primary-foreground: 210 40% 98%;
+    --primary:       186 74% 63%;          /* #5dd7e6 cyan */
+    --primary-foreground: 186 100% 11%;    /* #00363c */
 
-    --secondary: 210 40% 96.1%;
-    --secondary-foreground: 222.2 47.4% 11.2%;
+    --secondary:     191 21% 75%;          /* #b0cbd1 */
+    --secondary-foreground: 188 100% 11%;
 
-    --muted: 210 40% 96.1%;
+    --muted:         210 40% 96.1%;
     --muted-foreground: 215.4 16.3% 46.9%;
 
-    --accent: 210 40% 96.1%;
+    --accent:        210 40% 96.1%;
     --accent-foreground: 222.2 47.4% 11.2%;
 
-    --destructive: 0 84.2% 60.2%;
+    --destructive:   0 84.2% 60.2%;
     --destructive-foreground: 210 40% 98%;
 
-    --border: 214.3 31.8% 91.4%;
-    --input: 214.3 31.8% 91.4%;
-    --ring: 222.2 84% 4.9%;
+    --border:        214.3 31.8% 91.4%;
+    --input:         214.3 31.8% 91.4%;
+    --ring:          186 74% 63%;
 
     --radius: 0.5rem;
 
-    /* Personalization Layout Variables */
+    /* Layout variables */
     --content-width: 100%;
     --section-spacing: 4rem;
     --card-padding: 1.5rem;
@@ -42,37 +47,45 @@
     --heading-scale: 1;
   }
 
+/* ─────────────────────────────────────────────
+   Dark Mode  — Digital Atelier Palette
+   Background  #131313   Primary  #5dd7e6
+   Foreground  #e5e2e1   Secondary #b0cbd1
+───────────────────────────────────────────── */
   .dark {
-    --background: 222.2 84% 4.9%;
-    --foreground: 210 40% 98%;
+    --background:    0 0% 7%;              /* #121212 - Neutral dark charcoal */
+    --foreground:    20 5% 90%;            /* #e7e4e3 - Crisp off-white */
 
-    --card: 222.2 84% 4.9%;
-    --card-foreground: 210 40% 98%;
+    --card:          0 0% 9%;              /* #171717 - Deep surface card */
+    --card-foreground: 20 5% 90%;
 
-    --popover: 222.2 84% 4.9%;
-    --popover-foreground: 210 40% 98%;
+    --popover:       0 0% 8%;              /* #141414 */
+    --popover-foreground: 20 5% 90%;
 
-    --primary: 210 40% 98%;
-    --primary-foreground: 222.2 47.4% 11.2%;
+    --primary:       186 74% 63%;          /* #5dd7e6 - Digital Atelier Cyan */
+    --primary-foreground: 186 100% 11%;    /* #00363c */
 
-    --secondary: 217.2 32.6% 17.5%;
-    --secondary-foreground: 210 40% 98%;
+    --secondary:     191 21% 75%;          /* #b0cbd1 */
+    --secondary-foreground: 188 52% 15%;   /* #1b3439 */
 
-    --muted: 217.2 32.6% 17.5%;
-    --muted-foreground: 215 20.2% 65.1%;
+    --muted:         191 10% 26%;          /* ~#3f484a */
+    --muted-foreground: 191 14% 75%;       /* #bec8ca */
 
-    --accent: 217.2 32.6% 17.5%;
-    --accent-foreground: 210 40% 98%;
+    --accent:        191 10% 26%;
+    --accent-foreground: 20 5% 90%;
 
-    --destructive: 0 62.8% 30.6%;
-    --destructive-foreground: 210 40% 98%;
+    --destructive:   4 71% 64%;            /* #ffb4ab */
+    --destructive-foreground: 0 0% 7%;
 
-    --border: 217.2 32.6% 17.5%;
-    --input: 217.2 32.6% 17.5%;
-    --ring: 212.7 26.8% 83.9%;
+    --border:        191 9% 27%;           /* #3f484a */
+    --input:         191 9% 27%;
+    --ring:          186 74% 63%;          /* #5dd7e6 */
   }
 }
 
+/* ─────────────────────────────────────────────
+   Base element resets
+ ───────────────────────────────────────────── */
 @layer base {
   * {
     @apply border-border;
@@ -83,34 +96,86 @@
   }
 
   body {
-    @apply bg-background text-foreground;
+    @apply bg-background text-foreground overflow-x-hidden;
+    font-family: 'Inter', sans-serif;
+  }
+
+  h1, h2, h3, h4, h5, h6 {
+    font-family: 'Manrope', sans-serif;
+  }
+
+  /* Cyan tinted selection in dark mode */
+  .dark ::selection {
+    background-color: rgba(93, 215, 230, 0.25);
+    color: #e5e2e1;
   }
 }
 
-/* Custom Theme Colors */
-:root {
-  --primary-color: theme('colors.blue.600');
-  --primary-foreground: theme('colors.white');
+/* ─────────────────────────────────────────────
+   Global glow / gradient utilities
+ ───────────────────────────────────────────── */
+@layer utilities {
+  .text-glow-cyan {
+    text-shadow: 0 0 20px rgba(93, 215, 230, 0.35);
+  }
+
+  .bg-atelier-gradient {
+    background: linear-gradient(135deg, #5dd7e6 0%, #005f68 100%);
+  }
+
+  /* Specific typography for the 'Digital Atelier' vibe */
+  .atelier-title {
+    @apply font-bold tracking-tight text-white leading-[1.1];
+  }
+
+  .atelier-display {
+    @apply italic font-light text-[#5dd7e6] tracking-tighter;
+  }
+
+  /* Subtle ambient glow blobs used in hero – reusable */
+  .atelier-glow-tl {
+    background: radial-gradient(ellipse at top left, rgba(93,215,230,0.06), transparent 70%);
+  }
+  .atelier-glow-br {
+    background: radial-gradient(ellipse at bottom right, rgba(93,215,230,0.10), transparent 70%);
+  }
+
+  /* --- Premium Glassmorphism --- */
+  /* Glass card utility - consolidated in components layer */
+
+  .premium-glow {
+    box-shadow: 
+      0 0 20px rgba(93, 215, 230, 0.05),
+      0 0 40px rgba(93, 215, 230, 0.02);
+  }
+
+  .premium-glow-hover {
+    @apply transition-all duration-500;
+  }
+  .premium-glow-hover:hover {
+    box-shadow: 
+      0 0 30px rgba(93, 215, 230, 0.15),
+      0 0 60px rgba(93, 215, 230, 0.05);
+  }
+
+  .glass-border {
+    border: 1px solid rgba(255, 255, 255, 0.08);
+  }
+
+  .inner-glow {
+    box-shadow: inset 0 1px 1px rgba(255, 255, 255, 0.1);
+  }
+
+  /* --- Depth Blobs --- */
+  .depth-blob {
+    @apply absolute rounded-full blur-[120px] opacity-20 pointer-events-none;
+    z-index: -1;
+  }
 }
 
-/* Apply custom theme colors */
-.bg-primary {
-  background-color: var(--primary-color) !important;
-}
-
-.text-primary {
-  color: var(--primary-color) !important;
-}
-
-.text-primary-foreground {
-  color: var(--primary-foreground) !important;
-}
-
-.border-primary {
-  border-color: var(--primary-color) !important;
-}
-
-/* Layout adjustments */
+/* ─────────────────────────────────────────────
+   Personalization Layout Variables
+───────────────────────────────────────────── */
 :root[data-layout="compact"] {
   --content-width: 90%;
   --section-spacing: 2.5rem;
@@ -127,7 +192,6 @@
   --heading-scale: 1.1;
 }
 
-/* Apply layout styles */
 :root[data-layout] .container {
   width: var(--content-width);
   max-width: 1400px;
@@ -143,43 +207,37 @@
   padding: var(--card-padding);
 }
 
-/* Text size adjustments */
 :root[data-layout] {
   font-size: var(--text-base-size);
 }
 
-:root[data-layout] h1 {
-  font-size: calc(2.25rem * var(--heading-scale));
-}
+:root[data-layout] h1 { font-size: calc(2.25rem * var(--heading-scale)); }
+:root[data-layout] h2 { font-size: calc(1.875rem * var(--heading-scale)); }
+:root[data-layout] h3 { font-size: calc(1.5rem * var(--heading-scale)); }
 
-:root[data-layout] h2 {
-  font-size: calc(1.875rem * var(--heading-scale));
-}
+:root[data-layout="compact"] .grid { gap: 0.75rem !important; }
+:root[data-layout="compact"] .card { border-radius: 0.375rem; }
 
-:root[data-layout] h3 {
-  font-size: calc(1.5rem * var(--heading-scale));
-}
+:root[data-layout="spacious"] .grid { gap: 2rem !important; }
+:root[data-layout="spacious"] .card { border-radius: 1rem; }
 
-/* Specific layout adjustments */
-:root[data-layout="compact"] .grid {
-  gap: 0.75rem !important;
-}
-
-:root[data-layout="compact"] .card {
-  border-radius: 0.375rem;
-}
-
-:root[data-layout="spacious"] .grid {
-  gap: 2rem !important;
-}
-
-:root[data-layout="spacious"] .card {
-  border-radius: 1rem;
-}
-
-/* Additional custom styles */
+/* ─────────────────────────────────────────────
+   Component helpers
+───────────────────────────────────────────── */
 @layer components {
   .hover-underline {
-    @apply relative after:absolute after:left-0 after:bottom-0 after:h-0.5 after:w-0 after:bg-blue-500 after:transition-all after:duration-300 hover:after:w-full;
+    @apply relative after:absolute after:left-0 after:bottom-0 after:h-0.5 after:w-0 after:bg-[#5dd7e6] after:transition-all after:duration-300 hover:after:w-full;
+  }
+
+  /* Glass card for premium glassmorphism */
+  .glass-card {
+    @apply rounded-2xl border border-white/10 bg-white/5 backdrop-blur-xl transition-all duration-300;
+    box-shadow: 
+      0 4px 30px rgba(0, 0, 0, 0.1),
+      inset 0 0 0 1px rgba(255, 255, 255, 0.05);
+  }
+
+  .glass-card:hover {
+    @apply border-white/20 bg-white/10 shadow-2xl;
   }
 }

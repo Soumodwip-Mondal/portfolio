@@ -3,29 +3,24 @@ import Hero from '../components/sections/hero';
 
 // Lazy load non-critical components
 const Projects = lazy(() => import('../components/sections/projects'));
-const Skills = lazy(() => import('../components/sections/skills'));
 const Skills3D = lazy(() => import('../components/sections/skills-3d'));
 const Contact = lazy(() => import('../components/sections/contact'));
 const Footer = lazy(() => import('../components/layout/footer'));
-import { PersonalizedRecommendations } from '../components/personalization/PersonalizedRecommendations';
 import { SectionTracker } from '../components/personalization/SectionTracker';
-import { usePersonalization } from '../context/PersonalizationContext';
 import LoadingSpinner from '../components/ui/loading-spinner';
-import HireMePopup from '../components/shared/hire-me-popup';
 
 export default function Home() {
-  const { isReturningVisitor } = usePersonalization();
   return (
-    <>
+    <div className="relative isolate min-h-screen overflow-x-hidden">
+      {/* Background blobs for depth and glassmorphism */}
+      <div className="depth-blob top-[-10%] left-[-10%] w-[500px] h-[500px] bg-primary/20 animate-pulse" />
+      <div className="depth-blob top-[30%] right-[-5%] w-[400px] h-[400px] bg-purple-500/10" style={{ animationDelay: '2s' }} />
+      <div className="depth-blob bottom-[10%] left-[5%] w-[600px] h-[600px] bg-blue-500/10 animate-pulse" style={{ animationDuration: '8s' }} />
       <main className="container mx-auto px-4">
       <SectionTracker sectionId="hero" interest="development">
           <Hero />
         </SectionTracker>
         
-        {/* Show personalized recommendations for returning visitors */}
-        {isReturningVisitor && (
-          <PersonalizedRecommendations />
-        )}
         
         <SectionTracker sectionId="projects" interest="development">
           <Suspense fallback={<LoadingSpinner />}>
@@ -38,12 +33,6 @@ export default function Home() {
             <Skills3D />
           </Suspense>
         </SectionTracker>
-        <SectionTracker sectionId="skills" interest="development">
-          <Suspense fallback={<LoadingSpinner />}>
-            <Skills />
-          </Suspense>
-        </SectionTracker>
-        
         <SectionTracker sectionId="contact">
           <Suspense fallback={<LoadingSpinner />}>
             <Contact />
@@ -54,8 +43,6 @@ export default function Home() {
         <Footer />
       </Suspense>
       
-      {/* Hire Me Popup that appears after 10 seconds for testing */}
-      <HireMePopup timeToShow={10000} />
-    </>
+    </div>
   );
 }

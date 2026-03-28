@@ -11,7 +11,7 @@ export const ScrollProgress = () => {
 
     return (
         <motion.div
-            className="fixed top-0 left-0 right-0 h-1 bg-gradient-to-r from-blue-500 via-purple-500 to-pink-500 origin-left z-50"
+            className="fixed top-0 left-0 right-0 h-[3px] bg-gradient-to-r from-[#5dd7e6] to-[#8df2ff] origin-left z-[60] shadow-[0_0_10px_rgba(93,215,230,0.3)]"
             style={{ scaleX }}
         />
     );
@@ -43,10 +43,10 @@ export const ScrollToTop = () => {
             initial={{ opacity: 0, scale: 0.8 }}
             animate={{ opacity: 1, scale: 1 }}
             exit={{ opacity: 0, scale: 0.8 }}
-            whileHover={{ scale: 1.1 }}
+            whileHover={{ scale: 1.1, backgroundColor: '#5dd7e6', color: '#121212' }}
             whileTap={{ scale: 0.9 }}
             onClick={scrollToTop}
-            className="fixed bottom-8 left-6 z-50 p-3 rounded-full bg-gradient-to-r from-blue-600 to-purple-600 text-white shadow-lg hover:shadow-xl transition-shadow"
+            className="fixed bottom-8 left-6 z-50 p-3 rounded-full bg-[#1c1b1b] text-[#5dd7e6] border border-[#5dd7e6]/30 shadow-[0_0_20px_rgba(0,0,0,0.4)] backdrop-blur-md transition-colors"
             aria-label="Scroll to top"
         >
             <svg
@@ -59,7 +59,7 @@ export const ScrollToTop = () => {
                 <path
                     strokeLinecap="round"
                     strokeLinejoin="round"
-                    strokeWidth={2}
+                    strokeWidth={2.5}
                     d="M5 10l7-7m0 0l7 7m-7-7v18"
                 />
             </svg>
