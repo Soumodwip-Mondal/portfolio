@@ -15,7 +15,7 @@ export function ProjectEditor({ project, onSave, onCancel }: ProjectEditorProps)
         id: project?.id || 0,
         title: project?.title || '',
         description: project?.description || '',
-        category: project?.category || 'web',
+        categories: project?.categories || ['web'],
         tags: project?.tags || [],
         image: project?.image || '',
         imageUrl: project?.imageUrl || '',
@@ -25,6 +25,7 @@ export function ProjectEditor({ project, onSave, onCancel }: ProjectEditorProps)
     });
 
     const [tagInput, setTagInput] = useState('');
+    const [categoryInput, setCategoryInput] = useState('');
     const [isSaving, setIsSaving] = useState(false);
 
     const handleSubmit = async (e: React.FormEvent) => {
@@ -51,10 +52,27 @@ export function ProjectEditor({ project, onSave, onCancel }: ProjectEditorProps)
         }
     };
 
+    const addCategory = () => {
+        if (categoryInput.trim() && !formData.categories?.includes(categoryInput.trim())) {
+            setFormData({
+                ...formData,
+                categories: [...(formData.categories || []), categoryInput.trim()],
+            });
+            setCategoryInput('');
+        }
+    };
+
     const removeTag = (tag: string) => {
         setFormData({
             ...formData,
             tags: formData.tags?.filter(t => t !== tag),
+        });
+    };
+
+    const removeCategory = (category: string) => {
+        setFormData({
+            ...formData,
+            categories: formData.categories?.filter(c => c !== category),
         });
     };
 
@@ -83,22 +101,46 @@ export function ProjectEditor({ project, onSave, onCancel }: ProjectEditorProps)
                     </div>
 
                     <div>
-                        <label className="block text-sm font-medium mb-2">Category *</label>
-                        <select
-                            value={formData.category}
-                            onChange={(e) => setFormData({ ...formData, category: e.target.value })}
-                            className="w-full px-4 py-2 border border-gray-300 dark:border-gray-600 rounded-lg focus:ring-2 focus:ring-blue-500 dark:bg-gray-800"
-                            required
-                        >
-                            <option value="web">Web</option>
-                            <option value="data analysis">Data Analysis</option>
-                            <option value="database">Database</option>
-                            <option value="python">Python</option>
-                            <option value="ml">Machine Learning</option>
-                            <option value="customer segmentation">Customer Segmentation</option>
-                            <option value="trend analysis">Trend Analysis</option>
-                            <option value="group">Group Project</option>
-                        </select>
+                        <label className="block text-sm font-medium mb-2">Categories *</label>
+                        <div className="flex gap-2 mb-2">
+                            <select
+                                value={categoryInput}
+                                onChange={(e) => {
+                                    if (e.target.value) {
+                                        setCategoryInput(e.target.value);
+                                    }
+                                }}
+                                className="flex-1 px-4 py-2 border border-gray-300 dark:border-gray-600 rounded-lg focus:ring-2 focus:ring-blue-500 dark:bg-gray-800"
+                            >
+                                <option value="">Select a category...</option>
+                                <option value="web">Web</option>
+                                <option value="data analysis">Data Analysis</option>
+                                <option value="database">Database</option>
+                                <option value="python">Python</option>
+                                <option value="ML&GenAI">ML&GenAI</option>
+                                <option value="group">Group Project</option>
+                            </select>
+                            <Button type="button" onClick={addCategory} variant="outline">
+                                Add
+                            </Button>
+                        </div>
+                        <div className="flex flex-wrap gap-2">
+                            {formData.categories?.map((cat, index) => (
+                                <span
+                                    key={index}
+                                    className="bg-purple-100 dark:bg-purple-900/30 text-purple-800 dark:text-purple-300 px-3 py-1 rounded-full text-sm flex items-center gap-2"
+                                >
+                                    {cat}
+                                    <button
+                                        type="button"
+                                        onClick={() => removeCategory(cat)}
+                                        className="hover:text-red-600"
+                                    >
+                                        <X className="w-3 h-3" />
+                                    </button>
+                                </span>
+                            ))}
+                        </div>
                     </div>
                 </div>
 

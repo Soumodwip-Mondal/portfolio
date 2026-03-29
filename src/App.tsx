@@ -6,10 +6,8 @@ import Home from './app/page';
 import BlogPage from './pages/BlogPage';
 import Dashboard from './components/sections/dashboard';
 import CollaborativePage from './pages/CollaborativePage';
-import AIAssistantPage from './pages/AIAssistantPage';
 import AdminPanel from './components/admin/admin-panel';
 import { PersonalizationProvider } from './context/PersonalizationContext';
-import { ChatAssistant } from './components/Ai/ChatBot';
 import { LayoutManager } from './components/personalization/LayoutManager';
 import { ScrollProgress, ScrollToTop as ScrollToTopButton } from './components/ui/scroll-indicators';
 // Scroll to top component
@@ -89,7 +87,8 @@ function App() {
         <LayoutManager>
           <Router>
             <ScrollToTop />
-            <div className="flex flex-col min-h-screen">
+            <div className="flex flex-col min-h-screen relative">
+              <div className="noise-bg pointer-events-none fixed inset-0 z-[100] mix-blend-overlay opacity-50"></div>
               <Header />
               <div className="flex-grow">
                 {isLoading && (
@@ -102,7 +101,6 @@ function App() {
                   <Route path="/blog" element={<BlogPage />} />
                   <Route path="/dashboard" element={<Dashboard />} />
                   <Route path="/collaborate" element={<CollaborativePage />} />
-                  <Route path="/ai-assistant" element={<AIAssistantPage />} />
                   <Route path="/admin" element={<AdminPanel />} />
                   {/* Redirect any other routes to home */}
                   <Route path="*" element={<Navigate to="/" />} />
@@ -110,7 +108,6 @@ function App() {
               </div>
               <ScrollProgress />
               <ScrollToTopButton />
-              <ChatAssistant />
             </div>
           </Router>
         </LayoutManager>

@@ -54,7 +54,7 @@ export function ProjectList({ projects, onEdit, onDelete }: ProjectListProps) {
                                             )}
                                         </div>
                                         <p className="text-sm text-gray-600 dark:text-gray-400 mb-2">
-                                            {project.category} • {project.date}
+                                            {project.categories.join(' • ')} • {project.date}
                                         </p>
                                         <p className="text-sm text-gray-700 dark:text-gray-300 line-clamp-2 mb-3">
                                             {project.description}

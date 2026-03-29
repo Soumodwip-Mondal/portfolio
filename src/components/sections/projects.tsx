@@ -121,7 +121,7 @@ export default function Projects() {
   const normalizedProjects = useMemo(() =>
     projects.map(project => ({
       ...project,
-      category: normalizeCategory(project.category)
+      categories: project.categories.map(cat => normalizeCategory(cat))
     })),
     []
   );
@@ -130,7 +130,7 @@ export default function Projects() {
   const categories = useMemo(() => {
     const order = ['all', 'data analysis', 'ml&genai', 'web', 'database', 'group', 'python'];
     const uniqueCategories = Array.from(
-      new Set(normalizedProjects.map(project => project.category))
+      new Set(normalizedProjects.flatMap(project => project.categories))
     );
 
     // Return the list based on the predefined order
@@ -192,7 +192,7 @@ export default function Projects() {
 
     const normalizedFilter = normalizeCategory(activeFilter);
     return normalizedProjects.filter(project =>
-      project.category === normalizedFilter
+      project.categories.includes(normalizedFilter)
     );
   }, [activeFilter, normalizedProjects]);
 
@@ -222,7 +222,7 @@ export default function Projects() {
       initial="hidden"
       animate={controls}
       variants={headingVariants}
-      className="py-28 relative overflow-hidden"
+      className="pt-16 pb-28 !mb-0 relative overflow-hidden"
     >
       {/* Animated background with SSR check */}
       {typeof window !== 'undefined' && (
@@ -385,15 +385,15 @@ export default function Projects() {
             >
               <Button
                 size="lg"
-                className="bg-gradient-to-r from-primary to-purple-600 hover:from-primary/90 hover:to-purple-600/90 text-primary-foreground group relative overflow-hidden"
+                className="bg-gradient-to-r from-[#5dd7e6] to-[#018b99] hover:from-[#5dd7e6]/90 hover:to-[#018b99]/90 text-[#00363c] border-0 shadow-[0_8px_20px_rgba(93,215,230,0.3)] hover:shadow-[0_12px_24px_rgba(93,215,230,0.4)] transition-all duration-300 group relative overflow-hidden px-8"
                 onClick={handleShowAll}
               >
-                <span className="relative z-10 flex items-center">
+                <span className="relative z-10 flex items-center font-bold">
                   Explore All Projects <ChevronRight className="ml-2 h-5 w-5 transition-transform duration-300 group-hover:translate-x-1" />
                 </span>
 
                 <motion.span
-                  className="absolute inset-0 bg-gradient-to-r from-blue-600 to-purple-700"
+                  className="absolute inset-0 bg-gradient-to-r from-[#018b99] to-[#5dd7e6] opacity-0 group-hover:opacity-100 transition-opacity duration-300"
                   animate={{
                     backgroundPosition: ['0% 50%', '100% 50%', '0% 50%'],
                   }}
@@ -420,15 +420,15 @@ export default function Projects() {
               >
                 <Button
                   size="lg"
-                  className="bg-gradient-to-r from-purple-600 to-primary hover:from-purple-600/90 hover:to-primary/90 text-primary-foreground group relative overflow-hidden"
+                  className="bg-gradient-to-r from-[#018b99] to-[#5dd7e6] hover:from-[#018b99]/90 hover:to-[#5dd7e6]/90 text-[#00363c] border-0 shadow-[0_8px_20px_rgba(93,215,230,0.3)] hover:shadow-[0_12px_24px_rgba(93,215,230,0.4)] transition-all duration-300 group relative overflow-hidden px-8"
                   onClick={handleShowLess}
                 >
-                  <span className="relative z-10 flex items-center">
+                  <span className="relative z-10 flex items-center font-bold">
                     Show Less <ChevronUp className="ml-2 h-5 w-5 transition-transform duration-300 group-hover:-translate-y-1" />
                   </span>
 
                   <motion.span
-                    className="absolute inset-0 bg-gradient-to-r from-purple-700 to-blue-600"
+                    className="absolute inset-0 bg-gradient-to-r from-[#5dd7e6] to-[#018b99] opacity-0 group-hover:opacity-100 transition-opacity duration-300"
                     animate={{
                       backgroundPosition: ['0% 50%', '100% 50%', '0% 50%'],
                     }}

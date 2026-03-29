@@ -26,7 +26,6 @@ export default function MobileMenu({ isOpen, setIsOpen }: MobileMenuProps) {
     { to: '/blog',        label: 'Blog'      },
     { to: '/dashboard',   label: 'Dashboard' },
     { to: '/collaborate', label: 'Draw'      },
-    { to: '/ai-assistant',label: 'AI Assistant'},
   ];
 
   return (
