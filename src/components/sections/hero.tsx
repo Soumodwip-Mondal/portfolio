@@ -6,7 +6,7 @@ import { Button } from '../ui/button';
 import { Badge } from '../ui/badge';
 import { ChevronRight, ExternalLink } from 'lucide-react';
 import { useScrollToSection } from '../../hooks/useScrollToSection';
-import image from '../../assets/myPhoto.jpg';
+import image from '../../assets/dp.png';
 import resume from '../../assets/Soumodwip_Mondal_Resume.pdf';
 
 const LeetCodeIcon = ({ className }: { className?: string }) => (
