@@ -75,7 +75,7 @@ export const projects: Project[] = [
   },
   {
     id: 6,
-    title: "Building an Enterprise-Lebel Data Warehouse",
+    title: "Building an Enterprise-Level Data Warehouse",
     description: "This project involves designing and implementing a data warehouse for an enterprise, focusing on data integration, storage, and retrieval to support business intelligence and analytics.",
     categories: ["database"],
     tags: ["PostgreSQL", "Data Integration", "Data Warehousing", "ETL", "Data analysis"],

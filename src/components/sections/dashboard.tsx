@@ -19,10 +19,9 @@ import {
 } from '../../data/dashboard-data';
 import { RefreshCw, TrendingUp, Users, Star, Download } from 'lucide-react';
 
-// Custom colors for charts
-const COLORS = ['#0088FE', '#00C49F', '#FFBB28', '#FF8042', '#8884d8', '#82ca9d'];
+// Custom colors for charts - Premium Digital Atelier Palette
+const COLORS = ['#5dd7e6', '#3dbdc3', '#018b99', '#005f68', '#bec8ca', '#899295'];
 
-// Dashboard Card Component
 const DashboardCard = ({
   title,
   children,
@@ -33,10 +32,10 @@ const DashboardCard = ({
   className?: string;
 }) => {
   return (
-    <Card className={`p-4 h-full ${className}`}>
-      <div className="flex justify-between items-center mb-4">
-        <h3 className="text-lg font-semibold">{title}</h3>
-        <RefreshCw className="w-4 h-4 text-slate-400 cursor-pointer hover:text-slate-600" />
+    <Card className={`glass-card p-6 h-full border-white/5 bg-white/[0.01] ${className}`}>
+      <div className="flex justify-between items-center mb-6">
+        <h3 className="text-lg font-bold tracking-tight text-white/90">{title}</h3>
+        <RefreshCw className="w-4 h-4 text-zinc-500 cursor-pointer hover:text-[#5dd7e6] transition-colors" />
       </div>
       {children}
     </Card>
@@ -55,16 +54,34 @@ const GitHubContributionsChart = ({ data }: { data?: any[] }) => {
             data={contributionData}
             margin={{ top: 10, right: 30, left: 0, bottom: 0 }}
           >
-            <CartesianGrid strokeDasharray="3 3" />
-            <XAxis dataKey="date" />
-            <YAxis />
-            <Tooltip />
+            <defs>
+              <linearGradient id="colorPrimary" x1="0" y1="0" x2="0" y2="1">
+                <stop offset="5%" stopColor="#5dd7e6" stopOpacity={0.3}/>
+                <stop offset="95%" stopColor="#5dd7e6" stopOpacity={0}/>
+              </linearGradient>
+            </defs>
+            <CartesianGrid strokeDasharray="3 3" stroke="rgba(255,255,255,0.05)" vertical={false} />
+            <XAxis 
+              dataKey="date" 
+              axisLine={false} 
+              tickLine={false} 
+              tick={{fill: 'rgba(255,255,255,0.3)', fontSize: 10}}
+            />
+            <YAxis 
+              axisLine={false} 
+              tickLine={false} 
+              tick={{fill: 'rgba(255,255,255,0.3)', fontSize: 10}}
+            />
+            <Tooltip 
+              contentStyle={{backgroundColor: 'rgba(20,20,20,0.8)', border: '1px solid rgba(255,255,255,0.1)', borderRadius: '12px', backdropFilter: 'blur(10px)'}}
+              itemStyle={{color: '#5dd7e6'}}
+            />
             <Area
               type="monotone"
               dataKey="contributions"
-              stroke="#8884d8"
-              fill="#8884d8"
-              fillOpacity={0.3}
+              stroke="#5dd7e6"
+              strokeWidth={2}
+              fill="url(#colorPrimary)"
             />
           </AreaChart>
         </ResponsiveContainer>
@@ -83,19 +100,33 @@ const VisitorAnalyticsChart = () => {
             data={visitorAnalytics}
             margin={{ top: 5, right: 30, left: 20, bottom: 5 }}
           >
-            <CartesianGrid strokeDasharray="3 3" />
-            <XAxis dataKey="date" />
-            <YAxis />
-            <Tooltip />
-            <Legend />
+            <CartesianGrid strokeDasharray="3 3" stroke="rgba(255,255,255,0.05)" vertical={false} />
+            <XAxis 
+              dataKey="date" 
+              axisLine={false} 
+              tickLine={false} 
+              tick={{fill: 'rgba(255,255,255,0.3)', fontSize: 10}}
+            />
+            <YAxis 
+              axisLine={false} 
+              tickLine={false} 
+              tick={{fill: 'rgba(255,255,255,0.3)', fontSize: 10}}
+            />
+            <Tooltip 
+              contentStyle={{backgroundColor: 'rgba(20,20,20,0.8)', border: '1px solid rgba(255,255,255,0.1)', borderRadius: '12px', backdropFilter: 'blur(10px)'}}
+              itemStyle={{color: '#5dd7e6'}}
+            />
+            <Legend wrapperStyle={{paddingTop: '10px', fontSize: '12px'}} />
             <Line
               type="monotone"
               dataKey="visitors"
-              stroke="#8884d8"
-              activeDot={{ r: 8 }}
+              stroke="#5dd7e6"
+              strokeWidth={3}
+              dot={{ r: 4, fill: '#5dd7e6', strokeWidth: 0 }}
+              activeDot={{ r: 6, strokeWidth: 0, fill: '#fff' }}
             />
-            <Line type="monotone" dataKey="newVisitors" stroke="#82ca9d" />
-            <Line type="monotone" dataKey="returningVisitors" stroke="#ffc658" />
+            <Line type="monotone" dataKey="newVisitors" stroke="#3dbdc3" strokeWidth={2} dot={false} />
+            <Line type="monotone" dataKey="returningVisitors" stroke="#899295" strokeWidth={2} dot={false} strokeDasharray="5 5" />
           </LineChart>
         </ResponsiveContainer>
       </div>
@@ -170,14 +201,16 @@ const ProjectMetricsChart = () => {
             data={projectMetrics}
             margin={{ top: 20, right: 30, left: 20, bottom: 5 }}
           >
-            <CartesianGrid strokeDasharray="3 3" />
-            <XAxis dataKey="name" />
-            <YAxis />
-            <Tooltip />
+            <CartesianGrid strokeDasharray="3 3" stroke="rgba(255,255,255,0.05)" vertical={false} />
+            <XAxis dataKey="name" axisLine={false} tickLine={false} tick={{fill: 'rgba(255,255,255,0.3)', fontSize: 10}} />
+            <YAxis axisLine={false} tickLine={false} tick={{fill: 'rgba(255,255,255,0.3)', fontSize: 10}} />
+            <Tooltip 
+              contentStyle={{backgroundColor: 'rgba(20,20,20,0.8)', border: '1px solid rgba(255,255,255,0.1)', borderRadius: '12px'}}
+            />
             <Legend />
-            <Bar dataKey="stars" fill="#8884d8" name="GitHub Stars" />
-            <Bar dataKey="downloads" fill="#82ca9d" name="Downloads" />
-            <Bar dataKey="issues" fill="#ffc658" name="Open Issues" />
+            <Bar dataKey="stars" fill="#5dd7e6" radius={[4, 4, 0, 0]} name="GitHub Stars" />
+            <Bar dataKey="downloads" fill="#3dbdc3" radius={[4, 4, 0, 0]} name="Downloads" />
+            <Bar dataKey="issues" fill="#899295" radius={[4, 4, 0, 0]} name="Open Issues" />
           </BarChart>
         </ResponsiveContainer>
       </div>
@@ -201,14 +234,17 @@ const TechnologyUsageChart = ({ data }: { data?: any[] }) => {
               labelLine={false}
               label={({ name, percent }) => `${name}: ${(percent * 100).toFixed(0)}%`}
               outerRadius={80}
-              fill="#8884d8"
               dataKey="value"
+              stroke="rgba(0,0,0,0.5)"
+              strokeWidth={2}
             >
               {languageData.map((_, index) => (
                 <Cell key={`cell-${index}`} fill={COLORS[index % COLORS.length]} />
               ))}
             </Pie>
-            <Tooltip />
+            <Tooltip 
+              contentStyle={{backgroundColor: 'rgba(20,20,20,0.8)', border: '1px solid rgba(255,255,255,0.1)', borderRadius: '12px'}}
+            />
           </PieChart>
         </ResponsiveContainer>
       </div>
@@ -223,17 +259,19 @@ const DevelopmentActivitiesChart = () => {
       <div className="h-64">
         <ResponsiveContainer width="100%" height="100%">
           <RadarChart cx="50%" cy="50%" outerRadius="80%" data={devActivities}>
-            <PolarGrid />
-            <PolarAngleAxis dataKey="activity" />
-            <PolarRadiusAxis />
+            <PolarGrid stroke="rgba(255,255,255,0.1)" />
+            <PolarAngleAxis dataKey="activity" tick={{fill: 'rgba(255,255,255,0.5)', fontSize: 10}} />
+            <PolarRadiusAxis axisLine={false} tick={false} />
             <Radar
               name="Hours Spent"
               dataKey="hours"
-              stroke="#8884d8"
-              fill="#8884d8"
-              fillOpacity={0.6}
+              stroke="#5dd7e6"
+              fill="#5dd7e6"
+              fillOpacity={0.5}
             />
-            <Tooltip />
+            <Tooltip 
+              contentStyle={{backgroundColor: 'rgba(20,20,20,0.8)', border: '1px solid rgba(255,255,255,0.1)', borderRadius: '12px'}}
+            />
           </RadarChart>
         </ResponsiveContainer>
       </div>
@@ -243,48 +281,48 @@ const DevelopmentActivitiesChart = () => {
 
 // Stats Cards
 const StatsCards = ({ stats }: { stats: any }) => {
+  const container = {
+    hidden: { opacity: 0 },
+    show: {
+      opacity: 1,
+      transition: {
+        staggerChildren: 0.1
+      }
+    }
+  };
+
+  const item = {
+    hidden: { y: 20, opacity: 0 },
+    show: { y: 0, opacity: 1, transition: { type: 'spring' as const, stiffness: 100 } }
+  };
+
   return (
-    <div className="grid grid-cols-1 md:grid-cols-2 lg:grid-cols-4 gap-4 mb-6">
-      <Card className="p-4 flex items-center">
-        <div className="mr-4 bg-blue-100 dark:bg-blue-900/30 p-3 rounded-full">
-          <TrendingUp className="w-6 h-6 text-blue-600 dark:text-blue-400" />
-        </div>
-        <div>
-          <p className="text-sm text-slate-500 dark:text-slate-400">Total Repositories</p>
-          <h3 className="text-2xl font-bold">{stats?.totalRepos || 0}</h3>
-        </div>
-      </Card>
-
-      <Card className="p-4 flex items-center">
-        <div className="mr-4 bg-green-100 dark:bg-green-900/30 p-3 rounded-full">
-          <Users className="w-6 h-6 text-green-600 dark:text-green-400" />
-        </div>
-        <div>
-          <p className="text-sm text-slate-500 dark:text-slate-400">Total Forks</p>
-          <h3 className="text-2xl font-bold">{stats?.totalForks || 0}</h3>
-        </div>
-      </Card>
-
-      <Card className="p-4 flex items-center">
-        <div className="mr-4 bg-yellow-100 dark:bg-yellow-900/30 p-3 rounded-full">
-          <Star className="w-6 h-6 text-yellow-600 dark:text-yellow-400" />
-        </div>
-        <div>
-          <p className="text-sm text-slate-500 dark:text-slate-400">GitHub Stars</p>
-          <h3 className="text-2xl font-bold">{stats?.totalStars || 0}</h3>
-        </div>
-      </Card>
-
-      <Card className="p-4 flex items-center">
-        <div className="mr-4 bg-purple-100 dark:bg-purple-900/30 p-3 rounded-full">
-          <Download className="w-6 h-6 text-purple-600 dark:text-purple-400" />
-        </div>
-        <div>
-          <p className="text-sm text-slate-500 dark:text-slate-400">Top Repositories</p>
-          <h3 className="text-2xl font-bold">{stats?.repositories?.length || 0}</h3>
-        </div>
-      </Card>
-    </div>
+    <motion.div 
+      variants={container}
+      initial="hidden"
+      whileInView="show"
+      viewport={{ once: true }}
+      className="grid grid-cols-1 md:grid-cols-2 lg:grid-cols-4 gap-4 mb-6"
+    >
+      {[
+        { label: 'Total Repositories', value: stats?.totalRepos || 0, icon: TrendingUp },
+        { label: 'Total Forks', value: stats?.totalForks || 0, icon: Users },
+        { label: 'GitHub Stars', value: stats?.totalStars || 0, icon: Star },
+        { label: 'Top Repositories', value: stats?.repositories?.length || 0, icon: Download }
+      ].map((stat, i) => (
+        <motion.div key={i} variants={item}>
+          <Card className="glass-card p-6 flex items-center border-white/5 bg-white/[0.02] hover:bg-white/[0.04] transition-all duration-300">
+            <div className="mr-5 p-3.5 rounded-2xl bg-white/[0.03] border border-white/5 group-hover:border-[#5dd7e6]/30 transition-colors">
+              <stat.icon className="w-6 h-6 text-[#5dd7e6] filter drop-shadow-[0_0_8px_rgba(93,215,230,0.3)]" />
+            </div>
+            <div>
+              <p className="text-[10px] font-bold text-zinc-500 uppercase tracking-[0.2em] mb-1">{stat.label}</p>
+              <h3 className="text-2xl font-extrabold text-white tracking-tight">{stat.value}</h3>
+            </div>
+          </Card>
+        </motion.div>
+      ))}
+    </motion.div>
   );
 };
 
@@ -301,11 +339,13 @@ const TopRepositories = ({ repos }: { repos?: any[] }) => {
             data={repositoryData}
             margin={{ top: 5, right: 30, left: 20, bottom: 5 }}
           >
-            <CartesianGrid strokeDasharray="3 3" />
-            <XAxis type="number" />
-            <YAxis dataKey="name" type="category" width={150} />
-            <Tooltip />
-            <Bar dataKey="stars" fill="#8884d8" name="Stars">
+            <CartesianGrid strokeDasharray="3 3" stroke="rgba(255,255,255,0.05)" horizontal={false} />
+            <XAxis type="number" axisLine={false} tickLine={false} tick={{fill: 'rgba(255,255,255,0.3)', fontSize: 10}} />
+            <YAxis dataKey="name" type="category" width={150} axisLine={false} tickLine={false} tick={{fill: 'rgba(255,255,255,0.5)', fontSize: 10}} />
+            <Tooltip 
+              contentStyle={{backgroundColor: 'rgba(20,20,20,0.8)', border: '1px solid rgba(255,255,255,0.1)', borderRadius: '12px'}}
+            />
+            <Bar dataKey="stars" fill="#5dd7e6" radius={[0, 4, 4, 0]} name="Stars">
               {repositoryData.map((_, index) => (
                 <Cell key={`cell-${index}`} fill={COLORS[index % COLORS.length]} />
               ))}
@@ -361,12 +401,12 @@ export default function Dashboard() {
         transition={{ duration: 0.5 }}
         className="container mx-auto px-4"
       >
-        <div className="text-center mb-12">
-          <h2 className="text-4xl font-bold bg-gradient-to-r from-blue-600 to-purple-600 dark:from-blue-400 dark:to-purple-400 bg-clip-text text-transparent mb-4">
-            GitHub Analytics Dashboard
+        <div className="text-center mb-16">
+          <h2 className="text-4xl md:text-5xl font-extrabold bg-gradient-to-r from-white via-[#5dd7e6] to-white/40 bg-clip-text text-transparent mb-6 tracking-tight animate-gradient-x">
+            System Analytics
           </h2>
-          <p className="text-lg text-slate-600 dark:text-slate-300 max-w-2xl mx-auto">
-            Real-time analytics and insights from my GitHub profile
+          <p className="text-lg text-zinc-500 max-w-2xl mx-auto font-light leading-relaxed">
+            Real-time telemetry and deep insights harvested from my active digital workspace.
           </p>
           {error && (
             <p className="text-sm text-red-500 dark:text-red-400 mt-2">

@@ -5,23 +5,24 @@ import { motion } from 'framer-motion';
 import * as THREE from 'three';
 
 // Define your skills with categories, proficiency levels, and colors
+// Define your skills with categories, proficiency levels, and colors - Digital Atelier Palette
 const skillsData = [
-  { name: 'React', category: 'Frontend', level: 0.9, color: '#61DAFB' },
-  { name: 'Python', category: 'Languages', level: 0.8, color: '#3776AB' },
-  { name: 'Data Analysis', category: 'Analytics', level: 0.9, color: '#FF6B6B' },
-  { name: 'Pandas', category: 'Analytics', level: 0.85, color: '#150458' },
-  { name: 'Tailwind', category: 'Frontend', level: 0.9, color: '#38B2AC' },
-  { name: 'Tableau', category: 'Analytics', level: 0.8, color: '#E97627' },
-  { name: 'JavaScript', category: 'Languages', level: 0.85, color: '#F7DF1E' },
-  { name: 'HTML/CSS', category: 'Frontend', level: 0.9, color: '#E34F26' },
-  { name: 'FastAPI', category: 'Backend', level: 0.8, color: '#05998B' },
-  { name: 'Git', category: 'Tools', level: 0.8, color: '#F05032' },
-  { name: 'ML', category: 'AI', level: 0.85, color: '#FFD700' },
-  { name: 'GenAI', category: 'AI', level: 0.9, color: '#FF69B4' },
-  { name: 'MySQL', category: 'Analytics', level: 0.8, color: '#00758F' },
-  { name: 'PostgreSQL', category: 'Analytics', level: 0.8, color: '#336791' },
-  { name: 'Business Analysis', category: 'Analytics', level: 0.8, color: '#40E0D0' },
-  { name: 'KPI', category: 'Analytics', level: 0.75, color: '#9932CC' },
+  { name: 'React', category: 'Frontend', level: 0.9, color: '#5dd7e6' },
+  { name: 'Python', category: 'Languages', level: 0.8, color: '#3dbdc3' },
+  { name: 'Data Analysis', category: 'Analytics', level: 0.9, color: '#8df2ff' },
+  { name: 'Pandas', category: 'Analytics', level: 0.85, color: '#018b99' },
+  { name: 'Tailwind', category: 'Frontend', level: 0.9, color: '#5dd7e6' },
+  { name: 'Tableau', category: 'Analytics', level: 0.8, color: '#3dbdc3' },
+  { name: 'JavaScript', category: 'Languages', level: 0.85, color: '#5dd7e6' },
+  { name: 'HTML/CSS', category: 'Frontend', level: 0.9, color: '#3dbdc3' },
+  { name: 'FastAPI', category: 'Backend', level: 0.8, color: '#018b99' },
+  { name: 'Git', category: 'Tools', level: 0.8, color: '#bec8ca' },
+  { name: 'ML', category: 'AI', level: 0.85, color: '#5dd7e6' },
+  { name: 'GenAI', category: 'AI', level: 0.9, color: '#8df2ff' },
+  { name: 'MySQL', category: 'Analytics', level: 0.8, color: '#018b99' },
+  { name: 'PostgreSQL', category: 'Analytics', level: 0.8, color: '#3dbdc3' },
+  { name: 'Business Analysis', category: 'Analytics', level: 0.8, color: '#bec8ca' },
+  { name: 'KPI', category: 'Analytics', level: 0.75, color: '#899295' },
 ];
 
 // Animated trail component for skill nodes
@@ -540,21 +541,27 @@ export default function Skills3D() {
           Explore my skills in this interactive 3D visualization. Drag to rotate, scroll to zoom.
         </p>
         
-        {/* Category filters */}
+        {/* Category filters with sliding pill */}
         <div className="flex justify-center mb-10 overflow-hidden">
           <div className="p-2 glass-card rounded-2xl md:rounded-full inline-flex flex-wrap justify-center shadow-2xl max-w-full gap-2 border border-white/10 inner-glow">
             {categories.map(category => (
               <motion.button
                 key={category}
                 onClick={() => setActiveCategory(category)}
-                className={`px-4 py-1.5 rounded-full text-sm font-medium transition-all duration-300 flex items-center gap-2 ${activeCategory === category
-                    ? 'bg-white/20 text-white shadow-[0_0_15px_rgba(255,255,255,0.1)] border border-white/20'
-                    : 'text-white/60 hover:text-white hover:bg-white/5 border border-transparent'
-                  }`}
-                whileHover={{ scale: 1.05 }}
-                whileTap={{ scale: 0.98 }}
+                className={`relative px-4 py-1.5 rounded-full text-sm font-medium flex items-center gap-2 transition-colors duration-200 ${
+                  activeCategory === category ? 'text-white' : 'text-white/60 hover:text-white'
+                }`}
+                whileHover={{ scale: 1.03 }}
+                whileTap={{ scale: 0.97 }}
               >
-                <span className="whitespace-nowrap">{category}</span>
+                {activeCategory === category && (
+                  <motion.div
+                    layoutId="skills-filter-pill"
+                    className="absolute inset-0 rounded-full bg-white/20 border border-white/20 shadow-[0_0_18px_rgba(255,255,255,0.12)]"
+                    transition={{ type: 'spring', stiffness: 380, damping: 30 }}
+                  />
+                )}
+                <span className="relative z-10 whitespace-nowrap">{category}</span>
               </motion.button>
             ))}
           </div>
@@ -570,38 +577,37 @@ export default function Skills3D() {
       {/* Skills list restored */}
       <div className="container mx-auto px-4 mt-12">
         <div className="grid grid-cols-1 md:grid-cols-3 gap-6">
-          {categories.slice(1).map(category => (
+          {categories.slice(1).map((category, catIdx) => (
             <motion.div
               key={category}
-              initial={{ opacity: 0, y: 20 }}
-              whileInView={{ opacity: 1, y: 0 }}
-              transition={{ duration: 0.5 }}
-              className="bg-[#1c1b1b] p-6 rounded-xl border border-[#3f484a]/30 hover:border-[#5dd7e6]/20 transition-colors duration-200"
+              initial={{ opacity: 0, y: 28, filter: 'blur(4px)' }}
+              whileInView={{ opacity: 1, y: 0, filter: 'blur(0px)' }}
+              viewport={{ once: true, amount: 0.15 }}
+              transition={{ duration: 0.55, delay: catIdx * 0.1, ease: [0.25, 0.46, 0.45, 0.94] }}
+              className="bg-[#1c1b1b] p-6 rounded-xl border border-[#3f484a]/30 hover:border-[#5dd7e6]/25 transition-colors duration-300"
             >
-              <h3 className="text-xl font-semibold mb-4 text-[#e5e2e1]">{category}</h3>
-              <ul className="space-y-3">
+              <h3 className="text-lg font-semibold mb-5 text-[#e5e2e1]">{category}</h3>
+              <ul className="space-y-4">
                 {skillsData
                   .filter(skill => skill.category === category)
                   .map(skill => (
-                    <li key={skill.name} className="space-y-1">
+                    <li key={skill.name} className="space-y-1.5">
                       <div className="flex items-center justify-between">
-                        <span className="font-medium text-[#e5e2e1]">{skill.name}</span>
-                        <span className="text-xs text-[#899295]">
-                          {Math.round(skill.level * 100)}%
-                        </span>
+                        <span className="font-medium text-sm text-[#e5e2e1]">{skill.name}</span>
+                        <span className="text-xs text-[#899295]">{Math.round(skill.level * 100)}%</span>
                       </div>
                       <div className="w-full h-1.5 bg-[#3f484a]/60 rounded-full overflow-hidden">
-                        <div 
-                          className="h-full rounded-full" 
-                          style={{ 
-                            width: `${skill.level * 100}%`,
-                            backgroundColor: skill.color 
-                          }}
+                        <motion.div
+                          className="h-full rounded-full"
+                          style={{ backgroundColor: skill.color }}
+                          initial={{ width: 0 }}
+                          whileInView={{ width: `${skill.level * 100}%` }}
+                          viewport={{ once: true, amount: 0.5 }}
+                          transition={{ duration: 0.9, ease: [0.25, 0.46, 0.45, 0.94], delay: 0.15 }}
                         />
                       </div>
                     </li>
-                  ))
-                }
+                  ))}
               </ul>
             </motion.div>
           ))}

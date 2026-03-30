@@ -110,34 +110,10 @@ export default function BlogPage() {
   return (
     <>
       <main className="min-h-screen pt-24 pb-16 relative overflow-hidden">
-        {/* Decorative background elements */}
-        <div className="absolute inset-0 z-0">
-          <div className="absolute top-40 right-1/4 w-72 h-72 bg-blue-500/10 rounded-full blur-3xl"></div>
-          <div className="absolute bottom-40 left-1/3 w-96 h-96 bg-purple-500/10 rounded-full blur-3xl"></div>
-          <motion.div
-            className="absolute top-1/3 left-1/5 w-4 h-4 bg-yellow-400 rounded-full"
-            animate={{
-              y: [0, 15, -15, 0],
-              opacity: [1, 0.5, 1]
-            }}
-            transition={{
-              duration: 5,
-              repeat: Infinity,
-              repeatType: "reverse"
-            }}
-          />
-          <motion.div
-            className="absolute bottom-1/4 right-1/5 w-3 h-3 bg-green-400 rounded-full"
-            animate={{
-              y: [0, -20, 20, 0],
-              opacity: [1, 0.6, 1]
-            }}
-            transition={{
-              duration: 6,
-              repeat: Infinity,
-              repeatType: "reverse"
-            }}
-          />
+        {/* Premium Atmospheric Depth Elements */}
+        <div className="absolute inset-0 z-0 overflow-hidden pointer-events-none">
+          <div className="absolute top-[-10%] right-[-10%] w-[600px] h-[600px] bg-[#5dd7e6]/[0.05] blur-[150px] animate-pulse"></div>
+          <div className="absolute bottom-[-10%] left-[-10%] w-[700px] h-[700px] bg-zinc-500/[0.03] blur-[180px] animate-pulse" style={{ animationDuration: '10s' }}></div>
         </div>
 
         <div className="container mx-auto px-4 z-10 relative">
@@ -150,58 +126,50 @@ export default function BlogPage() {
                 className="mb-12"
               >
                 <motion.div
-                  initial={{ opacity: 0, width: 0 }}
-                  animate={{ opacity: 1, width: "40%" }}
+                  initial={{ opacity: 0, scaleX: 0 }}
+                  animate={{ opacity: 1, scaleX: 1 }}
                   transition={{ delay: 0.2, duration: 0.8 }}
-                  className="h-1 bg-gradient-to-r from-blue-600 to-purple-600 dark:from-blue-500 dark:to-purple-500 mb-4 mx-auto"
+                  className="h-px bg-gradient-to-r from-transparent via-[#5dd7e6]/50 to-transparent mb-8 mx-auto w-1/3"
                 />
                 <motion.h1
                   variants={itemVariants}
-                  className="text-4xl md:text-5xl font-bold text-center mb-6"
+                  className="text-5xl md:text-6xl font-extrabold text-center mb-8 relative"
                 >
-                  <span className="relative">
-                    <span className="relative z-10 bg-gradient-to-r from-blue-600 to-purple-600 dark:from-blue-400 dark:to-purple-400 bg-clip-text text-transparent">
-                      My Blog
-                    </span>
-                    <motion.span
-                      className="absolute -bottom-2 left-0 w-full h-3 bg-blue-200 dark:bg-blue-900/50 -z-10"
-                      initial={{ width: 0 }}
-                      animate={{ width: "100%" }}
-                      transition={{ delay: 0.8, duration: 0.6 }}
-                    />
+                  <span className="bg-gradient-to-r from-white via-[#5dd7e6] to-white/40 bg-clip-text text-transparent animate-gradient-x tracking-tight">
+                    Insights & Expertise
                   </span>
                 </motion.h1>
                 <motion.p
                   variants={itemVariants}
-                  className="text-xl text-slate-600 dark:text-slate-300 text-center max-w-2xl mx-auto mb-8"
+                  className="text-lg text-zinc-500 text-center max-w-2xl mx-auto mb-12 font-light leading-relaxed"
                 >
-                  Thoughts, stories and ideas about web development, design, and technology.
+                  Strategic insights on data architecture, machine learning experiments, and the evolution of high-performance digital solutions.
                 </motion.p>
 
                 {/* Search and filter section */}
                 <motion.div
                   variants={itemVariants}
-                  className="max-w-3xl mx-auto mb-12 bg-white dark:bg-slate-800/50 backdrop-blur-sm rounded-xl p-6 shadow-lg border border-slate-200 dark:border-slate-700"
+                  className="max-w-3xl mx-auto mb-16 glass-card p-2 rounded-2xl md:rounded-full border border-white/5 bg-white/[0.01] shadow-2xl relative z-20"
                 >
-                  <div className="flex flex-col md:flex-row gap-4">
+                  <div className="flex flex-col md:flex-row gap-2">
                     <div className="relative flex-grow">
-                      <Search className="absolute left-3 top-1/2 transform -translate-y-1/2 text-slate-400" size={18} />
+                      <Search className="absolute left-4 top-1/2 transform -translate-y-1/2 text-zinc-500" size={16} />
                       <input
                         type="text"
-                        placeholder="Search articles..."
+                        placeholder="Search the archive..."
                         value={searchTerm}
                         onChange={(e) => setSearchTerm(e.target.value)}
-                        className="w-full pl-10 pr-4 py-2 rounded-lg border border-slate-200 dark:border-slate-700 bg-white dark:bg-slate-800 focus:ring-2 focus:ring-blue-500 focus:border-transparent outline-none transition-all"
+                        className="w-full pl-11 pr-5 py-3 rounded-full border border-transparent bg-white/[0.02] text-white placeholder:text-zinc-600 focus:ring-1 focus:ring-[#5dd7e6]/30 outline-none transition-all text-sm font-light"
                       />
                     </div>
                     <div className="flex-shrink-0">
                       <select
                         value={selectedCategory || 'All'}
                         onChange={(e) => setSelectedCategory(e.target.value === 'All' ? null : e.target.value)}
-                        className="w-full md:w-auto px-4 py-2 rounded-lg border border-slate-200 dark:border-slate-700 bg-white dark:bg-slate-800 focus:ring-2 focus:ring-blue-500 focus:border-transparent outline-none transition-all"
+                        className="w-full md:w-auto px-6 py-3 rounded-full border border-transparent bg-white/[0.02] text-zinc-400 focus:ring-1 focus:ring-[#5dd7e6]/30 outline-none transition-all text-sm font-medium cursor-pointer hover:bg-white/5"
                       >
                         {categories.map(category => (
-                          <option key={category} value={category}>{category}</option>
+                          <option key={category} value={category} className="bg-[#0e0e0e] text-white">{category}</option>
                         ))}
                       </select>
                     </div>
@@ -223,49 +191,49 @@ export default function BlogPage() {
                   animate="visible"
                   whileHover="hover"
                   whileTap="tap"
-                  className="bg-white dark:bg-slate-800 rounded-xl overflow-hidden shadow-md border border-slate-100 dark:border-slate-700 h-full flex flex-col"
+                  className="glass-card rounded-2xl overflow-hidden border border-white/5 flex flex-col h-full bg-white/[0.01] hover:border-[#5dd7e6]/20 transition-all duration-500 group"
                 >
-                  <div className="relative overflow-hidden">
+                  <div className="relative overflow-hidden aspect-[16/10]">
                     <motion.img
                       src={post.imageUrl}
                       alt={post.title}
-                      className="w-full h-56 object-cover transition-transform"
+                      className="w-full h-full object-cover opacity-80 group-hover:opacity-100 transition-opacity duration-500"
                       whileHover={{ scale: 1.05 }}
-                      transition={{ duration: 0.3 }}
+                      transition={{ duration: 0.8 }}
                     />
-                    <div className="absolute inset-0 bg-gradient-to-t from-black/30 to-transparent"></div>
-                    <div className="absolute bottom-4 left-4 flex items-center space-x-2">
+                    <div className="absolute inset-0 bg-gradient-to-t from-[#0e0e0e] via-[#0e0e0e]/0 to-transparent opacity-60"></div>
+                    <div className="absolute bottom-4 left-4 flex flex-wrap gap-2">
                       {post.categories.map(category => (
                         <span
                           key={category}
-                          className="px-2 py-1 bg-blue-500/80 text-white text-xs font-medium rounded-full backdrop-blur-sm"
+                          className="px-2.5 py-1 bg-[#5dd7e6]/10 text-[#5dd7e6] text-[10px] font-bold tracking-widest uppercase rounded-md border border-[#5dd7e6]/30 backdrop-blur-md shadow-[0_0_15px_rgba(93,215,230,0.1)]"
                         >
                           {category}
                         </span>
                       ))}
                     </div>
                   </div>
-                  <div className="p-6 flex-grow flex flex-col">
-                    <div className="flex items-center text-sm text-slate-500 dark:text-slate-400 mb-3 space-x-4">
+                  <div className="p-7 flex-grow flex flex-col relative">
+                    <div className="flex items-center text-[10px] font-bold uppercase tracking-widest text-zinc-600 mb-4 space-x-5">
                       <span className="flex items-center">
-                        <Calendar className="mr-1 h-4 w-4" />
+                        <Calendar className="mr-2 h-3.5 w-3.5" />
                         {post.date}
                       </span>
                       <span className="flex items-center">
-                        <BookOpen className="mr-1 h-4 w-4" />
+                        <BookOpen className="mr-2 h-3.5 w-3.5" />
                         {post.readTime}
                       </span>
                     </div>
-                    <h3 className="text-xl font-semibold mb-3 flex-grow">{post.title}</h3>
-                    <p className="text-slate-600 dark:text-slate-300 mb-4">{post.excerpt}</p>
+                    <h3 className="text-xl font-bold mb-3 flex-grow text-white group-hover:text-[#5dd7e6] transition-colors duration-300 leading-tight tracking-tight">{post.title}</h3>
+                    <p className="text-zinc-500 mb-6 text-sm font-light leading-relaxed line-clamp-3">{post.excerpt}</p>
                     <a
                       href={post.mediumUrl}
                       target="_blank"
                       rel="noopener noreferrer"
-                      className="text-blue-500 hover:text-blue-700 font-medium inline-flex items-center group mt-auto"
+                      className="text-[#5dd7e6] hover:text-white transition-colors duration-300 flex items-center gap-2 text-xs font-bold uppercase tracking-wider group/btn mt-auto"
                     >
-                      Read on Medium
-                      <ArrowRight className="ml-1 h-4 w-4 transition-transform group-hover:translate-x-1" />
+                      <span className="relative pb-0.5 border-b border-transparent group-hover/btn:border-[#5dd7e6] transition-all">Deep Read</span>
+                      <ArrowRight className="h-3.5 w-3.5 transition-transform group-hover/btn:translate-x-1" />
                     </a>
                   </div>
                 </motion.article>
@@ -302,31 +270,31 @@ export default function BlogPage() {
             initial={{ opacity: 0, y: 30 }}
             animate={{ opacity: 1, y: 0 }}
             transition={{ duration: 0.6, delay: 0.8 }}
-            className="mt-20 bg-gradient-to-r from-blue-500/10 to-purple-500/10 dark:from-blue-900/20 dark:to-purple-900/20 rounded-2xl p-8 md:p-12 relative overflow-hidden"
+            className="mt-24 glass-card rounded-3xl p-10 md:p-16 relative overflow-hidden border border-white/5 bg-white/[0.01]"
           >
-            <div className="absolute inset-0 overflow-hidden">
-              <div className="absolute -right-10 -top-10 w-40 h-40 bg-blue-500/20 rounded-full blur-2xl"></div>
-              <div className="absolute -left-10 -bottom-10 w-40 h-40 bg-purple-500/20 rounded-full blur-2xl"></div>
+            <div className="absolute inset-0 overflow-hidden pointer-events-none">
+              <div className="absolute -right-20 -top-20 w-80 h-80 bg-[#5dd7e6]/10 rounded-full blur-[100px]"></div>
+              <div className="absolute -left-20 -bottom-20 w-80 h-80 bg-zinc-500/10 rounded-full blur-[100px]"></div>
             </div>
 
-            <div className="relative z-10">
-              <h3 className="text-2xl md:text-3xl font-bold mb-4 text-center">Subscribe to my newsletter</h3>
-              <p className="text-slate-600 dark:text-slate-300 text-center mb-6 max-w-2xl mx-auto">
-                Get the latest posts delivered right to your inbox. No spam, ever.
+            <div className="relative z-10 text-center">
+              <h3 className="text-3xl md:text-4xl font-extrabold mb-4 tracking-tight text-white">Subscribe to the Insight Layer</h3>
+              <p className="text-zinc-500 mb-10 max-w-xl mx-auto font-light leading-relaxed">
+                Join a curated list of professionals receiving strategic updates on data engineering and digital performance.
               </p>
 
-              <form className="max-w-md mx-auto flex flex-col sm:flex-row gap-3">
+              <form className="max-w-md mx-auto flex flex-col sm:flex-row gap-4">
                 <input
                   type="email"
-                  placeholder="Enter your email"
-                  className="flex-grow px-4 py-3 rounded-lg border border-slate-200 dark:border-slate-700 bg-white dark:bg-slate-800 focus:ring-2 focus:ring-blue-500 focus:border-transparent outline-none"
+                  placeholder="name@company.com"
+                  className="flex-grow px-6 py-4 rounded-full border border-white/10 bg-white/[0.02] text-white focus:ring-1 focus:ring-[#5dd7e6]/30 outline-none text-sm font-light"
                 />
                 <motion.button
                   whileHover={{ scale: 1.05 }}
                   whileTap={{ scale: 0.95 }}
-                  className="px-6 py-3 bg-blue-600 hover:bg-blue-700 text-white font-medium rounded-lg transition-colors shadow-md"
+                  className="px-8 py-4 bg-gradient-to-r from-[#5dd7e6] to-[#018b99] text-[#002e33] font-bold rounded-full transition-all duration-300 shadow-[0_8px_20px_rgba(93,215,230,0.3)] text-sm"
                 >
-                  Subscribe
+                  Join Now
                 </motion.button>
               </form>
             </div>

@@ -28,7 +28,7 @@ const normalizeCategory = (category: string): string => {
 const formatCategoryDisplay = (category: string): string => {
   const normalized = normalizeCategory(category);
   if (normalized === 'ml&genai') return 'ML&GenAI';
-  
+
   return category
     .split(' ')
     .map(word => word.charAt(0).toUpperCase() + word.slice(1))
@@ -67,15 +67,6 @@ const headingVariants = {
       damping: 12,
       duration: 0.8
     }
-  }
-};
-
-const filterVariants = {
-  inactive: { scale: 1, y: 0 },
-  active: {
-    scale: 1.08,
-    y: -2,
-    transition: { type: "spring" as const, stiffness: 300, damping: 10 }
   }
 };
 
@@ -164,7 +155,7 @@ export default function Projects() {
   useEffect(() => {
     if (!isInView) return;
 
-    return () => {};
+    return () => { };
   }, [isInView]);
 
   useEffect(() => {
@@ -224,10 +215,10 @@ export default function Projects() {
       variants={headingVariants}
       className="pt-16 pb-28 !mb-0 relative overflow-hidden"
     >
-      {/* Animated background with SSR check */}
+      {/* Animated background with SSR check - Premium Atmosphere */}
       {typeof window !== 'undefined' && (
         <motion.div
-          className="absolute -top-10 left-1/4 w-[28rem] h-[28rem] bg-gradient-to-br from-blue-400/20 to-sky-300/15 rounded-full filter blur-[100px] opacity-80 z-0"
+          className="absolute -top-10 left-1/4 w-[28rem] h-[28rem] bg-gradient-to-br from-[#5dd7e6]/10 to-transparent rounded-full filter blur-[120px] opacity-60 z-0"
           animate={{
             x: [0, 30, 0],
             y: [0, -30, 0],
@@ -245,46 +236,30 @@ export default function Projects() {
         {/* Heading with enhanced animation */}
         <div className="text-center mb-16">
           <motion.div
-            className="inline-flex items-center justify-center mb-3 relative"
+            className="inline-flex items-center justify-center mb-6 relative"
             initial={{ opacity: 0, scale: 0.8 }}
             animate={{ opacity: 1, scale: 1 }}
-            transition={{
-              duration: 0.5,
-              delay: 0.2,
-              type: 'spring' as const,
-              stiffness: 100
-            }}
           >
-            <motion.div
-              className="absolute inset-0 rounded-full bg-gradient-to-r from-blue-500/20 to-purple-500/20 blur-xl"
-              animate={{
-                rotate: [0, 360],
-              }}
-              transition={{
-                duration: 12,
-                repeat: Infinity,
-                ease: 'linear' as const
-              }}
-            />
-            <div className="glass-card !rounded-full px-4 py-2 flex items-center gap-2 relative z-10 border border-white/10 inner-glow">
-              <span className="text-sm font-medium text-white/90">My Work</span>
+            <div className="glass-card !rounded-full px-5 py-2 flex items-center gap-2.5 relative z-10 border border-white/10 inner-glow bg-white/[0.02]">
+              <span className="text-[10px] font-bold uppercase tracking-[0.2em] text-[#5dd7e6]">My Work</span>
             </div>
           </motion.div>
 
-          <motion.h2
-            className="text-4xl md:text-5xl font-bold mb-4 bg-clip-text text-transparent bg-gradient-to-r from-primary to-purple-500"
-            variants={headingVariants}
-          >
-            Featured Projects
-          </motion.h2>
-
-          <motion.p
-            className="text-lg text-muted-foreground max-w-2xl mx-auto"
-            initial={{ opacity: 0, y: 20 }}
+          <motion.h1
+            className="text-4xl md:text-5xl font-extrabold mb-6 tracking-tight bg-gradient-to-r from-white via-[#5dd7e6] to-white/40 bg-clip-text text-transparent animate-gradient-x"
+            initial={{ opacity: 0, y: 10 }}
             animate={{ opacity: 1, y: 0 }}
-            transition={{ delay: 0.4, duration: 0.6 }}
+            transition={{ delay: 0.3 }}
           >
-            Explore my latest work showcasing creative solutions and technical expertise. My Portfolio is my best project. Currently I am working on it. Many project is going to be added soon.
+            Digital Atelier
+          </motion.h1>
+          <motion.p
+            className="text-lg text-zinc-500 max-w-2xl mx-auto font-light leading-relaxed mb-10"
+            initial={{ opacity: 0 }}
+            animate={{ opacity: 1 }}
+            transition={{ delay: 0.5 }}
+          >
+            A curated portfolio of strategic data solutions and high-performance digital experiments. Currently evolving this space with new breakthroughs.
           </motion.p>
         </div>
 
@@ -295,26 +270,28 @@ export default function Projects() {
           animate={{ opacity: 1, y: 0 }}
           transition={{ delay: 0.6, duration: 0.5 }}
         >
-          <div className="p-2 glass-card rounded-2xl md:rounded-full inline-flex flex-wrap justify-center shadow-2xl max-w-full gap-2 border border-white/10 inner-glow">
+          <div className="p-2 glass-card rounded-2xl md:rounded-full inline-flex flex-wrap justify-center shadow-2xl max-w-full gap-2 border border-white/5 bg-white/[0.01] backdrop-blur-3xl">
             {categories.map((category) => {
               const normalizedCategory = normalizeCategory(category);
               const displayCategory = formatCategoryDisplay(category);
-
               return (
                 <motion.button
                   key={normalizedCategory}
                   onClick={() => handleFilterChange(category)}
-                  className={`px-4 py-1.5 rounded-full text-sm font-medium transition-all duration-300 flex items-center gap-2 ${activeFilter === category
-                      ? `bg-white/20 text-white shadow-[0_0_15px_rgba(255,255,255,0.1)] border border-white/20`
-                      : 'text-white/60 hover:text-white hover:bg-white/5 border border-transparent'
+                  className={`relative px-4 py-1.5 rounded-full text-sm font-medium flex items-center gap-2 transition-colors duration-200 ${activeFilter === category ? 'text-white' : 'text-white/60 hover:text-white'
                     }`}
-                  variants={filterVariants}
-                  animate={activeFilter === category ? 'active' : 'inactive'}
-                  whileHover={{ scale: 1.05 }}
-                  whileTap={{ scale: 0.98 }}
+                  whileHover={{ scale: 1.03 }}
+                  whileTap={{ scale: 0.97 }}
                 >
-                  <CategoryIcon category={category} />
-                  <span className="whitespace-nowrap">{displayCategory}</span>
+                  {activeFilter === category && (
+                    <motion.div
+                      layoutId="projects-filter-pill"
+                      className="absolute inset-0 rounded-full bg-white/20 border border-white/20 shadow-[0_0_18px_rgba(255,255,255,0.12)]"
+                      transition={{ type: 'spring', stiffness: 380, damping: 30 }}
+                    />
+                  )}
+                  <span className="relative z-10"><CategoryIcon category={category} /></span>
+                  <span className="relative z-10 whitespace-nowrap">{displayCategory}</span>
                 </motion.button>
               );
             })}
@@ -341,23 +318,20 @@ export default function Projects() {
           </AnimatePresence>
         </motion.div>
 
-        {/* Projects grid with lazy loading and reduced animations */}
+        {/* Projects grid — per-card stagger entrance */}
         <div className="grid grid-cols-1 md:grid-cols-2 lg:grid-cols-3 xl:grid-cols-4 gap-4 mb-12">
           {visibleProjects.map((project: Project, index: number) => (
             <motion.div
               key={project.id}
               className="h-full"
-              initial={{ opacity: 0, y: 20 }}
-              animate={{ opacity: 1, y: 0 }}
-              transition={{
-                delay: Math.min(index * 0.1, 0.3),
-                duration: 0.5
-              }}
+              initial={{ opacity: 0, y: 28, filter: 'blur(4px)' }}
+              whileInView={{ opacity: 1, y: 0, filter: 'blur(0px)' }}
+              viewport={{ once: true, amount: 0.1 }}
+              transition={{ duration: 0.55, delay: (index % 4) * 0.08, ease: [0.25, 0.46, 0.45, 0.94] }}
               onMouseEnter={() => setHoveredIndex(index)}
               onMouseLeave={() => setHoveredIndex(null)}
             >
               <div className="relative h-full group">
-                {/* Lazy loaded project card */}
                 <Suspense fallback={<CardSkeleton />}>
                   <ProjectCard
                     project={project}

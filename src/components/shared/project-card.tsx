@@ -3,8 +3,6 @@
 import { useRef } from 'react';
 import { motion, useMotionValue, useSpring, useTransform, useInView } from 'framer-motion';
 import { Card, CardHeader, CardTitle, CardDescription, CardContent, CardFooter } from '../ui/card';
-import { Badge } from '../ui/badge';
-import { Button } from '../ui/button';
 import { ExternalLink } from 'lucide-react';
 import { OptimizedImage } from '../ui/optimized-image';
 import { Project } from '../../types/project';
@@ -29,8 +27,8 @@ export default function ProjectCard({ project, isFocused, anyCardFocused }: Proj
   const springY = useSpring(mouseY, springConfig);
   
   // Transform mouse position to rotate card slightly
-  const rotateX = useTransform(springY, [-100, 100], [2, -2]);
-  const rotateY = useTransform(springX, [-100, 100], [-2, 2]);
+  const rotateX = useTransform(springY, [-100, 100], [5, -5]);
+  const rotateY = useTransform(springX, [-100, 100], [-5, 5]);
   
   // Handle mouse move for 3D effect
   const handleMouseMove = (e: React.MouseEvent<HTMLDivElement>) => {
@@ -77,10 +75,10 @@ export default function ProjectCard({ project, isFocused, anyCardFocused }: Proj
         rotateY,
         transformStyle: "preserve-3d",
         perspective: 1000,
-        scale: isFocused ? 1.02 : anyCardFocused ? 0.98 : 1,
-        opacity: isFocused ? 1 : anyCardFocused ? 0.5 : 1,
-        filter: isFocused ? 'brightness(1.05)' : anyCardFocused ? 'brightness(0.7)' : 'brightness(1)',
-        transition: 'all 0.4s cubic-bezier(0.16, 1, 0.3, 1)'
+      scale: isFocused ? 1.03 : anyCardFocused ? 0.97 : 1,
+        opacity: isFocused ? 1 : anyCardFocused ? 0.45 : 1,
+        filter: isFocused ? 'brightness(1.08)' : anyCardFocused ? 'brightness(0.65)' : 'brightness(1)',
+        transition: 'scale 0.35s cubic-bezier(0.16,1,0.3,1), opacity 0.35s ease, filter 0.35s ease'
       }}
       className="relative group h-full"
     >
@@ -97,46 +95,43 @@ export default function ProjectCard({ project, isFocused, anyCardFocused }: Proj
           </div>
         )}
         
-        <CardHeader className="relative px-4 py-2">
+        <CardHeader className="relative p-6 px-5 pb-0">
           {project.featured && (
-            <div className="absolute -top-3 -right-3 z-10">
-              <Badge variant="default" className="bg-primary text-primary-foreground shadow-lg text-[10px] h-5 px-2">
+            <div className="absolute top-4 right-4 z-10">
+              <div className="shimmer bg-[#5dd7e6]/20 text-[#5dd7e6] text-[9px] font-bold uppercase tracking-widest py-1 px-3 rounded-full border border-[#5dd7e6]/30 backdrop-blur-md shadow-[0_0_18px_rgba(93,215,230,0.15)]">
                 Featured
-              </Badge>
+              </div>
             </div>
           )}
-          <CardTitle className="text-[14px] leading-snug font-bold line-clamp-2 mb-1">{project.title}</CardTitle>
-          <CardDescription className="line-clamp-2 text-xs leading-relaxed text-[#899295]">{project.description}</CardDescription>
+          <CardTitle className="text-lg font-bold tracking-tight text-white mb-2 leading-tight">{project.title}</CardTitle>
+          <CardDescription className="line-clamp-2 text-sm leading-relaxed text-zinc-500 font-light">{project.description}</CardDescription>
         </CardHeader>
         
-        <CardContent className="flex-grow px-4 py-0">
-          <div className="flex flex-wrap gap-1.5 mt-1">
+        <CardContent className="flex-grow p-6 px-5 pt-5 pb-6">
+          <div className="flex flex-wrap gap-2">
             {project.tags.map((tag, index) => (
-              <Badge 
+              <span 
                 key={index} 
-                variant="secondary" 
-                className="text-xs hover:bg-secondary/80 transition-colors"
+                className="text-[10px] uppercase tracking-wider font-bold text-zinc-400 bg-white/[0.03] border border-white/5 py-1 px-2.5 rounded-md hover:border-[#5dd7e6]/30 hover:text-white transition-all duration-300"
               >
                 {tag}
-              </Badge>
+              </span>
             ))}
           </div>
         </CardContent>
         
-        <CardFooter className="px-4 py-2 border-t border-white/5 mt-auto bg-white/5">
-          <div className="w-full flex justify-between items-center gap-2">
-            <span className="text-[10px] text-muted-foreground whitespace-nowrap">
+        <CardFooter className="p-4 px-5 border-t border-white/5 bg-white/[0.01]">
+          <div className="w-full flex justify-between items-center">
+            <span className="text-[10px] font-bold text-zinc-600 uppercase tracking-widest">
               {project.date}
             </span>
-            <Button 
-              variant="outline" 
-              size="sm" 
-              className="flex items-center gap-1 hover:bg-[#5dd7e6]/10 hover:text-[#5dd7e6] hover:border-[#5dd7e6]/50 transition-all duration-300 relative overflow-hidden group border border-[#3f484a] text-[#bec8ca] bg-transparent backdrop-blur-sm"
+            <button 
+              className="text-[#5dd7e6] hover:text-white transition-colors duration-300 flex items-center gap-1.5 text-xs font-bold uppercase tracking-wider group/btn"
               onClick={() => window.open(project.url, '_blank')}
             >
-              <span className="relative z-10">View Project</span>
-              <ExternalLink className="h-4 w-4 ml-1 relative z-10" />
-            </Button>
+              <span className="relative pb-0.5 border-b border-transparent group-hover/btn:border-[#5dd7e6] transition-all">Project Details</span>
+              <ExternalLink className="h-3.5 w-3.5 transition-transform group-hover/btn:translate-x-0.5 group-hover/btn:-translate-y-0.5" />
+            </button>
           </div>
         </CardFooter>
       </Card>

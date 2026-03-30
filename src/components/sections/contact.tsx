@@ -89,16 +89,16 @@ export default function Contact() {
   };
 
   const contactInfo = [
-    { icon: <Mail size={20} />, title: 'Email', content: 'msoumo005@gmail.com', link: 'mailto:msoumo005@gmail.com', color: 'from-blue-400 to-blue-600' },
-    { icon: <Phone size={20} />, title: 'Phone', content: '+91 8348017580', link: 'tel:+918348017580', color: 'from-green-400 to-green-600' },
-    { icon: <MapPin size={20} />, title: 'Location', content: 'City-Jalpaiguri, Country-India', link: null, color: 'from-red-400 to-red-600' },
-    { icon: <Clock size={20} />, title: 'Working Hours', content: 'Any Time', link: null, color: 'from-purple-400 to-purple-600' }
+    { icon: <Mail size={20} />, title: 'Email', content: 'msoumo005@gmail.com', link: 'mailto:msoumo005@gmail.com' },
+    { icon: <Phone size={20} />, title: 'Phone', content: '+91 8348017580', link: 'tel:+918348017580' },
+    { icon: <MapPin size={20} />, title: 'Location', content: 'City-Jalpaiguri, Country-India', link: null },
+    { icon: <Clock size={20} />, title: 'Working Hours', content: 'Any Time', link: null }
   ];
 
   const socialLinks = [
-    { icon: <Github size={16} />, name: 'GitHub', url: 'https://github.com/Soumodwip-Mondal', color: 'from-gray-600 to-gray-800' },
-    { icon: <Linkedin size={16} />, name: 'LinkedIn', url: 'https://linkedin.com/in/soumodwip-mondal-805243298', color: 'from-blue-500 to-blue-700' },
-    { icon: <X size={16} />, name: 'Twitter', url: 'https://twitter.com/@SouravMond17180', color: 'from-blue-400 to-blue-600' }
+    { icon: <Github size={16} />, name: 'GitHub', url: 'https://github.com/Soumodwip-Mondal' },
+    { icon: <Linkedin size={16} />, name: 'LinkedIn', url: 'https://linkedin.com/in/soumodwip-mondal-805243298' },
+    { icon: <X size={16} />, name: 'Twitter', url: 'https://twitter.com/@SouravMond17180' }
   ];
 
   // Enhanced animation variants
@@ -162,25 +162,25 @@ export default function Contact() {
 
   return (
     <section id="contact" className="py-20 bg-background overflow-hidden relative">
-      {/* Animated background shapes */}
+      {/* Animated background shapes - Subtle Atmospheric Depth */}
       <motion.div 
-        className="absolute top-20 left-20 w-64 h-64 bg-[#5dd7e6]/8 rounded-full opacity-60 -z-10"
+        className="absolute top-20 left-10 w-80 h-80 bg-[#5dd7e6]/5 rounded-full blur-[100px] -z-10"
         animate={{ 
-          scale: [1, 1.2, 1],
-          rotate: [0, 90, 180, 270, 360],
-          borderRadius: ["50%", "40%", "50%"]
+          x: [0, 50, 0],
+          y: [0, 30, 0],
+          scale: [1, 1.1, 1],
         }}
-        transition={{ duration: 20, repeat: Infinity, ease: 'linear' as const }}
+        transition={{ duration: 15, repeat: Infinity, ease: 'easeInOut' }}
       />
       
       <motion.div 
-        className="absolute bottom-20 right-20 w-96 h-96 bg-[#005f68]/10 rounded-full opacity-60 -z-10"
+        className="absolute bottom-10 right-10 w-[30rem] h-[30rem] bg-[#5dd7e6]/[0.03] rounded-full blur-[120px] -z-10"
         animate={{ 
-          scale: [1.2, 1, 1.2],
-          rotate: [360, 270, 180, 90, 0],
-          borderRadius: ["50%", "40%", "30%", "40%", "50%"]
+          x: [0, -40, 0],
+          y: [0, -60, 0],
+          scale: [1.1, 1, 1.1],
         }}
-        transition={{ duration: 25, repeat: Infinity, ease: 'linear' as const }}
+        transition={{ duration: 20, repeat: Infinity, ease: 'easeInOut' }}
       />
 
       <div className="container mx-auto px-4">
@@ -200,13 +200,20 @@ export default function Contact() {
               transition={{ duration: 0.8, delay: 0.2 }}
             />
             <motion.h2 
-              className="text-4xl font-bold bg-gradient-to-r from-[#5dd7e6] to-[#8df2ff] bg-clip-text text-transparent"
-              initial={{ opacity: 0, scale: 0.8 }}
-              whileInView={{ opacity: 1, scale: 1 }}
-              viewport={{ once: true }}
-              transition={{ duration: 0.6, delay: 0.4 }}
+              className="text-4xl md:text-5xl font-extrabold tracking-tight"
             >
-              Get In Touch
+              {['Get', 'In', 'Touch'].map((word, i) => (
+                <motion.span
+                  key={word}
+                  className="inline-block bg-gradient-to-r from-white via-[#5dd7e6] to-white/40 bg-clip-text text-transparent animate-gradient-x"
+                  initial={{ opacity: 0, y: 18, filter: 'blur(5px)' }}
+                  whileInView={{ opacity: 1, y: 0, filter: 'blur(0px)' }}
+                  viewport={{ once: true }}
+                  transition={{ delay: 0.35 + i * 0.12, duration: 0.5, ease: [0.25, 0.46, 0.45, 0.94] }}
+                >
+                  {word}{i < 2 ? '\u00a0' : ''}
+                </motion.span>
+              ))}
             </motion.h2>
             
             {/* Floating stars decoration */}
@@ -252,38 +259,37 @@ export default function Contact() {
               whileHover={{ scale: 1.01 }}
               transition={{ type: 'spring' as const, stiffness: 300, damping: 15 }}
             >
-              <Card className="overflow-hidden shadow-lg border-0 bg-[#1c1b1b] backdrop-blur-sm">
+              <Card className="glass-card overflow-hidden shadow-2xl border-white/5 bg-white/[0.01] transition-all duration-500">
                 <CardContent className="p-8">
                   <motion.div
                     initial={{ opacity: 0, y: -10 }}
                     animate={{ opacity: 1, y: 0 }}
                     transition={{ duration: 0.5 }}
                   >
-                    <h3 className="text-2xl font-semibold mb-6">Send Message</h3>
+                    <h3 className="text-xl font-bold mb-8 text-white/90 tracking-wide uppercase">Send Message</h3>
                   </motion.div>
                   
                   <AnimatePresence mode="wait">
                     {isSubmitted ? (
                       <motion.div 
                         key="success"
-                        initial={{ opacity: 0, scale: 0.8 }}
+                        initial={{ opacity: 0, scale: 0.95 }}
                         animate={{ opacity: 1, scale: 1 }}
-                        exit={{ opacity: 0, scale: 0.8 }}
-                        className="bg-green-50 dark:bg-green-900/30 text-green-700 dark:text-green-300 p-6 rounded-lg flex items-center space-x-4"
+                        exit={{ opacity: 0, scale: 0.95 }}
+                        className="bg-[#5dd7e6]/10 border border-[#5dd7e6]/20 text-[#5dd7e6] p-8 rounded-2xl flex items-center space-x-6 backdrop-blur-md"
                       >
                         <motion.div 
-                          className="bg-green-100 dark:bg-green-800 rounded-full p-2"
+                          className="bg-[#5dd7e6]/20 rounded-full p-4 shadow-[0_0_20px_rgba(93,215,230,0.2)]"
                           animate={{ 
-                            scale: [1, 1.2, 1],
-                            rotate: [0, 10, -10, 0]
+                            scale: [1, 1.1, 1],
                           }}
-                          transition={{ duration: 0.5, delay: 0.2 }}
+                          transition={{ duration: 2, repeat: Infinity }}
                         >
-                          <CheckCircle size={24} />
+                          <CheckCircle size={32} />
                         </motion.div>
                         <div>
-                          <h4 className="font-semibold text-lg">Message Sent!</h4>
-                          <p>Thank you for reaching out. I'll get back to you soon.</p>
+                          <h4 className="font-bold text-xl mb-1">Transmission Received</h4>
+                          <p className="opacity-80">I've captured your message. Expect a response shortly.</p>
                         </div>
                       </motion.div>
                     ) : (
@@ -473,7 +479,7 @@ export default function Contact() {
             transition={{ duration: 0.7, type: 'spring' as const }}
           >
             <motion.h3 
-              className="text-2xl font-semibold mb-6"
+              className="text-xl font-bold mb-8 text-white/90 tracking-wide uppercase"
               initial={{ opacity: 0, y: -10 }}
               animate={{ opacity: 1, y: 0 }}
               transition={{ duration: 0.5 }}
@@ -494,37 +500,23 @@ export default function Contact() {
                   variants={itemVariants}
                   whileHover="hover"
                   custom={index}
-                  transition={{ delay: index * 0.1 }}
                 >
-                  <Card className="border border-[#3f484a]/30 h-full transition-all duration-300 hover:border-[#5dd7e6]/30 relative overflow-hidden bg-[#1c1b1b]">
-                    {/* Subtle background pattern */}
-                    <motion.div 
-                      className="absolute inset-0 bg-gradient-to-br opacity-0 from-[#5dd7e6]/5 to-[#005f68]/5"
-                      whileHover={{ opacity: 1 }}
-                    />
-                    
-                    <CardContent className="p-5 flex items-center space-x-4 relative z-10">
-                      <motion.div 
-                        className={`rounded-full bg-gradient-to-br ${item.color} p-3 text-white`}
-                        whileHover={{ 
-                          scale: 1.2, 
-                          rotate: [0, 10, -10, 0],
-                          transition: { rotate: { repeat: 0, duration: 0.5 } }
-                        }}
-                      >
+                  <Card className="glass-card border border-white/5 h-full transition-all duration-300 hover:border-[#5dd7e6]/30 relative overflow-hidden bg-white/[0.01]">
+                    <CardContent className="p-6 flex items-center space-x-5 relative z-10">
+                      <div className="rounded-2xl bg-white/[0.03] border border-white/10 p-4 text-[#5dd7e6] shadow-[0_0_15px_rgba(93,215,230,0.1)] transition-colors group-hover:bg-[#5dd7e6]/10">
                         {item.icon}
-                      </motion.div>
+                      </div>
                       <div>
-                        <h4 className="font-medium text-lg mb-1">{item.title}</h4>
+                        <h4 className="font-bold text-lg text-white/90 mb-1">{item.title}</h4>
                         {item.link ? (
                           <a 
                             href={item.link} 
-                            className="text-[#bec8ca] hover:text-[#5dd7e6] transition-colors text-sm"
+                            className="text-zinc-500 hover:text-[#5dd7e6] transition-colors text-sm font-light"
                           >
                             {item.content}
                           </a>
                         ) : (
-                          <p className="text-[#bec8ca] text-sm">{item.content}</p>
+                          <p className="text-zinc-500 text-sm font-light">{item.content}</p>
                         )}
                       </div>
                     </CardContent>
@@ -545,38 +537,30 @@ export default function Contact() {
                 <div className="absolute top-0 right-0 w-32 h-32 bg-gradient-to-bl from-[#5dd7e6]/10 to-transparent rounded-bl-full"></div>
                 <CardContent className="p-6 relative">
                   <motion.h4 
-                    className="font-medium text-xl mb-3"
+                    className="font-bold text-lg text-white mb-3"
                     animate={pulseAnimation}
                   >
                     Connect with me
                   </motion.h4>
-                  <p className="text-[#899295] mb-5 text-sm">
+                  <p className="text-zinc-500 mb-6 text-sm font-light">
                     Find me on social media or check out my other profiles.
                   </p>
                   <div className="flex flex-wrap gap-3">
                     {socialLinks.map((social, index) => (
                       <motion.div
                         key={index}
-                        initial={{ opacity: 0, y: 20 }}
-                        animate={{ opacity: 1, y: 0 }}
-                        transition={{ delay: index * 0.2 + 0.5 }}
-                        whileHover={{ scale: 1.1, y: -4 }}
+                        whileHover={{ scale: 1.05, y: -2 }}
                         whileTap={{ scale: 0.95 }}
                       >
                         <Button 
-                          variant="outline" 
+                          variant="ghost" 
                           size="sm" 
-                          className={`rounded-full border border-[#3f484a] text-[#bec8ca] hover:border-[#5dd7e6]/60 hover:text-[#5dd7e6] hover:bg-[#5dd7e6]/5 flex items-center space-x-2 px-4 transition-all duration-300`}
+                          className="rounded-xl border border-white/10 bg-white/[0.02] text-zinc-400 hover:border-[#5dd7e6]/40 hover:text-[#5dd7e6] hover:bg-[#5dd7e6]/5 flex items-center space-x-2 px-5 py-5 transition-all duration-300 backdrop-blur-md"
                           asChild
                         >
                           <a href={social.url} target="_blank" rel="noopener noreferrer">
-                            <motion.span
-                              animate={{ rotate: [0, 10, -10, 0] }}
-                              transition={{ duration: 2, repeat: Infinity, repeatDelay: 1 }}
-                            >
-                              {social.icon}
-                            </motion.span>
-                            <span className="ml-2">{social.name}</span>
+                             {social.icon}
+                             <span className="ml-2 font-medium tracking-wide text-xs uppercase">{social.name}</span>
                           </a>
                         </Button>
                       </motion.div>
