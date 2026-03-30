@@ -139,7 +139,7 @@ export default function Hero() {
                   Data Analyst proficient in{' '}
                   <span className="text-white font-medium">SQL, Python, Data Warehousing, Big Data, Advanced Excel, Machine Learning</span>
                   {' '}and PowerBI. Turning complex raw data into compelling stories and measurable outcomes.{' '}
-                  Ranked <span className="text-white font-medium">top 9%</span> on LeetCode (Rating 1769).
+                  Ranked <span className="text-white font-medium">top 9%</span> on LeetCode (Contest rating 1769).
                 </motion.p>
 
                 <motion.div className="marquee-wrap mb-7"

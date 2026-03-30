@@ -233,7 +233,6 @@ export default function Projects() {
       )}
 
       <div className="container mx-auto px-4 relative z-10">
-        {/* Heading with enhanced animation */}
         <div className="text-center mb-16">
           <motion.div
             className="inline-flex items-center justify-center mb-6 relative"
