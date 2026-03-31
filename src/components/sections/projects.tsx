@@ -12,7 +12,6 @@ import {
   Brain,
   BarChart3,
   Database,
-  Code,
   Users
 } from 'lucide-react';
 
@@ -45,7 +44,7 @@ const CategoryIcon = ({ category }: { category: string }) => {
     'ml&genai': <Brain className="h-4 w-4" />,
     database: <Database className="h-4 w-4" />,
     'data analysis': <BarChart3 className="h-4 w-4" />,
-    python: <Code className="h-4 w-4" />,
+
     group: <Users className="h-4 w-4" />,
   };
 
@@ -119,7 +118,7 @@ export default function Projects() {
 
   // Memoize categories to prevent recalculation with specific custom ordering
   const categories = useMemo(() => {
-    const order = ['all', 'data analysis', 'ml&genai', 'web', 'database', 'group', 'python'];
+    const order = ['all', 'data analysis', 'ml&genai', 'web', 'database', 'group'];
     const uniqueCategories = Array.from(
       new Set(normalizedProjects.flatMap(project => project.categories))
     );

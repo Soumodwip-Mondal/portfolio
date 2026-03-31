@@ -166,7 +166,7 @@ export const projects: Project[] = [
     id: 14,
     title: "Speech Recognition",
     description: "Can you believe that you can control your computer by just speaking? Yes, it's possible with the help of AI. I have created a simple speech recognition project using Python and Gemeni-api.",
-    categories: ["python"],
+    categories: ["ML&GenAI"],
     tags: ["Python", "Gemeni-api", "Speech Recognition"],
     image: speech_reco,
     imageUrl: speech_reco,
