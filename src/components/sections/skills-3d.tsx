@@ -570,7 +570,7 @@ export default function Skills3D() {
       
       {/* 3D Canvas */}
       <div className="container mx-auto px-4">
-      <div className="h-[600px] w-full max-w-5xl mx-auto relative bg-[#131313] rounded-2xl overflow-hidden border border-[#3f484a]/20">
+      <div className="h-[600px] w-full max-w-6xl mx-auto relative bg-[#131313] rounded-2xl overflow-hidden border border-[#3f484a]/20">
         <AnimatedCanvas isLoaded={isLoaded} filteredSkills={filteredSkills} hovered={hovered} setHovered={setHovered} />
         <SkillInfoPanel skill={hoveredSkill} />
       </div>
