@@ -1,6 +1,6 @@
-import { useEffect, useRef, useState } from 'react';
+import { useEffect, useRef, useState, useMemo } from 'react';
 import { Canvas, useFrame } from '@react-three/fiber';
-import { OrbitControls, Text, Stars, Trail, Float, MeshDistortMaterial } from '@react-three/drei';
+import { OrbitControls, Text, Stars, Trail, MeshDistortMaterial } from '@react-three/drei';
 import { motion } from 'framer-motion';
 import * as THREE from 'three';
 
@@ -44,7 +44,133 @@ function SkillTrail({ position, color }: { position: [number, number, number], c
   );
 } 
 
-// Skill node component for the 3D visualization
+// Sun component at the origin
+function Sun() {
+  const sunRef = useRef<THREE.Mesh>(null);
+  const corona1Ref = useRef<THREE.Mesh>(null);
+  const corona2Ref = useRef<THREE.Mesh>(null);
+  const corona3Ref = useRef<THREE.Mesh>(null);
+  const flareGroupRef = useRef<THREE.Group>(null);
+
+  useFrame(({ clock }) => {
+    const t = clock.getElapsedTime();
+    if (sunRef.current) {
+      sunRef.current.rotation.y = t * 0.12;
+    }
+    if (corona1Ref.current) {
+      corona1Ref.current.scale.setScalar(1 + Math.sin(t * 1.2) * 0.06);
+    }
+    if (corona2Ref.current) {
+      corona2Ref.current.scale.setScalar(1 + Math.sin(t * 0.8 + 1) * 0.09);
+    }
+    if (corona3Ref.current) {
+      corona3Ref.current.scale.setScalar(1 + Math.sin(t * 0.5 + 2) * 0.12);
+      corona3Ref.current.rotation.y = t * 0.05;
+    }
+    if (flareGroupRef.current) {
+      flareGroupRef.current.rotation.z = t * 0.15;
+    }
+  });
+
+  return (
+    <group position={[0, 0, 0]}>
+      {/* Outermost corona glow */}
+      <mesh ref={corona3Ref}>
+        <sphereGeometry args={[2.2, 32, 32]} />
+        <meshBasicMaterial
+          color="#ff6600"
+          transparent
+          opacity={0.07}
+          blending={THREE.AdditiveBlending}
+        />
+      </mesh>
+
+      {/* Mid corona */}
+      <mesh ref={corona2Ref}>
+        <sphereGeometry args={[1.7, 32, 32]} />
+        <meshBasicMaterial
+          color="#ffaa00"
+          transparent
+          opacity={0.12}
+          blending={THREE.AdditiveBlending}
+        />
+      </mesh>
+
+      {/* Inner corona */}
+      <mesh ref={corona1Ref}>
+        <sphereGeometry args={[1.35, 32, 32]} />
+        <meshBasicMaterial
+          color="#ffdd44"
+          transparent
+          opacity={0.22}
+          blending={THREE.AdditiveBlending}
+        />
+      </mesh>
+
+      {/* Sun surface */}
+      <mesh ref={sunRef}>
+        <sphereGeometry args={[1.1, 64, 64]} />
+        <MeshDistortMaterial
+          color="#ffcc00"
+          emissive="#ff8800"
+          emissiveIntensity={2.5}
+          roughness={0.3}
+          metalness={0.0}
+          speed={1.5}
+          distort={0.18}
+        />
+      </mesh>
+
+      {/* Solar flares (animated ring) */}
+      <group ref={flareGroupRef}>
+        {[0, 60, 120, 180, 240, 300].map((deg, i) => (
+          <mesh
+            key={i}
+            position={[
+              Math.cos((deg * Math.PI) / 180) * 1.2,
+              Math.sin((deg * Math.PI) / 180) * 1.2,
+              0,
+            ]}
+          >
+            <sphereGeometry args={[0.08, 8, 8]} />
+            <meshBasicMaterial
+              color="#ffe066"
+              transparent
+              opacity={0.7}
+              blending={THREE.AdditiveBlending}
+            />
+          </mesh>
+        ))}
+      </group>
+
+      {/* Sun light */}
+      <pointLight intensity={3} color="#ffcc44" distance={60} decay={1.5} />
+    </group>
+  );
+}
+
+// Orbit ring (visual guide showing the planet's orbit path)
+function OrbitRing({ radius, inclination }: { radius: number; inclination: number }) {
+  const line = useMemo(() => {
+    const points: THREE.Vector3[] = [];
+    const segments = 128;
+    for (let i = 0; i <= segments; i++) {
+      const theta = (i / segments) * Math.PI * 2;
+      points.push(new THREE.Vector3(Math.cos(theta) * radius, 0, Math.sin(theta) * radius));
+    }
+    const geometry = new THREE.BufferGeometry().setFromPoints(points);
+    const material = new THREE.LineBasicMaterial({ color: '#ffffff', transparent: true, opacity: 0.06 });
+    return new THREE.Line(geometry, material);
+  }, [radius]);
+
+  return (
+    <group rotation={[inclination, 0, 0]}>
+      <primitive object={line} />
+    </group>
+  );
+}
+
+// Skill node component for the 3D visualization — orbits around the sun
 function SkillNode({ skill, index, totalSkills, hovered, setHovered }: {
   skill: { name: string; category: string; level: number; color: string };
   index: number;
@@ -56,26 +182,15 @@ function SkillNode({ skill, index, totalSkills, hovered, setHovered }: {
   const textRef = useRef<THREE.Mesh | null>(null);
   const glowRef = useRef<THREE.Mesh>(null);
   const particlesRef = useRef<THREE.Points>(null);
-  const orbitRef = useRef<THREE.Group>(null);
-  
-  // Calculate position in 3D space based on skill category and level
-  const angle = (index / totalSkills) * Math.PI * 2;
-  const radius = 5 + skill.level * 2;
-  const x = Math.cos(angle) * radius;
-  const z = Math.sin(angle) * radius;
-  
-  // Position based on category
-  let y = 0;
-  switch(skill.category) {
-    case 'Frontend': y = 2; break;
-    case 'Languages': y = 0; break;
-    case 'Analytics': y = -2; break;
-    case 'Backend': y = 1; break;
-    case 'Tools': y = -1; break;
-    case 'AI': y = -2.5; break;
-    default: y = 0;
-  }
-  
+  const miniOrbitRef = useRef<THREE.Group>(null);
+  const orbitGroupRef = useRef<THREE.Group>(null); // The group that revolves around the sun
+
+  // Orbital parameters — unique per planet
+  const orbitRadius = 4.5 + skill.level * 2.5 + (index % 4) * 0.6;
+  const orbitSpeed = 0.08 + (index % 5) * 0.025; // different speeds
+  const orbitInclination = ((index % 6) - 2.5) * 0.22; // tilt in radians
+  const initialAngle = (index / totalSkills) * Math.PI * 2; // spread planets out initially
+
   // Create mini-orbits for each skill
   const orbitTrails = [];
   const orbitCount = 3;
@@ -84,23 +199,29 @@ function SkillNode({ skill, index, totalSkills, hovered, setHovered }: {
     const orbitX = Math.cos(orbitAngle) * 0.8;
     const orbitZ = Math.sin(orbitAngle) * 0.8;
     orbitTrails.push(
-      <SkillTrail 
-        key={i} 
-        position={[orbitX, 0, orbitZ]} 
-        color={skill.color} 
+      <SkillTrail
+        key={i}
+        position={[orbitX, 0, orbitZ]}
+        color={skill.color}
       />
     );
   }
-  
+
   useFrame((state) => {
     const time = state.clock.getElapsedTime();
-    
-    // Add subtle animation
+
+    // Revolve the orbit group around the sun
+    if (orbitGroupRef.current) {
+      const angle = initialAngle + time * orbitSpeed;
+      orbitGroupRef.current.position.x = Math.cos(angle) * orbitRadius;
+      orbitGroupRef.current.position.z = Math.sin(angle) * orbitRadius;
+      orbitGroupRef.current.position.y = Math.sin(angle + orbitInclination) * (orbitRadius * 0.3 * Math.sin(orbitInclination + 0.3));
+    }
+
+    // Spin the planet on its own axis
     if (meshRef.current) {
-      meshRef.current.rotation.x = Math.sin(time * 0.5) * 0.1;
-      meshRef.current.rotation.y = Math.sin(time * 0.3) * 0.1;
-      
-      // Pulse effect when hovered
+      meshRef.current.rotation.y += 0.01;
+
       if (hovered === index) {
         meshRef.current.scale.x = THREE.MathUtils.lerp(meshRef.current.scale.x, 1.3, 0.1);
         meshRef.current.scale.y = THREE.MathUtils.lerp(meshRef.current.scale.y, 1.3, 0.1);
@@ -111,146 +232,124 @@ function SkillNode({ skill, index, totalSkills, hovered, setHovered }: {
         meshRef.current.scale.z = THREE.MathUtils.lerp(meshRef.current.scale.z, 1, 0.1);
       }
     }
-    
+
     // Animate glow effect
     if (glowRef.current && glowRef.current.material instanceof THREE.Material) {
-      glowRef.current.scale.x = 1 + Math.sin(time) * 0.1;
-      glowRef.current.scale.y = 1 + Math.sin(time) * 0.1;
-      glowRef.current.scale.z = 1 + Math.sin(time) * 0.1;
-      
+      glowRef.current.scale.setScalar(1 + Math.sin(time * 1.2 + index) * 0.1);
       if (hovered === index) {
-        glowRef.current.material.opacity = THREE.MathUtils.lerp(glowRef.current.material.opacity, 0.8, 0.1);
+        (glowRef.current.material as THREE.MeshBasicMaterial).opacity = THREE.MathUtils.lerp(
+          (glowRef.current.material as THREE.MeshBasicMaterial).opacity, 0.8, 0.1
+        );
       } else {
-        glowRef.current.material.opacity = THREE.MathUtils.lerp(glowRef.current.material.opacity, 0.4, 0.1);
+        (glowRef.current.material as THREE.MeshBasicMaterial).opacity = THREE.MathUtils.lerp(
+          (glowRef.current.material as THREE.MeshBasicMaterial).opacity, 0.35, 0.1
+        );
       }
     }
-    
+
     // Animate particles
     if (particlesRef.current) {
       particlesRef.current.rotation.y = time * 0.3;
-      
-      // Make particles more active when hovered
       if (hovered === index) {
-        particlesRef.current.scale.x = THREE.MathUtils.lerp(particlesRef.current.scale.x, 1.5, 0.1);
-        particlesRef.current.scale.y = THREE.MathUtils.lerp(particlesRef.current.scale.y, 1.5, 0.1);
-        particlesRef.current.scale.z = THREE.MathUtils.lerp(particlesRef.current.scale.z, 1.5, 0.1);
+        particlesRef.current.scale.setScalar(THREE.MathUtils.lerp(particlesRef.current.scale.x, 1.5, 0.1));
       } else {
-        particlesRef.current.scale.x = THREE.MathUtils.lerp(particlesRef.current.scale.x, 1, 0.1);
-        particlesRef.current.scale.y = THREE.MathUtils.lerp(particlesRef.current.scale.y, 1, 0.1);
-        particlesRef.current.scale.z = THREE.MathUtils.lerp(particlesRef.current.scale.z, 1, 0.1);
+        particlesRef.current.scale.setScalar(THREE.MathUtils.lerp(particlesRef.current.scale.x, 1, 0.1));
       }
     }
-    
-    // Rotate orbiting elements
-    if (orbitRef.current) {
-      orbitRef.current.rotation.y = time * 0.5;
+
+    // Rotate mini-orbit ring
+    if (miniOrbitRef.current) {
+      miniOrbitRef.current.rotation.y = time * 0.5 + index;
     }
-    
+
     // Make text always face the camera
     if (textRef.current) {
       textRef.current.lookAt(state.camera.position);
     }
   });
 
-  // Create particles geometry
+  // Create particles geometry (memoised via useMemo equivalent — create once)
   const particlesGeometry = new THREE.BufferGeometry();
-  const particleCount = 30;
+  const particleCount = 20;
   const positions = new Float32Array(particleCount * 3);
-  const colors = new Float32Array(particleCount * 3);
-  const sizes = new Float32Array(particleCount);
-  
+  const pColors = new Float32Array(particleCount * 3);
   const color = new THREE.Color(skill.color);
-  
   for (let i = 0; i < particleCount; i++) {
     const i3 = i * 3;
-    positions[i3] = (Math.random() - 0.5) * 3;
-    positions[i3 + 1] = (Math.random() - 0.5) * 3;
-    positions[i3 + 2] = (Math.random() - 0.5) * 3;
-    
-    colors[i3] = color.r;
-    colors[i3 + 1] = color.g;
-    colors[i3 + 2] = color.b;
-    
-    sizes[i] = Math.random() * 0.1 + 0.03;
+    positions[i3] = (Math.random() - 0.5) * 2.5;
+    positions[i3 + 1] = (Math.random() - 0.5) * 2.5;
+    positions[i3 + 2] = (Math.random() - 0.5) * 2.5;
+    pColors[i3] = color.r;
+    pColors[i3 + 1] = color.g;
+    pColors[i3 + 2] = color.b;
   }
-  
   particlesGeometry.setAttribute('position', new THREE.BufferAttribute(positions, 3));
-  particlesGeometry.setAttribute('color', new THREE.BufferAttribute(colors, 3));
-  particlesGeometry.setAttribute('size', new THREE.BufferAttribute(sizes, 1));
+  particlesGeometry.setAttribute('color', new THREE.BufferAttribute(pColors, 3));
 
   return (
-    <Float 
-      speed={2} 
-      rotationIntensity={0.5} 
-      floatIntensity={0.5}
-      position={[x, y, z]}
-    >
-      <group>
-        {/* Glow effect */}
-        <mesh 
-          ref={glowRef}
-          scale={[1.8, 1.8, 1.8]}
-        >
-          <sphereGeometry args={[skill.level * 0.5, 32, 32]} />
-          <meshBasicMaterial 
-            color={skill.color} 
-            transparent 
-            opacity={0.4}
-            blending={THREE.AdditiveBlending}
-          />
-        </mesh>
-        
-        {/* Main sphere */}
-        <mesh 
-          ref={meshRef}
-          onPointerOver={() => setHovered(index)}
-          onPointerOut={() => setHovered(null)}
-        >
-          <sphereGeometry args={[skill.level * 0.5, 32, 32]} />
-          <MeshDistortMaterial
-            color={skill.color}
-            emissive={skill.color}
-            emissiveIntensity={0.8}
-            roughness={0.2}
-            metalness={0.9}
-            speed={3}
-            distort={hovered === index ? 0.4 : 0.2}
-          />
-        </mesh>
-        
-        {/* Orbiting elements */}
-        <group ref={orbitRef}>
-          {orbitTrails}
-        </group>
-        
-        {/* Orbiting particles */}
-        <points ref={particlesRef}>
-          <primitive object={particlesGeometry} />
-          <pointsMaterial 
-            size={0.08} 
-            vertexColors
-            transparent 
-            opacity={0.8}
-            blending={THREE.AdditiveBlending}
-            sizeAttenuation
-          />
-        </points>
-        
-        {/* Skill name text */}
-        <Text
-          ref={textRef}
-          position={[0, 1, 0]}
-          fontSize={0.4}
-          color="white"
-          anchorX="center"
-          anchorY="middle"
-          outlineWidth={0.02}
-          outlineColor="#000000"
-        >
-          {skill.name}
-        </Text>
+    // Orbit wrapper — its position is animated in useFrame
+    <group ref={orbitGroupRef} position={[orbitRadius, 0, 0]}>
+      {/* Glow */}
+      <mesh ref={glowRef} scale={[1.8, 1.8, 1.8]}>
+        <sphereGeometry args={[skill.level * 0.5, 32, 32]} />
+        <meshBasicMaterial
+          color={skill.color}
+          transparent
+          opacity={0.35}
+          blending={THREE.AdditiveBlending}
+        />
+      </mesh>
+
+      {/* Main planet sphere */}
+      <mesh
+        ref={meshRef}
+        onPointerOver={() => setHovered(index)}
+        onPointerOut={() => setHovered(null)}
+      >
+        <sphereGeometry args={[skill.level * 0.5, 32, 32]} />
+        <MeshDistortMaterial
+          color={skill.color}
+          emissive={skill.color}
+          emissiveIntensity={0.8}
+          roughness={0.2}
+          metalness={0.9}
+          speed={3}
+          distort={hovered === index ? 0.4 : 0.2}
+        />
+      </mesh>
+
+      {/* Mini orbiting trails */}
+      <group ref={miniOrbitRef}>
+        {orbitTrails}
       </group>
-    </Float>
+
+      {/* Surrounding particles */}
+      <points ref={particlesRef}>
+        <primitive object={particlesGeometry} />
+        <pointsMaterial
+          size={0.07}
+          vertexColors
+          transparent
+          opacity={0.75}
+          blending={THREE.AdditiveBlending}
+          sizeAttenuation
+        />
+      </points>
+
+      {/* Skill name label */}
+      <Text
+        ref={textRef}
+        position={[0, skill.level * 0.5 + 0.6, 0]}
+        fontSize={0.38}
+        color="white"
+        anchorX="center"
+        anchorY="middle"
+        outlineWidth={0.02}
+        outlineColor="#000000"
+      >
+        {skill.name}
+      </Text>
+    </group>
   );
 }
 
@@ -633,37 +732,46 @@ function AnimatedCanvas({ isLoaded, filteredSkills, hovered, setHovered }: {
       transition={{ duration: 1 }}
       className="w-full h-full bg-[#131313]"
     >
-      <Canvas camera={{ position: [0, 0, 15], fov: 60 }} style={{ background: '#131313' }}>
+      <Canvas camera={{ position: [0, 5, 18], fov: 60 }} style={{ background: '#131313' }}>
         <color attach="background" args={['#131313']} />
-        <ambientLight intensity={0.3} />
-        <pointLight position={[10, 10, 10]} intensity={0.8} />
-        <spotLight position={[-10, -10, -10]} intensity={0.5} />
-        <pointLight position={[40, 8, -30]} intensity={0.3} color="#E4B45A" /> {/* Light from Saturn */}
-        <pointLight position={[-35, -15, -40]} intensity={0.2} color="#4287f5" /> {/* Light from blue planet */}
-        
+        <ambientLight intensity={0.15} />
+        <pointLight position={[40, 8, -30]} intensity={0.3} color="#E4B45A" />
+        <pointLight position={[-35, -15, -40]} intensity={0.2} color="#4287f5" />
+
         <GalaxyBackground />
-        
+
+        {/* The Sun at origin */}
+        <Sun />
+
+        {/* Orbit path rings (visual guides) */}
+        {filteredSkills.map((skill, index) => {
+          const orbitRadius = 4.5 + skill.level * 2.5 + (index % 4) * 0.6;
+          const orbitInclination = ((index % 6) - 2.5) * 0.22;
+          return (
+            <OrbitRing key={skill.name + '-ring'} radius={orbitRadius} inclination={orbitInclination} />
+          );
+        })}
+
+        {/* Skill planets */}
         {filteredSkills.map((skill, index) => (
-          <SkillNode 
-            key={skill.name} 
-            skill={skill} 
-            index={index} 
-            totalSkills={filteredSkills.length} 
+          <SkillNode
+            key={skill.name}
+            skill={skill}
+            index={index}
+            totalSkills={filteredSkills.length}
             hovered={hovered}
             setHovered={setHovered}
           />
         ))}
-        
-        <OrbitControls 
-          enableZoom={true} 
-          enablePan={false} 
-          autoRotate={true} 
-          autoRotateSpeed={0.5} 
-          minDistance={8}
-          maxDistance={20}
+
+        <OrbitControls
+          enableZoom={true}
+          enablePan={false}
+          autoRotate={false}
+          minDistance={6}
+          maxDistance={30}
         />
-        
-        {/* Add post-processing effects */}
+
         <Effects />
       </Canvas>
     </motion.div>
