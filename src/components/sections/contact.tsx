@@ -245,10 +245,10 @@ export default function Contact() {
           </motion.p>
         </motion.div>
 
-        <div className="grid grid-cols-1 lg:grid-cols-5 gap-12">
+        <div className="grid grid-cols-1 md:grid-cols-2 lg:grid-cols-5 gap-8 lg:gap-12">
           {/* Contact Form */}
           <motion.div
-            className="lg:col-span-3"
+            className="md:col-span-2 lg:col-span-3"
             initial={{ opacity: 0, x: -40 }}
             whileInView={{ opacity: 1, x: 0 }}
             viewport={{ once: true }}
@@ -260,7 +260,7 @@ export default function Contact() {
               transition={{ type: 'spring' as const, stiffness: 300, damping: 15 }}
             >
               <Card className="glass-card overflow-hidden shadow-2xl border-white/5 bg-white/[0.01] transition-all duration-500">
-                <CardContent className="p-8">
+                <CardContent className="p-5 md:p-8">
                   <motion.div
                     initial={{ opacity: 0, y: -10 }}
                     animate={{ opacity: 1, y: 0 }}
@@ -472,7 +472,7 @@ export default function Contact() {
           
           {/* Contact Information */}
           <motion.div
-            className="lg:col-span-2 space-y-6"
+            className="md:col-span-2 lg:col-span-2 space-y-6"
             initial={{ opacity: 0, x: 40 }}
             whileInView={{ opacity: 1, x: 0 }}
             viewport={{ once: true }}
@@ -488,7 +488,7 @@ export default function Contact() {
             </motion.h3>
             
             <motion.div 
-              className="grid grid-cols-1 gap-4"
+              className="grid grid-cols-1 sm:grid-cols-2 lg:grid-cols-1 gap-4"
               variants={containerVariants}
               initial="hidden"
               whileInView="visible"
@@ -502,7 +502,7 @@ export default function Contact() {
                   custom={index}
                 >
                   <Card className="glass-card border border-white/5 h-full transition-all duration-300 hover:border-[#5dd7e6]/30 relative overflow-hidden bg-white/[0.01]">
-                    <CardContent className="p-6 flex items-center space-x-5 relative z-10">
+                    <CardContent className="p-4 md:p-6 flex items-center space-x-4 md:space-x-5 relative z-10">
                       <div className="rounded-2xl bg-white/[0.03] border border-white/10 p-4 text-[#5dd7e6] shadow-[0_0_15px_rgba(93,215,230,0.1)] transition-colors group-hover:bg-[#5dd7e6]/10">
                         {item.icon}
                       </div>

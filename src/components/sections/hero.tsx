@@ -38,9 +38,10 @@ function WordReveal({ text, className, delay = 0 }: { text: string; className?: 
 }
 
 const skills = [
-  'Data Analysis', 'Business Analysis', 'Python', 'PowerBI', 'SQL',
-  'Data Warehousing', 'ML', 'ETL', 'Big Data', 'GCP', 'Excel',
-  'JavaScript', 'GenAI', 'React', 'Notion', 'Tableau', 'Pandas'
+  'Data Products', 'Business Analytics', 'GenAI', 'Automation', 'Python',
+  'SQL', 'LLMs & AI Workflows', 'PowerBI', 'Data Warehousing', 'ML',
+  'ETL', 'Big Data', 'GCP', 'Advanced Excel', 'JavaScript', 'React',
+  'Notion', 'Tableau', 'Pandas'
 ];
 
 export default function Hero() {
@@ -86,7 +87,7 @@ export default function Hero() {
   };
 
   return (
-    <section id="about" className="min-h-[90vh] pt-20 md:pt-28 pb-12 !mb-0 flex items-center relative overflow-x-hidden bg-background">
+    <section id="about" className="md:min-h-[90vh] pt-24 md:pt-28 pb-8 md:pb-12 !mb-0 flex items-center relative bg-background">
       {/* Ambient */}
       <div className="absolute inset-0 z-0 pointer-events-none">
         <div className="absolute top-[10%] left-[10%] w-[35rem] h-[35rem] bg-[#5dd7e6]/10 rounded-full blur-[120px] animate-pulse" />
@@ -108,7 +109,7 @@ export default function Hero() {
           - Mobile (flex-col): Text FIRST in DOM → shows on top. Photo LAST → shows below buttons.
           - Desktop (md:grid 2-col): Text is col-1 (left), Photo is col-2 (right). DOM order matches visual order naturally.
         */}
-        <div className="flex flex-col md:grid md:grid-cols-2 gap-8 md:gap-16 md:items-center">
+        <div className="flex flex-col md:grid md:grid-cols-2 gap-6 md:gap-8 md:items-center">
 
           {/* ── Text — first in DOM ── */}
           <AnimatePresence>
@@ -118,29 +119,45 @@ export default function Hero() {
                 <motion.p className="text-sm md:text-base font-semibold uppercase tracking-widest text-[#5dd7e6] mb-3"
                   initial={{ opacity: 0, y: 10 }} animate={{ opacity: 1, y: 0 }} transition={{ delay: 0.2 }}
                 >
-                  Data Analyst &amp; Problem Solver
+                  Data • Product • Business • Gen AI • Automation
                 </motion.p>
 
-                <h1 className="text-2xl sm:text-3xl md:text-4xl lg:text-5xl font-extrabold mb-5 tracking-tight leading-[1.3] text-white break-words max-w-full">
-                  <WordReveal text="Turning" delay={0.3} />{' '}
+                <h1 className="text-xl sm:text-2xl md:text-3xl lg:text-4xl font-extrabold mb-5 tracking-tight leading-[1.3] text-white break-words max-w-full">
+                  <WordReveal text="Exploring" delay={0.3} />{' '}
                   <WordReveal
-                    text="Complex Data"
+                    text="Data, Product, AI & Automation"
                     delay={0.42}
                     className="bg-gradient-to-r from-[#5dd7e6] via-[#a2f0f9] to-[#8df2ff] bg-clip-text text-transparent animate-gradient-x"
                   />{' '}
-                  <WordReveal text="into Clear, Actionable Insights" delay={0.62} />
+                  <WordReveal text="to Solve Business Problems" delay={0.62} />
                 </h1>
 
-                <motion.p
-                  className="text-sm md:text-base text-[#bec8ca]/80 mb-7 max-w-xl font-light leading-relaxed"
+                <motion.div
+                  className="text-base md:text-lg text-[#bec8ca]/80 mb-7 font-light leading-relaxed space-y-4"
                   initial={{ opacity: 0, y: 8 }} animate={{ opacity: 1, y: 0 }}
                   transition={{ delay: 1.05, duration: 0.6 }}
                 >
-                  Data Analyst proficient in{' '}
-                  <span className="text-white font-medium">SQL, Python, Data Warehousing, Big Data, Advanced Excel, Machine Learning</span>
-                  {' '}and PowerBI. Turning complex raw data into compelling stories and measurable outcomes.{' '}
-                  Ranked <span className="text-white font-medium">top 9%</span> on LeetCode (Contest rating 1769).
-                </motion.p>
+                  <p>
+                    I'm passionate about{' '}
+                    <span className="text-white font-medium">Data, Product, Business, Gen AI, and Automation</span>
+                    — and how these areas come together to solve real-world problems and create meaningful business impact.
+                  </p>
+                  <p>
+                    My experience spans{' '}
+                    <span className="text-white font-medium">data analysis, product operations, business problem-solving, AI/LLMs, and workflow automation</span>, with hands-on experience as an{' '}
+                    <span className="text-[#5dd7e6] font-medium">Intern @ Delhivery</span>,{' '}
+                    <span className="text-[#5dd7e6] font-medium">Ex-Product Ops @ AppBroda</span>, and{' '}
+                    <span className="text-[#5dd7e6] font-medium">Data Science Intern @ Aim Digitalise</span>.
+                  </p>
+                  <p>
+                    I work with{' '}
+                    <span className="text-white font-medium">Python, SQL, GenAI/LLMs, Machine Learning, Power BI, Data Warehousing, and ETL</span>, and I enjoy turning data and technology into practical, actionable solutions.
+                  </p>
+                  <p>
+                    <span className="text-white font-medium">LeetCode:</span>{' '}
+                    Top 9% | Contest Rating: 1769
+                  </p>
+                </motion.div>
 
                 <motion.div className="marquee-wrap mb-7"
                   initial={{ opacity: 0 }} animate={{ opacity: 1 }} transition={{ delay: 1.1 }}>
@@ -200,14 +217,14 @@ export default function Hero() {
             ref={cardRef}
             onMouseMove={handleMouseMove}
             onMouseLeave={handleMouseLeave}
-            style={{ perspective: '1000px', width: 'min(280px, 80vw)' }}
+            style={{ perspective: '1000px', width: 'min(300px, 70vw)' }}
           >
             <motion.div
               className="relative rounded-[2rem] border border-[#5dd7e6]/30 shadow-[0_0_40px_rgba(93,215,230,0.12)] overflow-hidden group"
               style={{
                 rotateX, rotateY, transformStyle: 'preserve-3d',
                 width: '100%',
-                height: 'min(280px, 80vw)',
+                height: 'min(300px, 70vw)',
                 background: '#0a0a0a',
               }}
             >

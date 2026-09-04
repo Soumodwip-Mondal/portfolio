@@ -32,7 +32,7 @@ const DashboardCard = ({
   className?: string;
 }) => {
   return (
-    <Card className={`glass-card p-6 h-full border-white/5 bg-white/[0.01] ${className}`}>
+    <Card className={`glass-card p-4 md:p-6 h-full border-white/5 bg-white/[0.01] ${className}`}>
       <div className="flex justify-between items-center mb-6">
         <h3 className="text-lg font-bold tracking-tight text-white/90">{title}</h3>
         <RefreshCw className="w-4 h-4 text-zinc-500 cursor-pointer hover:text-[#5dd7e6] transition-colors" />
@@ -48,11 +48,11 @@ const GitHubContributionsChart = ({ data }: { data?: any[] }) => {
 
   return (
     <DashboardCard title="GitHub Contributions (Last 30 Days)">
-      <div className="h-64">
+      <div className="h-48 md:h-64">
         <ResponsiveContainer width="100%" height="100%">
           <AreaChart
             data={contributionData}
-            margin={{ top: 10, right: 30, left: 0, bottom: 0 }}
+            margin={{ top: 10, right: 10, left: -10, bottom: 0 }}
           >
             <defs>
               <linearGradient id="colorPrimary" x1="0" y1="0" x2="0" y2="1">
@@ -94,11 +94,11 @@ const GitHubContributionsChart = ({ data }: { data?: any[] }) => {
 const VisitorAnalyticsChart = () => {
   return (
     <DashboardCard title="Portfolio Visitors">
-      <div className="h-64">
+      <div className="h-48 md:h-64">
         <ResponsiveContainer width="100%" height="100%">
           <LineChart
             data={visitorAnalytics}
-            margin={{ top: 5, right: 30, left: 20, bottom: 5 }}
+            margin={{ top: 5, right: 10, left: 0, bottom: 5 }}
           >
             <CartesianGrid strokeDasharray="3 3" stroke="rgba(255,255,255,0.05)" vertical={false} />
             <XAxis 
@@ -195,11 +195,11 @@ const VisitorAnalyticsChart = () => {
 const ProjectMetricsChart = () => {
   return (
     <DashboardCard title="Project Metrics">
-      <div className="h-64">
+      <div className="h-48 md:h-64">
         <ResponsiveContainer width="100%" height="100%">
           <BarChart
             data={projectMetrics}
-            margin={{ top: 20, right: 30, left: 20, bottom: 5 }}
+            margin={{ top: 20, right: 10, left: 0, bottom: 5 }}
           >
             <CartesianGrid strokeDasharray="3 3" stroke="rgba(255,255,255,0.05)" vertical={false} />
             <XAxis dataKey="name" axisLine={false} tickLine={false} tick={{fill: 'rgba(255,255,255,0.3)', fontSize: 10}} />
@@ -224,7 +224,7 @@ const TechnologyUsageChart = ({ data }: { data?: any[] }) => {
 
   return (
     <DashboardCard title="Programming Languages">
-      <div className="h-64">
+      <div className="h-48 md:h-64">
         <ResponsiveContainer width="100%" height="100%">
           <PieChart>
             <Pie
@@ -256,7 +256,7 @@ const TechnologyUsageChart = ({ data }: { data?: any[] }) => {
 const DevelopmentActivitiesChart = () => {
   return (
     <DashboardCard title="Development Activities">
-      <div className="h-64">
+      <div className="h-48 md:h-64">
         <ResponsiveContainer width="100%" height="100%">
           <RadarChart cx="50%" cy="50%" outerRadius="80%" data={devActivities}>
             <PolarGrid stroke="rgba(255,255,255,0.1)" />
@@ -302,7 +302,7 @@ const StatsCards = ({ stats }: { stats: any }) => {
       initial="hidden"
       whileInView="show"
       viewport={{ once: true }}
-      className="grid grid-cols-1 md:grid-cols-2 lg:grid-cols-4 gap-4 mb-6"
+      className="grid grid-cols-2 md:grid-cols-2 lg:grid-cols-4 gap-3 md:gap-4 mb-6"
     >
       {[
         { label: 'Total Repositories', value: stats?.totalRepos || 0, icon: TrendingUp },
@@ -311,9 +311,9 @@ const StatsCards = ({ stats }: { stats: any }) => {
         { label: 'Top Repositories', value: stats?.repositories?.length || 0, icon: Download }
       ].map((stat, i) => (
         <motion.div key={i} variants={item}>
-          <Card className="glass-card p-6 flex items-center border-white/5 bg-white/[0.02] hover:bg-white/[0.04] transition-all duration-300">
-            <div className="mr-5 p-3.5 rounded-2xl bg-white/[0.03] border border-white/5 group-hover:border-[#5dd7e6]/30 transition-colors">
-              <stat.icon className="w-6 h-6 text-[#5dd7e6] filter drop-shadow-[0_0_8px_rgba(93,215,230,0.3)]" />
+          <Card className="glass-card p-4 md:p-6 flex items-center border-white/5 bg-white/[0.02] hover:bg-white/[0.04] transition-all duration-300">
+            <div className="mr-3 md:mr-5 p-2.5 md:p-3.5 rounded-2xl bg-white/[0.03] border border-white/5 group-hover:border-[#5dd7e6]/30 transition-colors">
+              <stat.icon className="w-5 h-5 md:w-6 md:h-6 text-[#5dd7e6] filter drop-shadow-[0_0_8px_rgba(93,215,230,0.3)]" />
             </div>
             <div>
               <p className="text-[10px] font-bold text-zinc-500 uppercase tracking-[0.2em] mb-1">{stat.label}</p>
@@ -332,16 +332,16 @@ const TopRepositories = ({ repos }: { repos?: any[] }) => {
 
   return (
     <DashboardCard title="Top Repositories by Stars">
-      <div className="h-64">
+      <div className="h-48 md:h-64">
         <ResponsiveContainer width="100%" height="100%">
           <BarChart
             layout="vertical"
             data={repositoryData}
-            margin={{ top: 5, right: 30, left: 20, bottom: 5 }}
+            margin={{ top: 5, right: 10, left: 0, bottom: 5 }}
           >
             <CartesianGrid strokeDasharray="3 3" stroke="rgba(255,255,255,0.05)" horizontal={false} />
             <XAxis type="number" axisLine={false} tickLine={false} tick={{fill: 'rgba(255,255,255,0.3)', fontSize: 10}} />
-            <YAxis dataKey="name" type="category" width={150} axisLine={false} tickLine={false} tick={{fill: 'rgba(255,255,255,0.5)', fontSize: 10}} />
+            <YAxis dataKey="name" type="category" width={100} axisLine={false} tickLine={false} tick={{fill: 'rgba(255,255,255,0.5)', fontSize: 10}} />
             <Tooltip 
               contentStyle={{backgroundColor: 'rgba(20,20,20,0.8)', border: '1px solid rgba(255,255,255,0.1)', borderRadius: '12px'}}
             />
@@ -401,11 +401,11 @@ export default function Dashboard() {
         transition={{ duration: 0.5 }}
         className="container mx-auto px-4"
       >
-        <div className="text-center mb-16">
-          <h2 className="text-4xl md:text-5xl font-extrabold bg-gradient-to-r from-white via-[#5dd7e6] to-white/40 bg-clip-text text-transparent mb-6 tracking-tight animate-gradient-x">
+        <div className="text-center mb-10 md:mb-16">
+          <h2 className="text-3xl md:text-4xl lg:text-5xl font-extrabold bg-gradient-to-r from-white via-[#5dd7e6] to-white/40 bg-clip-text text-transparent mb-4 md:mb-6 tracking-tight animate-gradient-x">
             System Analytics
           </h2>
-          <p className="text-lg text-zinc-500 max-w-2xl mx-auto font-light leading-relaxed">
+          <p className="text-base md:text-lg text-zinc-500 max-w-2xl mx-auto font-light leading-relaxed">
             Real-time telemetry and deep insights harvested from my active digital workspace.
           </p>
           {error && (
@@ -444,7 +444,7 @@ export default function Dashboard() {
                   ? "Live data fetched from GitHub API"
                   : "Some data uses mock values for demonstration. GitHub contributions and language stats are real!"}
               </p>
-              <div className="flex justify-center space-x-4">
+              <div className="flex flex-wrap justify-center gap-3">
                 <Button onClick={loadGitHubData} variant="outline">
                   <RefreshCw className="w-4 h-4 mr-2" />
                   Refresh Data

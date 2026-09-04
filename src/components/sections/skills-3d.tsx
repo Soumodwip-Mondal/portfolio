@@ -633,10 +633,10 @@ export default function Skills3D() {
         transition={{ duration: 1 }}
         className="container mx-auto px-4 text-center mb-12"
       >
-        <h2 className="text-4xl font-bold bg-gradient-to-r from-[#5dd7e6] to-[#8df2ff] bg-clip-text text-transparent mb-4">
+        <h2 className="text-3xl md:text-4xl font-bold bg-gradient-to-r from-[#5dd7e6] to-[#8df2ff] bg-clip-text text-transparent mb-4">
           Skills Universe
         </h2>
-        <p className="text-lg text-[#bec8ca] max-w-2xl mx-auto mb-8">
+        <p className="text-base md:text-lg text-[#bec8ca] max-w-2xl mx-auto mb-8">
           Explore my skills in this interactive 3D visualization. Drag to rotate, scroll to zoom.
         </p>
         
@@ -669,7 +669,7 @@ export default function Skills3D() {
       
       {/* 3D Canvas */}
       <div className="container mx-auto px-4">
-      <div className="h-[600px] w-full max-w-6xl mx-auto relative bg-[#131313] rounded-2xl overflow-hidden border border-[#3f484a]/20">
+      <div className="h-[350px] sm:h-[450px] md:h-[600px] w-full max-w-6xl mx-auto relative bg-[#131313] rounded-2xl overflow-hidden border border-[#3f484a]/20">
         <AnimatedCanvas isLoaded={isLoaded} filteredSkills={filteredSkills} hovered={hovered} setHovered={setHovered} />
         <SkillInfoPanel skill={hoveredSkill} />
       </div>
@@ -677,7 +677,7 @@ export default function Skills3D() {
       
       {/* Skills list restored */}
       <div className="container mx-auto px-4 mt-12">
-        <div className="grid grid-cols-1 md:grid-cols-3 gap-6">
+        <div className="grid grid-cols-1 sm:grid-cols-2 md:grid-cols-3 gap-4 md:gap-6">
           {categories.slice(1).map((category, catIdx) => (
             <motion.div
               key={category}

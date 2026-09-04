@@ -212,7 +212,7 @@ export default function Projects() {
       initial="hidden"
       animate={controls}
       variants={headingVariants}
-      className="pt-16 pb-28 !mb-0 relative overflow-hidden"
+      className="pt-12 md:pt-16 pb-16 md:pb-28 !mb-0 relative overflow-hidden"
     >
       {/* Animated background with SSR check - Premium Atmosphere */}
       {typeof window !== 'undefined' && (
@@ -244,7 +244,7 @@ export default function Projects() {
           </motion.div>
 
           <motion.h1
-            className="text-4xl md:text-5xl font-extrabold mb-6 tracking-tight bg-gradient-to-r from-white via-[#5dd7e6] to-white/40 bg-clip-text text-transparent animate-gradient-x"
+            className="text-3xl sm:text-4xl md:text-5xl font-extrabold mb-4 md:mb-6 tracking-tight bg-gradient-to-r from-white via-[#5dd7e6] to-white/40 bg-clip-text text-transparent animate-gradient-x"
             initial={{ opacity: 0, y: 10 }}
             animate={{ opacity: 1, y: 0 }}
             transition={{ delay: 0.3 }}
@@ -252,7 +252,7 @@ export default function Projects() {
             Digital Atelier
           </motion.h1>
           <motion.p
-            className="text-lg text-zinc-500 max-w-2xl mx-auto font-light leading-relaxed mb-10"
+            className="text-base md:text-lg text-zinc-500 max-w-2xl mx-auto font-light leading-relaxed mb-8 md:mb-10"
             initial={{ opacity: 0 }}
             animate={{ opacity: 1 }}
             transition={{ delay: 0.5 }}
@@ -317,7 +317,7 @@ export default function Projects() {
         </motion.div>
 
         {/* Projects grid — per-card stagger entrance */}
-        <div className="grid grid-cols-1 md:grid-cols-2 lg:grid-cols-3 xl:grid-cols-4 gap-4 mb-12">
+        <div className="grid grid-cols-1 sm:grid-cols-2 lg:grid-cols-3 xl:grid-cols-4 gap-4 mb-12">
           {visibleProjects.map((project: Project, index: number) => (
             <motion.div
               key={project.id}
